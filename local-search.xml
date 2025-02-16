@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>Codeforce-1005</title>
+    <link href="/2025/02/16/Codeforce-1005/"/>
+    <url>/2025/02/16/Codeforce-1005/</url>
+    
+    <content type="html"><![CDATA[<h1 id="A"><a href="#A" class="headerlink" title="A"></a>A</h1><p>采用模拟，a字符串从头遍历，找到第一个1，它和其后的字符串删除增加到b字符串后面；b数组从头遍历，找到第一个0；</p><p>应该使用数组比较简单；条件怎么判断</p><h1 id="B"><a href="#B" class="headerlink" title="B"></a>B</h1><p>删除子数组使得相同数字尽可能多；条件怎么设置，没有思路</p><h1 id="C"><a href="#C" class="headerlink" title="C"></a>C</h1><p>ai小于0删除后缀，大于0删除前缀</p><p>如果数组左边都是大于0的数，右边都是小于0的数，很好处理</p><p>但是左边小于0，右边大于0呢</p><p>进一步，分布没有规律，分成好多子数组怎么办</p><h1 id="D"><a href="#D" class="headerlink" title="D"></a>D</h1><p>看起来很简单，只需要从后往前尝试遍历即可；忘记异或怎么操作了</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>cf刷题</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Codeforce_1004(Div2)</title>
     <link href="/2025/02/12/Codeforce-1004-Div2/"/>
     <url>/2025/02/12/Codeforce-1004-Div2/</url>
