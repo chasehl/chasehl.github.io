@@ -4,6 +4,35 @@
   
   
   <entry>
+    <title>25.3.6刷题</title>
+    <link href="/2025/03/07/25.3.6%E5%88%B7%E9%A2%98/"/>
+    <url>/2025/03/07/25.3.6%E5%88%B7%E9%A2%98/</url>
+    
+    <content type="html"><![CDATA[<p><a href="https://www.luogu.com.cn/problem/P1048">https://www.luogu.com.cn/problem/P1048</a></p><h1 id="P1048-采药"><a href="#P1048-采药" class="headerlink" title="P1048 采药"></a>P1048 采药</h1><h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><p>01背包，纯模板</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1010</span>;<br><span class="hljs-type">int</span> v[N],w[N];<br><span class="hljs-type">int</span> dp[N];<br><span class="hljs-type">int</span> n,m;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-literal">false</span>);<br>cin.<span class="hljs-built_in">tie</span>(<span class="hljs-literal">nullptr</span>);<br>cin &gt;&gt; m &gt;&gt; n;<br><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) cin &gt;&gt; v[i]&gt;&gt;w[i];<br><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++)<br>&#123;<br><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = m; j &gt;= v[i]; j--)<br>&#123;<br>dp[j] = <span class="hljs-built_in">max</span>(dp[j], dp[j - v[i]] + w[i]);<br>&#125;<br>&#125;<br>cout &lt;&lt; dp[m];<br><span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>算法竞赛</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>动态规划</tag>
+      
+      <tag>刷题</tag>
+      
+      <tag>算法</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>25.3.5刷题</title>
     <link href="/2025/03/06/25.3.5%E5%88%B7%E9%A2%98/"/>
     <url>/2025/03/06/25.3.5%E5%88%B7%E9%A2%98/</url>
