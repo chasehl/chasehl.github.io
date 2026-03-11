@@ -1,0 +1,384 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Github Pages 博客搭建指南 | ChaseLog</title><meta name="author" content="Chase King"><meta name="copyright" content="Chase King"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="GitHub Pages 博客搭建指南 Hexo + Butterfly 主题 + GitHub Actions 自动部署个人备忘，记录首次搭建流程及后续更换博客的方法   目录 技术栈说明 首次搭建完整步骤 日常写文章工作流 我的情况：已有博客，重新搭建替换 常见报错处理 文件结构说明   一、技术栈说明   工具 作用 安装位置    Node.js 运行环境，Hexo 依赖它 C 盘（系统级">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Github Pages 博客搭建指南">
+<meta property="og:url" content="https://chaseking.github.io/2026/03/12/Github-Pages-%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/index.html">
+<meta property="og:site_name" content="ChaseLog">
+<meta property="og:description" content="GitHub Pages 博客搭建指南 Hexo + Butterfly 主题 + GitHub Actions 自动部署个人备忘，记录首次搭建流程及后续更换博客的方法   目录 技术栈说明 首次搭建完整步骤 日常写文章工作流 我的情况：已有博客，重新搭建替换 常见报错处理 文件结构说明   一、技术栈说明   工具 作用 安装位置    Node.js 运行环境，Hexo 依赖它 C 盘（系统级">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://chaseking.github.io/img/butterfly-icon.png">
+<meta property="article:published_time" content="2026-03-12T00:42:38.000Z">
+<meta property="article:modified_time" content="2026-03-11T16:43:45.792Z">
+<meta property="article:author" content="Chase King">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://chaseking.github.io/img/butterfly-icon.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Github Pages 博客搭建指南",
+  "url": "https://chaseking.github.io/2026/03/12/Github-Pages-%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/",
+  "image": "https://chaseking.github.io/img/butterfly-icon.png",
+  "datePublished": "2026-03-12T00:42:38.000Z",
+  "dateModified": "2026-03-11T16:43:45.792Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Chase King",
+      "url": "https://chaseking.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://chaseking.github.io/2026/03/12/Github-Pages-%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.4"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Github Pages 博客搭建指南',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 8.1.1"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">ChaseLog</span></a><a class="nav-page-title" href="/"><span class="site-name">Github Pages 博客搭建指南</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  Back to Home</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">Github Pages 博客搭建指南</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2026-03-12T00:42:38.000Z" title="Created 2026-03-12 00:42:38">2026-03-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2026-03-11T16:43:45.792Z" title="Updated 2026-03-11 16:43:45">2026-03-11</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="GitHub-Pages-博客搭建指南"><a href="#GitHub-Pages-博客搭建指南" class="headerlink" title="GitHub Pages 博客搭建指南"></a>GitHub Pages 博客搭建指南</h1><blockquote>
+<p>Hexo + Butterfly 主题 + GitHub Actions 自动部署<br>个人备忘，记录首次搭建流程及后续更换博客的方法</p>
+</blockquote>
+<hr>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ol>
+<li><a href="#%E4%B8%80%E6%8A%80%E6%9C%AF%E6%A0%88%E8%AF%B4%E6%98%8E">技术栈说明</a></li>
+<li><a href="#%E4%BA%8C%E9%A6%96%E6%AC%A1%E6%90%AD%E5%BB%BA%E5%AE%8C%E6%95%B4%E6%AD%A5%E9%AA%A4">首次搭建完整步骤</a></li>
+<li><a href="#%E4%B8%89%E6%97%A5%E5%B8%B8%E5%86%99%E6%96%87%E7%AB%A0%E5%B7%A5%E4%BD%9C%E6%B5%81">日常写文章工作流</a></li>
+<li><a href="#%E5%9B%9B%E6%88%91%E7%9A%84%E6%83%85%E5%86%B5%E5%B7%B2%E6%9C%89%E5%8D%9A%E5%AE%A2%E9%87%8D%E6%96%B0%E6%90%AD%E5%BB%BA%E6%9B%BF%E6%8D%A2">我的情况：已有博客，重新搭建替换</a></li>
+<li><a href="#%E4%BA%94%E5%B8%B8%E8%A7%81%E6%8A%A5%E9%94%99%E5%A4%84%E7%90%86">常见报错处理</a></li>
+<li><a href="#%E5%85%AD%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E8%AF%B4%E6%98%8E">文件结构说明</a></li>
+</ol>
+<hr>
+<h2 id="一、技术栈说明"><a href="#一、技术栈说明" class="headerlink" title="一、技术栈说明"></a>一、技术栈说明</h2><table>
+<thead>
+<tr>
+<th>工具</th>
+<th>作用</th>
+<th>安装位置</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Node.js</td>
+<td>运行环境，Hexo 依赖它</td>
+<td>C 盘（系统级）</td>
+</tr>
+<tr>
+<td>Hexo CLI</td>
+<td>博客框架命令行工具</td>
+<td>C 盘（全局 npm 包）</td>
+</tr>
+<tr>
+<td>Butterfly</td>
+<td>Hexo 主题，决定博客外观</td>
+<td>项目 node_modules 内</td>
+</tr>
+<tr>
+<td>Git</td>
+<td>版本管理，推送到 GitHub</td>
+<td>C 盘（系统级）</td>
+</tr>
+<tr>
+<td>GitHub Pages</td>
+<td>免费静态网站托管</td>
+<td>云端</td>
+</tr>
+<tr>
+<td>GitHub Actions</td>
+<td>自动编译部署，push 后自动触发</td>
+<td>云端</td>
+</tr>
+</tbody></table>
+<p><strong>核心理解：</strong></p>
+<ul>
+<li>Hexo CLI 是”工具”，装在 C 盘，装一次不用管</li>
+<li>博客项目是”内容”，可以放在任意盘（如 <code>E:\blog</code>），路径不要有中文和空格</li>
+<li>GitHub Actions 配置好后，本地只需写文章 + <code>git push</code>，编译部署全在云端自动完成</li>
+</ul>
+<hr>
+<h2 id="二、首次搭建完整步骤"><a href="#二、首次搭建完整步骤" class="headerlink" title="二、首次搭建完整步骤"></a>二、首次搭建完整步骤</h2><h3 id="前置准备"><a href="#前置准备" class="headerlink" title="前置准备"></a>前置准备</h3><ol>
+<li>安装 Node.js（LTS 版本，需 18+）：<a target="_blank" rel="noopener" href="https://nodejs.org/">https://nodejs.org</a></li>
+<li>安装 Git：<a target="_blank" rel="noopener" href="https://git-scm.com/">https://git-scm.com</a></li>
+<li>注册 GitHub 账号：<a target="_blank" rel="noopener" href="https://github.com/">https://github.com</a></li>
+</ol>
+<p>验证安装：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">node <span class="literal">--version</span>   <span class="comment"># v18.x.x 或更高</span></span><br><span class="line">npm <span class="literal">--version</span></span><br><span class="line">git <span class="literal">--version</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="第-1-步：在-GitHub-创建仓库"><a href="#第-1-步：在-GitHub-创建仓库" class="headerlink" title="第 1 步：在 GitHub 创建仓库"></a>第 1 步：在 GitHub 创建仓库</h3><p>仓库名必须为 <code>你的用户名.github.io</code>（固定格式，不能改）。</p>
+<ol>
+<li>登录 GitHub → 右上角 <code>+</code> → New repository</li>
+<li>Repository name 填写：<code>你的用户名.github.io</code></li>
+<li>设为 Public</li>
+<li>不要勾选 Initialize README</li>
+<li>点击 Create repository</li>
+</ol>
+<hr>
+<h3 id="第-2-步：安装-Hexo-CLI"><a href="#第-2-步：安装-Hexo-CLI" class="headerlink" title="第 2 步：安装 Hexo CLI"></a>第 2 步：安装 Hexo CLI</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install <span class="literal">-g</span> hexo<span class="literal">-cli</span></span><br></pre></td></tr></table></figure>
+
+<p>验证：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo <span class="literal">--version</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="第-3-步：初始化博客项目"><a href="#第-3-步：初始化博客项目" class="headerlink" title="第 3 步：初始化博客项目"></a>第 3 步：初始化博客项目</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 切换到 E 盘（或你想放的位置）</span></span><br><span class="line">E:</span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化项目，会创建 E:\blog 文件夹</span></span><br><span class="line">hexo init blog</span><br><span class="line"><span class="built_in">cd</span> blog</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="第-4-步：安装-Butterfly-主题"><a href="#第-4-步：安装-Butterfly-主题" class="headerlink" title="第 4 步：安装 Butterfly 主题"></a>第 4 步：安装 Butterfly 主题</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo<span class="literal">-theme-butterfly</span> hexo<span class="literal">-renderer-pug</span> hexo<span class="literal">-renderer-stylus</span> <span class="literal">--save</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="第-5-步：配置-config-yml"><a href="#第-5-步：配置-config-yml" class="headerlink" title="第 5 步：配置 _config.yml"></a>第 5 步：配置 <code>_config.yml</code></h3><p>用 VS Code 打开 <code>E:\blog\_config.yml</code>，修改以下字段：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">title:</span> <span class="string">你的博客名</span></span><br><span class="line"><span class="attr">subtitle:</span> <span class="string">&#x27;副标题&#x27;</span></span><br><span class="line"><span class="attr">description:</span> <span class="string">&#x27;博客描述&#x27;</span></span><br><span class="line"><span class="attr">author:</span> <span class="string">你的名字</span></span><br><span class="line"></span><br><span class="line"><span class="attr">url:</span> <span class="string">https://你的用户名.github.io</span></span><br><span class="line"><span class="attr">root:</span> <span class="string">/</span></span><br><span class="line"></span><br><span class="line"><span class="attr">theme:</span> <span class="string">butterfly</span></span><br></pre></td></tr></table></figure>
+
+<p>可以删除 <code>_config.landscape.yml</code>（默认主题配置，用不到）：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">del</span> _config.landscape.yml</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="第-6-步：创建-Butterfly-主题配置"><a href="#第-6-步：创建-Butterfly-主题配置" class="headerlink" title="第 6 步：创建 Butterfly 主题配置"></a>第 6 步：创建 Butterfly 主题配置</h3><p>在 <code>E:\blog\</code> 根目录新建 <code>_config.butterfly.yml</code>：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 深色模式</span></span><br><span class="line"><span class="attr">dark_mode:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">default:</span> <span class="string">light</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 代码块</span></span><br><span class="line"><span class="attr">highlight_theme:</span> <span class="string">mac</span></span><br><span class="line"><span class="attr">highlight_copy:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">highlight_lang:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 文章封面</span></span><br><span class="line"><span class="attr">cover:</span></span><br><span class="line">  <span class="attr">index_enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">aside_enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">archives_enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">position:</span> <span class="string">both</span></span><br><span class="line">  <span class="attr">default_cover:</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 侧边栏</span></span><br><span class="line"><span class="attr">aside:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">position:</span> <span class="string">right</span></span><br><span class="line">  <span class="attr">card_author:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">description:</span> <span class="string">记录折腾过程的地方</span></span><br><span class="line">  <span class="attr">card_tags:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">card_archives:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">card_recent_post:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 页脚</span></span><br><span class="line"><span class="attr">footer:</span></span><br><span class="line">  <span class="attr">owner:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">since:</span> <span class="number">2024</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 关闭暂不需要的功能</span></span><br><span class="line"><span class="attr">aplayer:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="第-7-步：本地预览"><a href="#第-7-步：本地预览" class="headerlink" title="第 7 步：本地预览"></a>第 7 步：本地预览</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo server</span><br></pre></td></tr></table></figure>
+
+<p>打开浏览器访问 <code>http://localhost:4000</code>，确认主题和样式正常。</p>
+<blockquote>
+<p><code>Ctrl+C</code> 停止预览服务器。</p>
+</blockquote>
+<hr>
+<h3 id="第-8-步：初始化-Git-并关联远程仓库"><a href="#第-8-步：初始化-Git-并关联远程仓库" class="headerlink" title="第 8 步：初始化 Git 并关联远程仓库"></a>第 8 步：初始化 Git 并关联远程仓库</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br><span class="line">git add .</span><br><span class="line">git commit <span class="literal">-m</span> <span class="string">&quot;init: hexo + butterfly&quot;</span></span><br><span class="line">git branch <span class="literal">-M</span> main</span><br><span class="line">git remote add origin https://github.com/你的用户名/你的用户名.github.io.git</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="第-9-步：配置-GitHub-Actions-自动部署"><a href="#第-9-步：配置-GitHub-Actions-自动部署" class="headerlink" title="第 9 步：配置 GitHub Actions 自动部署"></a>第 9 步：配置 GitHub Actions 自动部署</h3><p>在项目根目录创建文件（路径如下，需手动创建文件夹）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">E:\blog\.github\workflows\deploy.yml</span><br></pre></td></tr></table></figure>
+
+<p>文件内容：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">Deploy</span> <span class="string">Hexo</span> <span class="string">Blog</span></span><br><span class="line"></span><br><span class="line"><span class="attr">on:</span></span><br><span class="line">  <span class="attr">push:</span></span><br><span class="line">    <span class="attr">branches:</span> [<span class="string">main</span>]</span><br><span class="line"></span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="attr">deploy:</span></span><br><span class="line">    <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">actions/checkout@v4</span></span><br><span class="line"></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Setup</span> <span class="string">Node.js</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">actions/setup-node@v4</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">node-version:</span> <span class="string">&#x27;20&#x27;</span></span><br><span class="line"></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Install</span> <span class="string">dependencies</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">|</span></span><br><span class="line"><span class="string">          npm install hexo-cli -g</span></span><br><span class="line"><span class="string">          npm install</span></span><br><span class="line"><span class="string"></span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Build</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">|</span></span><br><span class="line"><span class="string">          hexo clean</span></span><br><span class="line"><span class="string">          hexo generate</span></span><br><span class="line"><span class="string"></span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Deploy</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">peaceiris/actions-gh-pages@v3</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">github_token:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.GITHUB_TOKEN</span> <span class="string">&#125;&#125;</span></span><br><span class="line">          <span class="attr">publish_dir:</span> <span class="string">./public</span></span><br><span class="line">          <span class="attr">publish_branch:</span> <span class="string">gh-pages</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="第-10-步：推送到-GitHub"><a href="#第-10-步：推送到-GitHub" class="headerlink" title="第 10 步：推送到 GitHub"></a>第 10 步：推送到 GitHub</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit <span class="literal">-m</span> <span class="string">&quot;deploy: add github actions&quot;</span></span><br><span class="line"><span class="comment"># 首次推送需要 -u 指定上游，之后直接 git push 即可</span></span><br><span class="line">git push <span class="literal">-u</span> origin main</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="第-11-步：设置-GitHub-Pages-分支"><a href="#第-11-步：设置-GitHub-Pages-分支" class="headerlink" title="第 11 步：设置 GitHub Pages 分支"></a>第 11 步：设置 GitHub Pages 分支</h3><p>推送成功后（等 Actions 跑完，约 1~2 分钟）：</p>
+<ol>
+<li>打开 GitHub 仓库页面</li>
+<li>Settings → Pages</li>
+<li>Source 选择 <strong>Deploy from a branch</strong></li>
+<li>Branch 选 <strong>gh-pages</strong>，目录选 <code>/ (root)</code></li>
+<li>点击 Save</li>
+</ol>
+<p>稍等片刻，访问 <code>https://你的用户名.github.io</code> 即可看到博客上线。</p>
+<hr>
+<h2 id="三、日常写文章工作流"><a href="#三、日常写文章工作流" class="headerlink" title="三、日常写文章工作流"></a>三、日常写文章工作流</h2><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 进入项目目录</span></span><br><span class="line"><span class="built_in">cd</span> E:\blog</span><br><span class="line"></span><br><span class="line"><span class="comment"># 新建文章（会在 source/_posts/ 下生成 .md 文件）</span></span><br><span class="line">hexo new post <span class="string">&quot;文章标题&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 用 VS Code 编辑文章</span></span><br><span class="line"><span class="comment"># source/_posts/文章标题.md</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 本地预览（可选）</span></span><br><span class="line">hexo clean</span><br><span class="line">hexo server</span><br><span class="line"></span><br><span class="line"><span class="comment"># 满意后推送，GitHub Actions 自动编译部署</span></span><br><span class="line">git add .</span><br><span class="line">git commit <span class="literal">-m</span> <span class="string">&quot;新文章：文章标题&quot;</span></span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
+
+<h3 id="文章头部格式（Front-Matter）"><a href="#文章头部格式（Front-Matter）" class="headerlink" title="文章头部格式（Front Matter）"></a>文章头部格式（Front Matter）</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: 文章标题</span><br><span class="line">date: 2026-03-12</span><br><span class="line">tags:</span><br><span class="line"><span class="bullet">  -</span> 标签1</span><br><span class="line"><span class="bullet">  -</span> 标签2</span><br><span class="line">categories:</span><br><span class="line"><span class="bullet">  -</span> 分类名</span><br><span class="line"><span class="section">cover: https://可选的封面图片URL</span></span><br><span class="line"><span class="section">---</span></span><br><span class="line"></span><br><span class="line">正文内容从这里开始，支持标准 Markdown 语法。</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="四、我的情况：已有博客，重新搭建替换"><a href="#四、我的情况：已有博客，重新搭建替换" class="headerlink" title="四、我的情况：已有博客，重新搭建替换"></a>四、我的情况：已有博客，重新搭建替换</h2><blockquote>
+<p>适用场景：已有 <code>用户名.github.io</code> 仓库，但本地文件丢失，想全部重来换新主题。</p>
+</blockquote>
+<h3 id="与首次搭建的区别"><a href="#与首次搭建的区别" class="headerlink" title="与首次搭建的区别"></a>与首次搭建的区别</h3><table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>首次搭建</th>
+<th>替换重建</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>创建 GitHub 仓库</td>
+<td>需要新建</td>
+<td>仓库已存在，跳过</td>
+</tr>
+<tr>
+<td>本地初始化</td>
+<td><code>hexo init</code></td>
+<td><code>hexo init</code>（一样）</td>
+</tr>
+<tr>
+<td>关联远程仓库</td>
+<td>正常 push</td>
+<td>需要<strong>强制覆盖</strong>旧仓库</td>
+</tr>
+<tr>
+<td>GitHub Pages 设置</td>
+<td>首次配置</td>
+<td>可能需要重新确认分支</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="完整操作步骤"><a href="#完整操作步骤" class="headerlink" title="完整操作步骤"></a>完整操作步骤</h3><p><strong>第 1~7 步与首次搭建完全相同</strong>（安装工具、初始化项目、配置主题、本地预览），按照第二章操作即可。</p>
+<hr>
+<p><strong>第 8 步：关联已有的远程仓库</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br><span class="line">git add .</span><br><span class="line">git commit <span class="literal">-m</span> <span class="string">&quot;init: hexo + butterfly&quot;</span></span><br><span class="line">git branch <span class="literal">-M</span> main</span><br><span class="line">git remote add origin https://github.com/你的用户名/你的用户名.github.io.git</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><strong>第 9 步：添加 GitHub Actions 配置</strong></p>
+<p>同首次搭建第 9 步，创建 <code>.github/workflows/deploy.yml</code>，内容完全相同。</p>
+<hr>
+<p><strong>第 10 步：强制推送覆盖旧仓库</strong></p>
+<blockquote>
+<p>⚠️ 因为旧仓库有历史提交记录，普通 <code>git push</code> 会被拒绝，需要强制覆盖。</p>
+</blockquote>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push <span class="operator">-f</span> <span class="literal">-u</span> origin main</span><br></pre></td></tr></table></figure>
+
+<p><code>-f</code> 表示强制覆盖，<code>-u</code> 设置上游分支。<strong>之后写文章正常 <code>git push</code> 即可，不需要再加 <code>-f</code>。</strong></p>
+<hr>
+<p><strong>第 11 步：确认 GitHub Pages 分支设置</strong></p>
+<p>等 GitHub Actions 跑完后（仓库 Actions 标签页查看进度）：</p>
+<ol>
+<li>Settings → Pages</li>
+<li>确认 Source 为 <strong>Deploy from a branch</strong>，Branch 为 <strong>gh-pages</strong></li>
+<li>如果之前设置过其他分支，重新选择 gh-pages 并保存</li>
+</ol>
+<hr>
+<h2 id="五、常见报错处理"><a href="#五、常见报错处理" class="headerlink" title="五、常见报错处理"></a>五、常见报错处理</h2><h3 id="不是有效语句分隔符"><a href="#不是有效语句分隔符" class="headerlink" title="&amp;&amp; 不是有效语句分隔符"></a><code>&amp;&amp;</code> 不是有效语句分隔符</h3><p><strong>原因</strong>：PowerShell 不支持 <code>&amp;&amp;</code>，这是 CMD&#x2F;bash 的写法。</p>
+<p><strong>解决</strong>：分开执行，或用分号：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 方式一：分开执行</span></span><br><span class="line">hexo clean</span><br><span class="line">hexo server</span><br><span class="line"></span><br><span class="line"><span class="comment"># 方式二：分号分隔（PowerShell 语法）</span></span><br><span class="line">hexo clean; hexo server</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="fatal-The-current-branch-main-has-no-upstream-branch"><a href="#fatal-The-current-branch-main-has-no-upstream-branch" class="headerlink" title="fatal: The current branch main has no upstream branch"></a><code>fatal: The current branch main has no upstream branch</code></h3><p><strong>原因</strong>：本地分支第一次推送，还没有指定远程上游。</p>
+<p><strong>解决</strong>：首次推送加 <code>-u</code> 参数：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push <span class="literal">-u</span> origin main</span><br></pre></td></tr></table></figure>
+
+<p>之后直接 <code>git push</code> 即可。</p>
+<hr>
+<h3 id="error-failed-to-push-some-refs（推送被拒绝）"><a href="#error-failed-to-push-some-refs（推送被拒绝）" class="headerlink" title="error: failed to push some refs（推送被拒绝）"></a><code>error: failed to push some refs</code>（推送被拒绝）</h3><p><strong>原因</strong>：远程仓库有本地没有的提交（如替换旧博客时）。</p>
+<p><strong>解决</strong>：确认要覆盖旧内容后，强制推送：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push <span class="operator">-f</span> origin main</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="GitHub-Actions-运行失败"><a href="#GitHub-Actions-运行失败" class="headerlink" title="GitHub Actions 运行失败"></a>GitHub Actions 运行失败</h3><ol>
+<li>打开 GitHub 仓库 → Actions 标签页</li>
+<li>点击失败的工作流，查看具体报错信息</li>
+<li>常见原因：<code>deploy.yml</code> 缩进格式错误（YAML 对缩进严格，只能用空格，不能用 Tab）</li>
+</ol>
+<hr>
+<h2 id="六、文件结构说明"><a href="#六、文件结构说明" class="headerlink" title="六、文件结构说明"></a>六、文件结构说明</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">E:\blog\</span><br><span class="line">├── .github\</span><br><span class="line">│   └── workflows\</span><br><span class="line">│       └── deploy.yml          ← GitHub Actions 自动部署配置</span><br><span class="line">├── node_modules\               ← 依赖包，自动生成，不提交 git</span><br><span class="line">├── public\                     ← 编译产物，自动生成，不提交 git</span><br><span class="line">├── scaffolds\                  ← 文章模板，一般不用动</span><br><span class="line">├── source\</span><br><span class="line">│   ├── _posts\                 ← ★ 所有文章放这里（.md 文件）</span><br><span class="line">│   └── about\</span><br><span class="line">│       └── index.md            ← 关于页</span><br><span class="line">├── themes\                     ← 主题（用 npm 安装时在 node_modules 里）</span><br><span class="line">├── .gitignore                  ← 忽略 node_modules 和 public 等</span><br><span class="line">├── _config.yml                 ← Hexo 全局配置（标题、URL、主题等）</span><br><span class="line">├── _config.butterfly.yml       ← Butterfly 主题配置（样式、功能开关）</span><br><span class="line">└── package.json                ← 项目依赖清单</span><br></pre></td></tr></table></figure>
+
+<p><strong>平时只需要动的文件：</strong></p>
+<ul>
+<li><code>source/_posts/*.md</code> — 写文章</li>
+<li><code>_config.butterfly.yml</code> — 调整博客样式和功能</li>
+<li><code>_config.yml</code> — 修改博客标题、作者等基础信息</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://chaseking.github.io">Chase King</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://chaseking.github.io/2026/03/12/Github-Pages-%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/">https://chaseking.github.io/2026/03/12/Github-Pages-%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/butterfly-icon.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/03/12/openclaw%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%E5%A4%87%E5%BF%98/" title="openclaw使用方法备忘"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">openclaw使用方法备忘</div></div><div class="info-2"><div class="info-item-1">OpenClaw 使用方法记录 记录个人使用 OpenClaw 的完整过程，涵盖云服务器选购、安装配置、大模型接入、Channel 接入及技能管理，供个人备忘或博客参考。   目录 云服务器选购与配置 安装 OpenClaw 大模型 API 接入 接入 Channel 接入飞书 接入 QQ 机器人   Web UI 访问（SSH 隧道） ClawHub 登录问题 无桌面 Linux 服务器使用浏览器（X11 转发） OpenClaw 技能管理（Skills）   一、云服务器选购与配置优点： 可以 24 小时在线，不影响本地电脑性能，操作相对安全隔离 缺点： 操作便利性不如本地；无桌面环境时，浏览器调用、Web UI 访问、网页登录验证都比较麻烦 推荐选择海外节点海外服务器可以直接访问外网，调用 OpenAI、Anthropic 等国外大模型无需额外代理。  ⚠️ 缺点：海外节点普遍比国内贵；免费套餐通常需要 Visa 或信用卡验证。  最低配置建议   配置项 最低要求 推荐配置    CPU 2 核 2 核   内存 2 GB 4 GB   系统 Ubuntu 20.04+ ...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Chase King</div><div class="author-info-description">A blog about my personal thoughts and experiences.</div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">4</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#GitHub-Pages-%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97"><span class="toc-number">1.</span> <span class="toc-text">GitHub Pages 博客搭建指南</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95"><span class="toc-number">1.1.</span> <span class="toc-text">目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%8A%80%E6%9C%AF%E6%A0%88%E8%AF%B4%E6%98%8E"><span class="toc-number">1.2.</span> <span class="toc-text">一、技术栈说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E9%A6%96%E6%AC%A1%E6%90%AD%E5%BB%BA%E5%AE%8C%E6%95%B4%E6%AD%A5%E9%AA%A4"><span class="toc-number">1.3.</span> <span class="toc-text">二、首次搭建完整步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E5%87%86%E5%A4%87"><span class="toc-number">1.3.1.</span> <span class="toc-text">前置准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC-1-%E6%AD%A5%EF%BC%9A%E5%9C%A8-GitHub-%E5%88%9B%E5%BB%BA%E4%BB%93%E5%BA%93"><span class="toc-number">1.3.2.</span> <span class="toc-text">第 1 步：在 GitHub 创建仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC-2-%E6%AD%A5%EF%BC%9A%E5%AE%89%E8%A3%85-Hexo-CLI"><span class="toc-number">1.3.3.</span> <span class="toc-text">第 2 步：安装 Hexo CLI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC-3-%E6%AD%A5%EF%BC%9A%E5%88%9D%E5%A7%8B%E5%8C%96%E5%8D%9A%E5%AE%A2%E9%A1%B9%E7%9B%AE"><span class="toc-number">1.3.4.</span> <span class="toc-text">第 3 步：初始化博客项目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC-4-%E6%AD%A5%EF%BC%9A%E5%AE%89%E8%A3%85-Butterfly-%E4%B8%BB%E9%A2%98"><span class="toc-number">1.3.5.</span> <span class="toc-text">第 4 步：安装 Butterfly 主题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC-5-%E6%AD%A5%EF%BC%9A%E9%85%8D%E7%BD%AE-config-yml"><span class="toc-number">1.3.6.</span> <span class="toc-text">第 5 步：配置 _config.yml</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC-6-%E6%AD%A5%EF%BC%9A%E5%88%9B%E5%BB%BA-Butterfly-%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE"><span class="toc-number">1.3.7.</span> <span class="toc-text">第 6 步：创建 Butterfly 主题配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC-7-%E6%AD%A5%EF%BC%9A%E6%9C%AC%E5%9C%B0%E9%A2%84%E8%A7%88"><span class="toc-number">1.3.8.</span> <span class="toc-text">第 7 步：本地预览</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC-8-%E6%AD%A5%EF%BC%9A%E5%88%9D%E5%A7%8B%E5%8C%96-Git-%E5%B9%B6%E5%85%B3%E8%81%94%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93"><span class="toc-number">1.3.9.</span> <span class="toc-text">第 8 步：初始化 Git 并关联远程仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC-9-%E6%AD%A5%EF%BC%9A%E9%85%8D%E7%BD%AE-GitHub-Actions-%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2"><span class="toc-number">1.3.10.</span> <span class="toc-text">第 9 步：配置 GitHub Actions 自动部署</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC-10-%E6%AD%A5%EF%BC%9A%E6%8E%A8%E9%80%81%E5%88%B0-GitHub"><span class="toc-number">1.3.11.</span> <span class="toc-text">第 10 步：推送到 GitHub</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC-11-%E6%AD%A5%EF%BC%9A%E8%AE%BE%E7%BD%AE-GitHub-Pages-%E5%88%86%E6%94%AF"><span class="toc-number">1.3.12.</span> <span class="toc-text">第 11 步：设置 GitHub Pages 分支</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%97%A5%E5%B8%B8%E5%86%99%E6%96%87%E7%AB%A0%E5%B7%A5%E4%BD%9C%E6%B5%81"><span class="toc-number">1.4.</span> <span class="toc-text">三、日常写文章工作流</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E7%AB%A0%E5%A4%B4%E9%83%A8%E6%A0%BC%E5%BC%8F%EF%BC%88Front-Matter%EF%BC%89"><span class="toc-number">1.4.1.</span> <span class="toc-text">文章头部格式（Front Matter）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%88%91%E7%9A%84%E6%83%85%E5%86%B5%EF%BC%9A%E5%B7%B2%E6%9C%89%E5%8D%9A%E5%AE%A2%EF%BC%8C%E9%87%8D%E6%96%B0%E6%90%AD%E5%BB%BA%E6%9B%BF%E6%8D%A2"><span class="toc-number">1.5.</span> <span class="toc-text">四、我的情况：已有博客，重新搭建替换</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8E%E9%A6%96%E6%AC%A1%E6%90%AD%E5%BB%BA%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.5.1.</span> <span class="toc-text">与首次搭建的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%8C%E6%95%B4%E6%93%8D%E4%BD%9C%E6%AD%A5%E9%AA%A4"><span class="toc-number">1.5.2.</span> <span class="toc-text">完整操作步骤</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%B8%B8%E8%A7%81%E6%8A%A5%E9%94%99%E5%A4%84%E7%90%86"><span class="toc-number">1.6.</span> <span class="toc-text">五、常见报错处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E6%98%AF%E6%9C%89%E6%95%88%E8%AF%AD%E5%8F%A5%E5%88%86%E9%9A%94%E7%AC%A6"><span class="toc-number">1.6.1.</span> <span class="toc-text">&amp;&amp; 不是有效语句分隔符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fatal-The-current-branch-main-has-no-upstream-branch"><span class="toc-number">1.6.2.</span> <span class="toc-text">fatal: The current branch main has no upstream branch</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#error-failed-to-push-some-refs%EF%BC%88%E6%8E%A8%E9%80%81%E8%A2%AB%E6%8B%92%E7%BB%9D%EF%BC%89"><span class="toc-number">1.6.3.</span> <span class="toc-text">error: failed to push some refs（推送被拒绝）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GitHub-Actions-%E8%BF%90%E8%A1%8C%E5%A4%B1%E8%B4%A5"><span class="toc-number">1.6.4.</span> <span class="toc-text">GitHub Actions 运行失败</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E8%AF%B4%E6%98%8E"><span class="toc-number">1.7.</span> <span class="toc-text">六、文件结构说明</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/12/Github-Pages-%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/" title="Github Pages 博客搭建指南">Github Pages 博客搭建指南</a><time datetime="2026-03-12T00:42:38.000Z" title="Created 2026-03-12 00:42:38">2026-03-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/12/openclaw%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%E5%A4%87%E5%BF%98/" title="openclaw使用方法备忘">openclaw使用方法备忘</a><time datetime="2026-03-12T00:32:51.000Z" title="Created 2026-03-12 00:32:51">2026-03-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/12/claude%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%E5%A4%87%E5%BF%98/" title="claude使用方法备忘">claude使用方法备忘</a><time datetime="2026-03-12T00:31:56.000Z" title="Created 2026-03-12 00:31:56">2026-03-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/11/hello-world/" title="Hello World">Hello World</a><time datetime="2026-03-11T16:43:45.792Z" title="Created 2026-03-11 16:43:45">2026-03-11</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By Chase King</span><span class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.4</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
