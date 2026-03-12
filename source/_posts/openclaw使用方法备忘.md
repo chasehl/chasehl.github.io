@@ -407,6 +407,14 @@ npx clawhub@latest login --no-browser
 
 **解决方案二：手动输入 Token（最终有效方案）**
 
+> 2026/3/12 16：54 修改
+>
+> 本地电脑浏览器登录clawhub，设置里找到token，然后服务器输入下面命令即可
+>
+> ~~~
+> npx clawhub@latest login --token 输入你的token
+> ~~~
+
 如果 SSH 隧道方式也不成功（如服务器使用 NAT 转发 IP、端口受限），可以手动获取 Token 登录：
 
 1. 在本地电脑上执行 `npx clawhub@latest login`，完成登录
