@@ -1,0 +1,363 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>skill概念理解、使用与创建 | ChaseLog</title><meta name="author" content="Chase King"><meta name="copyright" content="Chase King"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Skill 详解：概念、使用与创建 以 OpenClaw &#x2F; Claude 平台为例，记录 Skill 的完整使用方式，供个人学习与备忘。   目录 什么是 Skill Skill 能做什么：具体举例 Skill 的文件结构 如何使用 Skill（ClawHub 安装与管理） 如何创建自己的 Skill OpenClaw 实战举例 安全注意事项 常用命令速查   一、什么是 Skill一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="skill概念理解、使用与创建">
+<meta property="og:url" content="https://chaseking.github.io/2026/03/12/skill%E6%A6%82%E5%BF%B5%E7%90%86%E8%A7%A3%E3%80%81%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%88%9B%E5%BB%BA/index.html">
+<meta property="og:site_name" content="ChaseLog">
+<meta property="og:description" content="Skill 详解：概念、使用与创建 以 OpenClaw &#x2F; Claude 平台为例，记录 Skill 的完整使用方式，供个人学习与备忘。   目录 什么是 Skill Skill 能做什么：具体举例 Skill 的文件结构 如何使用 Skill（ClawHub 安装与管理） 如何创建自己的 Skill OpenClaw 实战举例 安全注意事项 常用命令速查   一、什么是 Skill一">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://chaseking.github.io/img/butterfly-icon.png">
+<meta property="article:published_time" content="2026-03-12T21:36:10.000Z">
+<meta property="article:modified_time" content="2026-03-12T13:39:39.555Z">
+<meta property="article:author" content="Chase King">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://chaseking.github.io/img/butterfly-icon.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "skill概念理解、使用与创建",
+  "url": "https://chaseking.github.io/2026/03/12/skill%E6%A6%82%E5%BF%B5%E7%90%86%E8%A7%A3%E3%80%81%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%88%9B%E5%BB%BA/",
+  "image": "https://chaseking.github.io/img/butterfly-icon.png",
+  "datePublished": "2026-03-12T21:36:10.000Z",
+  "dateModified": "2026-03-12T13:39:39.555Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Chase King",
+      "url": "https://chaseking.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://chaseking.github.io/2026/03/12/skill%E6%A6%82%E5%BF%B5%E7%90%86%E8%A7%A3%E3%80%81%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%88%9B%E5%BB%BA/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.4"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'skill概念理解、使用与创建',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 8.1.1"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">ChaseLog</span></a><a class="nav-page-title" href="/"><span class="site-name">skill概念理解、使用与创建</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  Back to Home</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">skill概念理解、使用与创建</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2026-03-12T21:36:10.000Z" title="Created 2026-03-12 21:36:10">2026-03-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2026-03-12T13:39:39.555Z" title="Updated 2026-03-12 13:39:39">2026-03-12</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="Skill-详解：概念、使用与创建"><a href="#Skill-详解：概念、使用与创建" class="headerlink" title="Skill 详解：概念、使用与创建"></a>Skill 详解：概念、使用与创建</h1><blockquote>
+<p>以 OpenClaw &#x2F; Claude 平台为例，记录 Skill 的完整使用方式，供个人学习与备忘。</p>
+</blockquote>
+<hr>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ol>
+<li><a href="#%E4%B8%80%E4%BB%80%E4%B9%88%E6%98%AF-skill">什么是 Skill</a></li>
+<li><a href="#%E4%BA%8Cskill-%E8%83%BD%E5%81%9A%E4%BB%80%E4%B9%88%E5%85%B7%E4%BD%93%E4%B8%BE%E4%BE%8B">Skill 能做什么：具体举例</a></li>
+<li><a href="#%E4%B8%89skill-%E7%9A%84%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84">Skill 的文件结构</a></li>
+<li><a href="#%E5%9B%9B%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-skillclawhub-%E5%AE%89%E8%A3%85%E4%B8%8E%E7%AE%A1%E7%90%86">如何使用 Skill（ClawHub 安装与管理）</a></li>
+<li><a href="#%E4%BA%94%E5%A6%82%E4%BD%95%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84-skill">如何创建自己的 Skill</a></li>
+<li><a href="#%E5%85%ADopenclaw-%E5%AE%9E%E6%88%98%E4%B8%BE%E4%BE%8B">OpenClaw 实战举例</a></li>
+<li><a href="#%E4%B8%83%E5%AE%89%E5%85%A8%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9">安全注意事项</a></li>
+<li><a href="#%E5%85%AB%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5">常用命令速查</a></li>
+</ol>
+<hr>
+<h2 id="一、什么是-Skill"><a href="#一、什么是-Skill" class="headerlink" title="一、什么是 Skill"></a>一、什么是 Skill</h2><h3 id="一句话定义"><a href="#一句话定义" class="headerlink" title="一句话定义"></a>一句话定义</h3><p><strong>Skill（技能）是一段给 AI 看的”操作说明书”</strong>，它告诉 AI 在遇到特定任务时应该怎么做、按什么步骤做、输出什么格式。</p>
+<h3 id="类比理解"><a href="#类比理解" class="headerlink" title="类比理解"></a>类比理解</h3><p>可以把 AI 理解成一个能力很强但什么都不专精的新员工。</p>
+<ul>
+<li><strong>没有 Skill</strong>：你每次都要手动告诉它”帮我搜索这个关键词，用这个 API，返回这个格式……”</li>
+<li><strong>有了 Skill</strong>：你只需要说”帮我搜索一下佛山天气”，AI 自动知道该调用哪个工具、怎么处理结果、用什么格式回复你</li>
+</ul>
+<p>Skill 本质上是<strong>将复杂的、重复的任务流程提前写好</strong>，让 AI 每次遇到类似任务时直接按方案执行，不需要重新”教”它。</p>
+<h3 id="和”插件”有什么区别？"><a href="#和”插件”有什么区别？" class="headerlink" title="和”插件”有什么区别？"></a>和”插件”有什么区别？</h3><table>
+<thead>
+<tr>
+<th>概念</th>
+<th>本质</th>
+<th>谁来写</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>插件（Plugin）</td>
+<td>一段可执行代码，扩展软件功能</td>
+<td>开发者</td>
+</tr>
+<tr>
+<td>Skill</td>
+<td>一份 Markdown 说明文档，指导 AI 行为</td>
+<td>任何人都可以写</td>
+</tr>
+</tbody></table>
+<p>Skill 不是代码插件，<strong>核心文件是一个 Markdown 文本文件</strong>（<code>SKILL.md</code>），普通用户也能创建。</p>
+<hr>
+<h2 id="二、Skill-能做什么：具体举例"><a href="#二、Skill-能做什么：具体举例" class="headerlink" title="二、Skill 能做什么：具体举例"></a>二、Skill 能做什么：具体举例</h2><h3 id="例-1：天气查询（weather）"><a href="#例-1：天气查询（weather）" class="headerlink" title="例 1：天气查询（weather）"></a>例 1：天气查询（weather）</h3><p><strong>没有 Skill 时：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">用户：佛山今天天气怎么样？</span><br><span class="line">AI：我没有实时数据，无法告诉你当前天气。</span><br></pre></td></tr></table></figure>
+
+<p><strong>安装 weather Skill 后：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">用户：佛山今天天气怎么样？</span><br><span class="line">AI：（自动调用天气 API）佛山今日多云，气温 22~28°C，东南风 3 级，</span><br><span class="line">    体感舒适，无需带伞。</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="例-2：网页-PDF-摘要（summarize）"><a href="#例-2：网页-PDF-摘要（summarize）" class="headerlink" title="例 2：网页&#x2F;PDF 摘要（summarize）"></a>例 2：网页&#x2F;PDF 摘要（summarize）</h3><p><strong>没有 Skill 时：</strong></p>
+<p>需要手动把内容复制粘贴给 AI，再告诉它”帮我总结一下”。</p>
+<p><strong>安装 summarize Skill 后：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">用户：帮我总结这篇文章 https://example.com/long-article</span><br><span class="line">AI：（自动抓取网页、提取正文、生成摘要）</span><br><span class="line">    核心观点：……</span><br><span class="line">    关键数据：……</span><br><span class="line">    结论：……</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="例-3：实时搜索（tavily-search）"><a href="#例-3：实时搜索（tavily-search）" class="headerlink" title="例 3：实时搜索（tavily-search）"></a>例 3：实时搜索（tavily-search）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">用户：马斯克今天发了什么推特？</span><br><span class="line">AI：（调用 Tavily 搜索 API，检索最新内容）</span><br><span class="line">    根据今日搜索结果：……</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="例-4：邮件管理（himalaya）"><a href="#例-4：邮件管理（himalaya）" class="headerlink" title="例 4：邮件管理（himalaya）"></a>例 4：邮件管理（himalaya）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">用户：帮我查一下有没有新邮件</span><br><span class="line">AI：（通过 IMAP 协议连接邮箱，读取未读邮件列表）</span><br><span class="line">    你有 3 封未读邮件：</span><br><span class="line">    1. [发件人] 主题 …… (10分钟前)</span><br><span class="line">    ……</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="三、Skill-的文件结构"><a href="#三、Skill-的文件结构" class="headerlink" title="三、Skill 的文件结构"></a>三、Skill 的文件结构</h2><p>一个完整的 Skill 由以下文件组成：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">skill-name/</span><br><span class="line">├── SKILL.md          ← 核心文件（必须），AI 的&quot;操作说明书&quot;</span><br><span class="line">├── scripts/          ← 可选，可执行脚本（处理复杂逻辑）</span><br><span class="line">├── references/       ← 可选，参考文档（AI 按需读取）</span><br><span class="line">└── assets/           ← 可选，附带资源（模板、图标等）</span><br></pre></td></tr></table></figure>
+
+<h3 id="SKILL-md-的结构"><a href="#SKILL-md-的结构" class="headerlink" title="SKILL.md 的结构"></a>SKILL.md 的结构</h3><p><code>SKILL.md</code> 是 Skill 最重要的文件，分为两部分：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">name: skill-name</span><br><span class="line">description: 这里描述这个 Skill 做什么、什么时候触发。</span><br><span class="line"><span class="section">             AI 会读这段描述来决定要不要使用这个 Skill。</span></span><br><span class="line"><span class="section">---</span></span><br><span class="line"></span><br><span class="line"><span class="section"># Skill 正文</span></span><br><span class="line"></span><br><span class="line">这里写具体的操作步骤、注意事项、输出格式要求……</span><br><span class="line">（普通 Markdown 格式，AI 会按照这里的说明行动）</span><br></pre></td></tr></table></figure>
+
+<p><strong><code>description</code> 字段非常关键</strong>：AI 是根据 description 来判断当前任务是否需要调用这个 Skill 的。描述写得越准确，触发越精准。</p>
+<h3 id="三级加载机制"><a href="#三级加载机制" class="headerlink" title="三级加载机制"></a>三级加载机制</h3><p>Skill 采用按需加载，避免占用过多 AI 上下文：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">第 1 级：name + description   ← 始终在 AI 视野里（约 100 字）</span><br><span class="line">第 2 级：SKILL.md 正文        ← Skill 触发时才加载（建议 500 行以内）</span><br><span class="line">第 3 级：scripts / references ← 需要时才读取（大小不限）</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="四、如何使用-Skill（ClawHub-安装与管理）"><a href="#四、如何使用-Skill（ClawHub-安装与管理）" class="headerlink" title="四、如何使用 Skill（ClawHub 安装与管理）"></a>四、如何使用 Skill（ClawHub 安装与管理）</h2><p>ClawHub 是 OpenClaw 的技能市场，类似于手机的”应用商店”。</p>
+<p>官网：<a target="_blank" rel="noopener" href="https://clawhub.com/">https://clawhub.com</a></p>
+<h3 id="安装-ClawHub-CLI"><a href="#安装-ClawHub-CLI" class="headerlink" title="安装 ClawHub CLI"></a>安装 ClawHub CLI</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -g clawhub</span><br></pre></td></tr></table></figure>
+
+<h3 id="常用管理命令"><a href="#常用管理命令" class="headerlink" title="常用管理命令"></a>常用管理命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 搜索技能</span></span><br><span class="line">clawhub search <span class="string">&quot;weather&quot;</span></span><br><span class="line">clawhub search <span class="string">&quot;browser automation&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装技能</span></span><br><span class="line">clawhub install tavily-search</span><br><span class="line">clawhub install summarize</span><br><span class="line">clawhub install weather</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看已安装的技能列表</span></span><br><span class="line">clawhub list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新所有技能到最新版</span></span><br><span class="line">clawhub update --all</span><br><span class="line"></span><br><span class="line"><span class="comment"># 卸载技能</span></span><br><span class="line">clawhub uninstall &lt;skill-name&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Skill-的加载优先级"><a href="#Skill-的加载优先级" class="headerlink" title="Skill 的加载优先级"></a>Skill 的加载优先级</h3><p>当多个位置存在同名 Skill 时，按以下顺序加载，<strong>高优先级覆盖低优先级</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">优先级 1（最高）：工作区技能   &lt;你的项目目录&gt;/skills/</span><br><span class="line">优先级 2         ：用户技能     ~/.openclaw/skills/</span><br><span class="line">优先级 3（最低）：内置技能     随 OpenClaw 安装包自带</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>💡 <strong>实用技巧</strong>：想修改某个公开 Skill 的行为？把它复制到你的项目 <code>skills/</code> 目录下改，不影响原版，也不用等官方更新。</p>
+</blockquote>
+<h3 id="登录-ClawHub（下载限速解除）"><a href="#登录-ClawHub（下载限速解除）" class="headerlink" title="登录 ClawHub（下载限速解除）"></a>登录 ClawHub（下载限速解除）</h3><p>未登录时下载 Skill 有频率限制（几分钟只能下一个），登录后解除限制：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx clawhub@latest login</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="五、如何创建自己的-Skill"><a href="#五、如何创建自己的-Skill" class="headerlink" title="五、如何创建自己的 Skill"></a>五、如何创建自己的 Skill</h2><p>任何人都可以创建 Skill，不需要会编程，核心就是写一个 <code>SKILL.md</code> 文件。</p>
+<h3 id="创建流程"><a href="#创建流程" class="headerlink" title="创建流程"></a>创建流程</h3><h4 id="第-1-步：明确你要解决的问题"><a href="#第-1-步：明确你要解决的问题" class="headerlink" title="第 1 步：明确你要解决的问题"></a>第 1 步：明确你要解决的问题</h4><p>在写 Skill 之前，先想清楚三件事：</p>
+<ol>
+<li><strong>这个 Skill 要让 AI 做什么？</strong>（目标）</li>
+<li><strong>用户说什么话时应该触发？</strong>（触发条件）</li>
+<li><strong>期望 AI 输出什么格式？</strong>（输出规范）</li>
+</ol>
+<h4 id="第-2-步：创建-Skill-文件夹"><a href="#第-2-步：创建-Skill-文件夹" class="headerlink" title="第 2 步：创建 Skill 文件夹"></a>第 2 步：创建 Skill 文件夹</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在你的项目 skills 目录下创建</span></span><br><span class="line"><span class="built_in">mkdir</span> -p skills/my-skill</span><br></pre></td></tr></table></figure>
+
+<h4 id="第-3-步：编写-SKILL-md"><a href="#第-3-步：编写-SKILL-md" class="headerlink" title="第 3 步：编写 SKILL.md"></a>第 3 步：编写 SKILL.md</h4><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">name: my-skill</span><br><span class="line">description: |</span><br><span class="line">  这个 Skill 用于做 XXX。</span><br><span class="line">  当用户说&quot;帮我XXX&quot;、&quot;查询XXX&quot;、&quot;处理XXX文件&quot;时触发。</span><br><span class="line"><span class="section">  适合 XXX 场景，能够自动完成 XXX 步骤。</span></span><br><span class="line"><span class="section">---</span></span><br><span class="line"></span><br><span class="line"><span class="section"># My Skill</span></span><br><span class="line"></span><br><span class="line"><span class="section">## 功能说明</span></span><br><span class="line"></span><br><span class="line">这个 Skill 的主要功能是……</span><br><span class="line"></span><br><span class="line"><span class="section">## 操作步骤</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">1.</span> 首先，……</span><br><span class="line"><span class="bullet">2.</span> 然后，……</span><br><span class="line"><span class="bullet">3.</span> 最后，以以下格式输出结果：</span><br><span class="line"></span><br><span class="line"><span class="section">## 输出格式</span></span><br><span class="line"></span><br><span class="line">\<span class="code">`\`</span>\`</span><br><span class="line">标题：xxx</span><br><span class="line">内容：xxx</span><br><span class="line">来源：xxx</span><br><span class="line">\<span class="code">`\`</span>\`</span><br><span class="line"></span><br><span class="line"><span class="section">## 注意事项</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> 如果遇到 XX 情况，应该……</span><br><span class="line"><span class="bullet">-</span> 不要……</span><br></pre></td></tr></table></figure>
+
+<h4 id="第-4-步：测试-Skill"><a href="#第-4-步：测试-Skill" class="headerlink" title="第 4 步：测试 Skill"></a>第 4 步：测试 Skill</h4><p>把 <code>SKILL.md</code> 放到项目 <code>skills/</code> 目录后，重启 OpenClaw 服务，然后向 AI 发送触发语句，观察是否按预期执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openclaw gateway restart</span><br></pre></td></tr></table></figure>
+
+<h4 id="第-5-步：发布到-ClawHub（可选）"><a href="#第-5-步：发布到-ClawHub（可选）" class="headerlink" title="第 5 步：发布到 ClawHub（可选）"></a>第 5 步：发布到 ClawHub（可选）</h4><p>如果想分享给其他人使用，可以打包发布：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 打包成 .skill 文件</span></span><br><span class="line">npm run package-skill skills/my-skill</span><br><span class="line"></span><br><span class="line"><span class="comment"># 按 ClawHub 官网引导上传发布</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="一个完整的创建示例：「每日简报」Skill"><a href="#一个完整的创建示例：「每日简报」Skill" class="headerlink" title="一个完整的创建示例：「每日简报」Skill"></a>一个完整的创建示例：「每日简报」Skill</h3><p><strong>需求</strong>：每天早上问 AI “今天有什么值得关注的新闻？”，AI 自动搜索并用固定格式输出简报。</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">name: daily-brief</span><br><span class="line">description: |</span><br><span class="line">  生成每日信息简报。当用户说&quot;今天有什么新闻&quot;、&quot;帮我出一份早报&quot;、</span><br><span class="line">  &quot;今日简报&quot;、&quot;最近有什么大事&quot;时触发。</span><br><span class="line"><span class="section">  会自动搜索科技、财经、AI 领域的最新动态，整理成简洁的摘要格式。</span></span><br><span class="line"><span class="section">---</span></span><br><span class="line"></span><br><span class="line"><span class="section"># Daily Brief</span></span><br><span class="line"></span><br><span class="line"><span class="section">## 执行步骤</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">1.</span> 使用搜索工具，依次搜索以下关键词：</span><br><span class="line"><span class="bullet">   -</span> &quot;今日科技新闻&quot;</span><br><span class="line"><span class="bullet">   -</span> &quot;今日 AI 进展&quot;</span><br><span class="line"><span class="bullet">   -</span> &quot;今日财经要闻&quot;</span><br><span class="line"></span><br><span class="line"><span class="bullet">2.</span> 从结果中筛选出最近 24 小时内的内容</span><br><span class="line"></span><br><span class="line"><span class="bullet">3.</span> 按以下格式输出：</span><br><span class="line"></span><br><span class="line"><span class="section">## 输出格式</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>📅 今日简报 - {日期}</p>
+<p>🤖 AI 动态<br>• [标题]：[一句话摘要]<br>• [标题]：[一句话摘要]</p>
+<p>💻 科技要闻<br>• [标题]：[一句话摘要]</p>
+<p>💰 财经简讯<br>• [标题]：[一句话摘要]</p>
+<hr>
+<p>数据来源：[搜索结果来源]</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">## 注意</span><br><span class="line"></span><br><span class="line">- 每个分类最多列 3 条，保持简洁</span><br><span class="line">- 摘要不超过 30 字</span><br><span class="line">- 如果某分类没有近 24 小时的新内容，注明&quot;暂无最新动态&quot;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="六、OpenClaw-实战举例"><a href="#六、OpenClaw-实战举例" class="headerlink" title="六、OpenClaw 实战举例"></a>六、OpenClaw 实战举例</h2><h3 id="场景：搭建一个「技术助手机器人」"><a href="#场景：搭建一个「技术助手机器人」" class="headerlink" title="场景：搭建一个「技术助手机器人」"></a>场景：搭建一个「技术助手机器人」</h3><p>目标：在飞书里 @ 机器人，让它能帮你搜索技术文档、总结文章、查询天气。</p>
+<h4 id="安装需要的-Skills"><a href="#安装需要的-Skills" class="headerlink" title="安装需要的 Skills"></a>安装需要的 Skills</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 实时搜索（最重要，解锁联网能力）</span></span><br><span class="line">clawhub install tavily-search</span><br><span class="line"></span><br><span class="line"><span class="comment"># 文章/网页摘要</span></span><br><span class="line">clawhub install summarize</span><br><span class="line"></span><br><span class="line"><span class="comment"># 天气查询</span></span><br><span class="line">clawhub install weather</span><br></pre></td></tr></table></figure>
+
+<h4 id="配置-Tavily-API-Key"><a href="#配置-Tavily-API-Key" class="headerlink" title="配置 Tavily API Key"></a>配置 Tavily API Key</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 去 https://tavily.com 注册，获取免费 API Key</span></span><br><span class="line">clawhub config <span class="built_in">set</span> TAVILY_API_KEY 你的TavilyAPIKey</span><br></pre></td></tr></table></figure>
+
+<h4 id="重启服务让-Skills-生效"><a href="#重启服务让-Skills-生效" class="headerlink" title="重启服务让 Skills 生效"></a>重启服务让 Skills 生效</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openclaw gateway restart</span><br></pre></td></tr></table></figure>
+
+<h4 id="效果演示"><a href="#效果演示" class="headerlink" title="效果演示"></a>效果演示</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"># 在飞书中 @ 机器人：</span><br><span class="line"></span><br><span class="line">用户：帮我搜索一下 Hexo butterfly 主题怎么配置深色模式</span><br><span class="line"></span><br><span class="line">AI：（调用 tavily-search Skill，搜索后返回）</span><br><span class="line">    根据搜索结果，Butterfly 主题配置深色模式的方法如下：</span><br><span class="line">    在 _config.butterfly.yml 中添加：</span><br><span class="line">    dark_mode:</span><br><span class="line">      enable: true</span><br><span class="line">      default: light</span><br><span class="line">    ……</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">用户：总结一下这篇文章 https://example.com/article</span><br><span class="line"></span><br><span class="line">AI：（调用 summarize Skill，抓取并总结）</span><br><span class="line">    文章核心观点：……</span><br><span class="line">    主要数据：……</span><br><span class="line">    结论：……</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">用户：广州明天天气</span><br><span class="line"></span><br><span class="line">AI：（调用 weather Skill）</span><br><span class="line">    广州明日：晴，26~32°C，南风 2 级，紫外线较强，建议防晒。</span><br></pre></td></tr></table></figure>
+
+<h3 id="自定义一个「代码审查」Skill（放入项目目录）"><a href="#自定义一个「代码审查」Skill（放入项目目录）" class="headerlink" title="自定义一个「代码审查」Skill（放入项目目录）"></a>自定义一个「代码审查」Skill（放入项目目录）</h3><p>项目目录结构：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">my-openclaw-project/</span><br><span class="line">└── skills/</span><br><span class="line">    └── code-review/</span><br><span class="line">        └── SKILL.md</span><br></pre></td></tr></table></figure>
+
+<p><code>SKILL.md</code> 内容：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">name: code-review</span><br><span class="line">description: |</span><br><span class="line">  对用户提交的代码进行审查。当用户说&quot;帮我看看这段代码&quot;、</span><br><span class="line">  &quot;代码 review&quot;、&quot;检查一下代码&quot;、&quot;有没有 bug&quot; 时触发。</span><br><span class="line"><span class="section">  会检查代码规范、潜在 bug、性能问题，并给出改进建议。</span></span><br><span class="line"><span class="section">---</span></span><br><span class="line"></span><br><span class="line"><span class="section"># Code Review Skill</span></span><br><span class="line"></span><br><span class="line"><span class="section">## 审查维度</span></span><br><span class="line"></span><br><span class="line">对收到的代码，依次从以下维度分析：</span><br><span class="line"></span><br><span class="line"><span class="bullet">1.</span> <span class="strong">**正确性**</span>：逻辑是否正确，有无明显 bug</span><br><span class="line"><span class="bullet">2.</span> <span class="strong">**安全性**</span>：有无 SQL 注入、XSS 等安全隐患</span><br><span class="line"><span class="bullet">3.</span> <span class="strong">**性能**</span>：有无不必要的循环、重复计算</span><br><span class="line"><span class="bullet">4.</span> <span class="strong">**可读性**</span>：命名是否清晰，注释是否充分</span><br><span class="line"><span class="bullet">5.</span> <span class="strong">**规范性**</span>：是否符合该语言的通用编码规范</span><br><span class="line"></span><br><span class="line"><span class="section">## 输出格式</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="代码审查报告"><a href="#代码审查报告" class="headerlink" title="代码审查报告"></a>代码审查报告</h2><p><strong>总体评分</strong>：x&#x2F;10</p>
+<h3 id="🐛-发现的问题"><a href="#🐛-发现的问题" class="headerlink" title="🐛 发现的问题"></a>🐛 发现的问题</h3><table>
+<thead>
+<tr>
+<th>行号</th>
+<th>严重程度</th>
+<th>问题描述</th>
+<th>修改建议</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>L12</td>
+<td>🔴 严重</td>
+<td>……</td>
+<td>……</td>
+</tr>
+<tr>
+<td>L25</td>
+<td>🟡 警告</td>
+<td>……</td>
+<td>……</td>
+</tr>
+</tbody></table>
+<h3 id="✅-改进后的代码"><a href="#✅-改进后的代码" class="headerlink" title="✅ 改进后的代码"></a>✅ 改进后的代码</h3><p>（给出修改后的完整代码片段）</p>
+<h3 id="💡-其他建议"><a href="#💡-其他建议" class="headerlink" title="💡 其他建议"></a>💡 其他建议</h3><p>……</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="七、安全注意事项"><a href="#七、安全注意事项" class="headerlink" title="七、安全注意事项"></a>七、安全注意事项</h2><blockquote>
+<p>⚠️ <strong>2025 年末 ClawHavoc 供应链攻击事件</strong>：ClawHub 曾出现大规模恶意 Skill 投毒，341~1184 个 Skill 受影响，感染率约 12%，主要伪装成加密货币工具和 YouTube 工具。</p>
+</blockquote>
+<h3 id="安装-Skill-前必须检查"><a href="#安装-Skill-前必须检查" class="headerlink" title="安装 Skill 前必须检查"></a>安装 Skill 前必须检查</h3><ul>
+<li>✅ <strong>Security Scan 为绿色 “Benign”</strong>（ClawHub 页面上的安全扫描结果）</li>
+<li>✅ <strong>VirusTotal 扫描通过</strong>（ClawHub 页面有展示）</li>
+<li>✅ <strong>高星数 + 高安装量</strong>（社区验证过的）</li>
+<li>✅ <strong>阅读 SKILL.md 源码</strong>，检查有无可疑的网络请求或”前置条件”</li>
+<li>❌ <strong>避免安装低星、新上架、无人维护的 Skill</strong>，尤其是涉及钱包、密钥的</li>
+</ul>
+<h3 id="高风险-Skill-类型"><a href="#高风险-Skill-类型" class="headerlink" title="高风险 Skill 类型"></a>高风险 Skill 类型</h3><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>风险原因</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>加密货币相关</td>
+<td>可能窃取钱包私钥</td>
+</tr>
+<tr>
+<td>邮件类（如 himalaya）</td>
+<td>需要存储邮箱账号密码</td>
+</tr>
+<tr>
+<td>浏览器自动化</td>
+<td>可能读取 Cookie 和账号信息</td>
+</tr>
+<tr>
+<td>文件系统操作</td>
+<td>可能读取或删除本地文件</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="八、常用命令速查"><a href="#八、常用命令速查" class="headerlink" title="八、常用命令速查"></a>八、常用命令速查</h2><h3 id="ClawHub-技能管理"><a href="#ClawHub-技能管理" class="headerlink" title="ClawHub 技能管理"></a>ClawHub 技能管理</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">npm i -g clawhub                      <span class="comment"># 安装 ClawHub CLI</span></span><br><span class="line">npx clawhub@latest login              <span class="comment"># 登录（解除下载限速）</span></span><br><span class="line">clawhub search <span class="string">&quot;关键词&quot;</span>               <span class="comment"># 搜索技能</span></span><br><span class="line">clawhub install &lt;skill-name&gt;          <span class="comment"># 安装技能</span></span><br><span class="line">clawhub list                          <span class="comment"># 查看已安装列表</span></span><br><span class="line">clawhub update --all                  <span class="comment"># 更新所有技能</span></span><br><span class="line">clawhub uninstall &lt;skill-name&gt;        <span class="comment"># 卸载技能</span></span><br><span class="line">clawhub config <span class="built_in">set</span> KEY value          <span class="comment"># 配置 API Key 等参数</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="OpenClaw-服务管理"><a href="#OpenClaw-服务管理" class="headerlink" title="OpenClaw 服务管理"></a>OpenClaw 服务管理</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">openclaw gateway restart              <span class="comment"># 重启服务（安装新 Skill 后执行）</span></span><br><span class="line">openclaw status                       <span class="comment"># 查看运行状态</span></span><br><span class="line">openclaw logs --<span class="built_in">tail</span> 100              <span class="comment"># 查看日志（排查问题）</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Skill-文件位置"><a href="#Skill-文件位置" class="headerlink" title="Skill 文件位置"></a>Skill 文件位置</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">工作区技能（最高优先级）：&lt;你的项目目录&gt;/skills/</span><br><span class="line">用户技能：                ~/.openclaw/skills/</span><br><span class="line">内置技能（最低优先级）：  随 OpenClaw 安装包自带</span><br></pre></td></tr></table></figure>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://chaseking.github.io">Chase King</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://chaseking.github.io/2026/03/12/skill%E6%A6%82%E5%BF%B5%E7%90%86%E8%A7%A3%E3%80%81%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%88%9B%E5%BB%BA/">https://chaseking.github.io/2026/03/12/skill%E6%A6%82%E5%BF%B5%E7%90%86%E8%A7%A3%E3%80%81%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%88%9B%E5%BB%BA/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/butterfly-icon.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/03/12/hello-world/" title="Hello World"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">Hello World</div></div><div class="info-2"><div class="info-item-1">Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new &quot;My New Post&quot;  More info: Writing Run server1$ hexo server  More info: Server Generate static files1$ hexo generate  More info: Generating Deploy to remote sites1$ hexo deploy  More info: Deployment </div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Chase King</div><div class="author-info-description">A blog about my personal thoughts and experiences.</div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Skill-%E8%AF%A6%E8%A7%A3%EF%BC%9A%E6%A6%82%E5%BF%B5%E3%80%81%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%88%9B%E5%BB%BA"><span class="toc-number">1.</span> <span class="toc-text">Skill 详解：概念、使用与创建</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95"><span class="toc-number">1.1.</span> <span class="toc-text">目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF-Skill"><span class="toc-number">1.2.</span> <span class="toc-text">一、什么是 Skill</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E5%AE%9A%E4%B9%89"><span class="toc-number">1.2.1.</span> <span class="toc-text">一句话定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E6%AF%94%E7%90%86%E8%A7%A3"><span class="toc-number">1.2.2.</span> <span class="toc-text">类比理解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%92%8C%E2%80%9D%E6%8F%92%E4%BB%B6%E2%80%9D%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="toc-number">1.2.3.</span> <span class="toc-text">和”插件”有什么区别？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81Skill-%E8%83%BD%E5%81%9A%E4%BB%80%E4%B9%88%EF%BC%9A%E5%85%B7%E4%BD%93%E4%B8%BE%E4%BE%8B"><span class="toc-number">1.3.</span> <span class="toc-text">二、Skill 能做什么：具体举例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B-1%EF%BC%9A%E5%A4%A9%E6%B0%94%E6%9F%A5%E8%AF%A2%EF%BC%88weather%EF%BC%89"><span class="toc-number">1.3.1.</span> <span class="toc-text">例 1：天气查询（weather）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B-2%EF%BC%9A%E7%BD%91%E9%A1%B5-PDF-%E6%91%98%E8%A6%81%EF%BC%88summarize%EF%BC%89"><span class="toc-number">1.3.2.</span> <span class="toc-text">例 2：网页&#x2F;PDF 摘要（summarize）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B-3%EF%BC%9A%E5%AE%9E%E6%97%B6%E6%90%9C%E7%B4%A2%EF%BC%88tavily-search%EF%BC%89"><span class="toc-number">1.3.3.</span> <span class="toc-text">例 3：实时搜索（tavily-search）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B-4%EF%BC%9A%E9%82%AE%E4%BB%B6%E7%AE%A1%E7%90%86%EF%BC%88himalaya%EF%BC%89"><span class="toc-number">1.3.4.</span> <span class="toc-text">例 4：邮件管理（himalaya）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81Skill-%E7%9A%84%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84"><span class="toc-number">1.4.</span> <span class="toc-text">三、Skill 的文件结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SKILL-md-%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-number">1.4.1.</span> <span class="toc-text">SKILL.md 的结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E7%BA%A7%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6"><span class="toc-number">1.4.2.</span> <span class="toc-text">三级加载机制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-Skill%EF%BC%88ClawHub-%E5%AE%89%E8%A3%85%E4%B8%8E%E7%AE%A1%E7%90%86%EF%BC%89"><span class="toc-number">1.5.</span> <span class="toc-text">四、如何使用 Skill（ClawHub 安装与管理）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-ClawHub-CLI"><span class="toc-number">1.5.1.</span> <span class="toc-text">安装 ClawHub CLI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E7%AE%A1%E7%90%86%E5%91%BD%E4%BB%A4"><span class="toc-number">1.5.2.</span> <span class="toc-text">常用管理命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Skill-%E7%9A%84%E5%8A%A0%E8%BD%BD%E4%BC%98%E5%85%88%E7%BA%A7"><span class="toc-number">1.5.3.</span> <span class="toc-text">Skill 的加载优先级</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%99%BB%E5%BD%95-ClawHub%EF%BC%88%E4%B8%8B%E8%BD%BD%E9%99%90%E9%80%9F%E8%A7%A3%E9%99%A4%EF%BC%89"><span class="toc-number">1.5.4.</span> <span class="toc-text">登录 ClawHub（下载限速解除）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%A6%82%E4%BD%95%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84-Skill"><span class="toc-number">1.6.</span> <span class="toc-text">五、如何创建自己的 Skill</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%B5%81%E7%A8%8B"><span class="toc-number">1.6.1.</span> <span class="toc-text">创建流程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC-1-%E6%AD%A5%EF%BC%9A%E6%98%8E%E7%A1%AE%E4%BD%A0%E8%A6%81%E8%A7%A3%E5%86%B3%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">1.6.1.1.</span> <span class="toc-text">第 1 步：明确你要解决的问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC-2-%E6%AD%A5%EF%BC%9A%E5%88%9B%E5%BB%BA-Skill-%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="toc-number">1.6.1.2.</span> <span class="toc-text">第 2 步：创建 Skill 文件夹</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC-3-%E6%AD%A5%EF%BC%9A%E7%BC%96%E5%86%99-SKILL-md"><span class="toc-number">1.6.1.3.</span> <span class="toc-text">第 3 步：编写 SKILL.md</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC-4-%E6%AD%A5%EF%BC%9A%E6%B5%8B%E8%AF%95-Skill"><span class="toc-number">1.6.1.4.</span> <span class="toc-text">第 4 步：测试 Skill</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC-5-%E6%AD%A5%EF%BC%9A%E5%8F%91%E5%B8%83%E5%88%B0-ClawHub%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89"><span class="toc-number">1.6.1.5.</span> <span class="toc-text">第 5 步：发布到 ClawHub（可选）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E4%B8%AA%E5%AE%8C%E6%95%B4%E7%9A%84%E5%88%9B%E5%BB%BA%E7%A4%BA%E4%BE%8B%EF%BC%9A%E3%80%8C%E6%AF%8F%E6%97%A5%E7%AE%80%E6%8A%A5%E3%80%8DSkill"><span class="toc-number">1.6.2.</span> <span class="toc-text">一个完整的创建示例：「每日简报」Skill</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81OpenClaw-%E5%AE%9E%E6%88%98%E4%B8%BE%E4%BE%8B"><span class="toc-number">1.7.</span> <span class="toc-text">六、OpenClaw 实战举例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%BA%E6%99%AF%EF%BC%9A%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E3%80%8C%E6%8A%80%E6%9C%AF%E5%8A%A9%E6%89%8B%E6%9C%BA%E5%99%A8%E4%BA%BA%E3%80%8D"><span class="toc-number">1.7.1.</span> <span class="toc-text">场景：搭建一个「技术助手机器人」</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E9%9C%80%E8%A6%81%E7%9A%84-Skills"><span class="toc-number">1.7.1.1.</span> <span class="toc-text">安装需要的 Skills</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-Tavily-API-Key"><span class="toc-number">1.7.1.2.</span> <span class="toc-text">配置 Tavily API Key</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%87%8D%E5%90%AF%E6%9C%8D%E5%8A%A1%E8%AE%A9-Skills-%E7%94%9F%E6%95%88"><span class="toc-number">1.7.1.3.</span> <span class="toc-text">重启服务让 Skills 生效</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%88%E6%9E%9C%E6%BC%94%E7%A4%BA"><span class="toc-number">1.7.1.4.</span> <span class="toc-text">效果演示</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA%E3%80%8C%E4%BB%A3%E7%A0%81%E5%AE%A1%E6%9F%A5%E3%80%8DSkill%EF%BC%88%E6%94%BE%E5%85%A5%E9%A1%B9%E7%9B%AE%E7%9B%AE%E5%BD%95%EF%BC%89"><span class="toc-number">1.7.2.</span> <span class="toc-text">自定义一个「代码审查」Skill（放入项目目录）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%A1%E6%9F%A5%E6%8A%A5%E5%91%8A"><span class="toc-number">1.8.</span> <span class="toc-text">代码审查报告</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%90%9B-%E5%8F%91%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">1.8.1.</span> <span class="toc-text">🐛 发现的问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%85-%E6%94%B9%E8%BF%9B%E5%90%8E%E7%9A%84%E4%BB%A3%E7%A0%81"><span class="toc-number">1.8.2.</span> <span class="toc-text">✅ 改进后的代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%92%A1-%E5%85%B6%E4%BB%96%E5%BB%BA%E8%AE%AE"><span class="toc-number">1.8.3.</span> <span class="toc-text">💡 其他建议</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%AE%89%E5%85%A8%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">1.9.</span> <span class="toc-text">七、安全注意事项</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-Skill-%E5%89%8D%E5%BF%85%E9%A1%BB%E6%A3%80%E6%9F%A5"><span class="toc-number">1.9.1.</span> <span class="toc-text">安装 Skill 前必须检查</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AB%98%E9%A3%8E%E9%99%A9-Skill-%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.9.2.</span> <span class="toc-text">高风险 Skill 类型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5"><span class="toc-number">1.10.</span> <span class="toc-text">八、常用命令速查</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ClawHub-%E6%8A%80%E8%83%BD%E7%AE%A1%E7%90%86"><span class="toc-number">1.10.1.</span> <span class="toc-text">ClawHub 技能管理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#OpenClaw-%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86"><span class="toc-number">1.10.2.</span> <span class="toc-text">OpenClaw 服务管理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Skill-%E6%96%87%E4%BB%B6%E4%BD%8D%E7%BD%AE"><span class="toc-number">1.10.3.</span> <span class="toc-text">Skill 文件位置</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/12/skill%E6%A6%82%E5%BF%B5%E7%90%86%E8%A7%A3%E3%80%81%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%88%9B%E5%BB%BA/" title="skill概念理解、使用与创建">skill概念理解、使用与创建</a><time datetime="2026-03-12T21:36:10.000Z" title="Created 2026-03-12 21:36:10">2026-03-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/12/hello-world/" title="Hello World">Hello World</a><time datetime="2026-03-12T13:39:39.555Z" title="Created 2026-03-12 13:39:39">2026-03-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/12/Github-Pages-%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/" title="Github Pages 博客搭建指南">Github Pages 博客搭建指南</a><time datetime="2026-03-12T00:42:38.000Z" title="Created 2026-03-12 00:42:38">2026-03-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/12/openclaw%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%E5%A4%87%E5%BF%98/" title="openclaw使用方法备忘">openclaw使用方法备忘</a><time datetime="2026-03-12T00:32:51.000Z" title="Created 2026-03-12 00:32:51">2026-03-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/12/claude%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%E5%A4%87%E5%BF%98/" title="claude使用方法备忘">claude使用方法备忘</a><time datetime="2026-03-12T00:31:56.000Z" title="Created 2026-03-12 00:31:56">2026-03-12</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By Chase King</span><span class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.4</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
