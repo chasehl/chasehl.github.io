@@ -2,6 +2,7 @@
 title: Github Pages 博客搭建指南
 date: 2026-03-12 00:42:38
 tags:
+cover: https://picsum.photos/800/400?random=1  # 网络图片
 ---
 
 # GitHub Pages 博客搭建指南

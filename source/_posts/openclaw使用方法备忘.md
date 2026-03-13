@@ -2,6 +2,7 @@
 title: openclaw使用方法备忘
 date: 2026-03-12 00:32:51
 tags:
+cover: none
 ---
 
 # OpenClaw 使用方法记录

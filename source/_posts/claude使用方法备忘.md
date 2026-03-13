@@ -2,6 +2,7 @@
 title: claude使用方法备忘
 date: 2026-03-12 00:31:56
 tags:
+cover: none
 ---
 
 # Claude Code 使用指南

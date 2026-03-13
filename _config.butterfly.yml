@@ -1,0 +1,194 @@
+# ==========================================
+# 主题配色
+# ==========================================
+theme_color:
+  enable: true
+  main: "#425AEF"
+  paginator: "#425AEF"
+  button_hover: "#FF7242"
+  text_selection: "#425AEF"
+  link_color: "#425AEF"
+  meta_color: "#858585"
+  hr_color: "#A4D8FA"
+  code_foreground: "#F47466"
+  code_background: "rgba(27, 31, 35, .05)"
+  toc_color: "#425AEF"
+  blockquote_padding_color: "#425AEF"
+  blockquote_background_color: "#425AEF"
+  scrollbar_color: "#425AEF"
+  meta_theme_color_light: "ffffff"
+  meta_theme_color_dark: "#0d0d0d"
+
+# ==========================================
+# 网站背景图片
+# 将图片放到 source/img/website_bg.jpg
+# ==========================================
+background: /img/website_bg.jpg
+
+# ==========================================
+# 注入自定义 CSS
+# ==========================================
+inject:
+  head:
+    - <link rel="stylesheet" href="/css/custom.css">
+
+# ==========================================
+# 导航栏
+# ==========================================
+nav:
+  logo:
+  display_title: true
+  default_theme: false
+
+menu:
+  首页: / || fas fa-home
+  文章 || fas fa-book:
+    归档: /archives/ || fas fa-archive
+    分类: /categories/ || fas fa-folder-open
+    标签: /tags/ || fas fa-tags
+  关于: /about/ || fas fa-user
+  友链: /links/ || fas fa-link
+
+# ==========================================
+# 头像（effect: false = 鼠标悬停才旋转）
+# ==========================================
+avatar:
+  img: /img/avatar.jpg
+  effect: false
+
+# ==========================================
+# 首页顶部 Banner
+# 将图片放到 source/img/banner.jpg
+# ==========================================
+index_img: /img/banner.jpg
+
+# ==========================================
+# 文章默认封面（未设封面的文章随机取一张）
+# 将图片放到 source/img/covers/ 目录下
+# ==========================================
+cover:
+  index_enable: true
+  aside_enable: true
+  archives_enable: true
+  position: both
+  default_cover:
+    - /img/covers/1.jpg
+    - /img/covers/2.jpg
+    - /img/covers/3.jpg
+
+# ==========================================
+# 站点副标题打字机效果
+# ==========================================
+subtitle:
+  enable: true
+  effect: true
+  loop: true
+  source: false
+  sub:
+    - 记录折腾的地方
+    - 技术笔记 & 瞎折腾
+    - Keep Learning
+
+# ==========================================
+# 本地搜索
+# ==========================================
+search:
+  use: local_search
+
+local_search:
+  enable: true
+  preload: false
+  CDN:
+
+# ==========================================
+# CDN（必须保留，否则启动报错）
+# ==========================================
+CDN:
+  internal_provider: local
+
+# ==========================================
+# 评论系统（Giscus）
+# ==========================================
+comments:
+  use: Giscus
+  text: true
+  lazyload: false
+  count: false
+  hide_empty_comment: false
+
+giscus:
+  repo: chasehl/chasehl.github.io
+  repo_id: R_kgDON3lWOw
+  category_id: DIC_kwDON3lWO84C4PJp
+  theme:
+    light: light
+    dark: dark
+  option:
+
+# ==========================================
+# 图片懒加载
+# ==========================================
+lazyload:
+  enable: true
+  field: site
+  placeholder:
+  blur: false
+
+# ==========================================
+# 图片点击放大
+# ==========================================
+medium_zoom: false
+fancybox: true
+
+# ==========================================
+# 页脚
+# ==========================================
+footer:
+  owner:
+    enable: true
+    since: 2024
+  custom_text: '由 <a href="https://hexo.io" target="_blank">Hexo</a> 驱动 &nbsp;|&nbsp; 主题 <a href="https://butterfly.js.org" target="_blank">Butterfly</a> &nbsp;|&nbsp; 托管于 <a href="https://github.com/chasehl/chasehl.github.io" target="_blank">GitHub Pages</a>'
+  copyright: true
+  runtime: false
+
+# 页脚背景图片（独立于 footer 块之外）
+# 将图片放到 source/img/footer_bg.jpg
+footer_img: /img/footer_bg.jpg
+
+# ==========================================
+# 侧边栏
+# ==========================================
+aside:
+  enable: true
+  position: right
+  card_author:
+    enable: true
+    description: 记录折腾过程的地方
+  card_tags:
+    enable: true
+  card_archives:
+    enable: true
+  card_recent_post:
+    enable: true
+
+# ==========================================
+# 深色模式
+# ==========================================
+dark_mode:
+  enable: true
+  default: light
+
+# ==========================================
+# 代码块
+# ==========================================
+highlight_theme: mac
+highlight_copy: true
+highlight_lang: true
+
+# ==========================================
+# 访问统计
+# ==========================================
+busuanzi:
+  site_uv: false
+  site_pv: false
+  page_pv: false

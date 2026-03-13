@@ -1,0 +1,15 @@
+- class_name: 技术博客
+  class_desc: 优秀的技术内容创作者
+  link_list:
+    - name: 示例博客
+      link: https://example.com
+      avatar: https://example.com/avatar.jpg
+      descr: 这是一个示例友链
+
+- class_name: 工具资源
+  class_desc: 常用工具与资源
+  link_list:
+    - name: Butterfly 主题
+      link: https://butterfly.js.org
+      avatar: https://butterfly.js.org/img/favicon.png
+      descr: Hexo Butterfly 主题官网

@@ -2,6 +2,7 @@
 title: skill概念理解、使用与创建
 date: 2026-03-12 21:36:10
 tags:
+cover: /img/covers/1.jpg
 ---
 
 # Skill 详解：概念、使用与创建
