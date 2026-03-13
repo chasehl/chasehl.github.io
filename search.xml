@@ -1,0 +1,974 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Github Pages 博客搭建指南</title>
+    <url>/2026/03/12/Github-Pages-%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/</url>
+    <content><![CDATA[<h1 id="GitHub-Pages-博客搭建指南"><a href="#GitHub-Pages-博客搭建指南" class="headerlink" title="GitHub Pages 博客搭建指南"></a>GitHub Pages 博客搭建指南</h1><blockquote>
+<p>Hexo + Butterfly 主题 + GitHub Actions 自动部署<br>个人备忘，记录首次搭建流程及后续更换博客的方法</p>
+</blockquote>
+<hr>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ol>
+<li><a href="#%E4%B8%80%E6%8A%80%E6%9C%AF%E6%A0%88%E8%AF%B4%E6%98%8E">技术栈说明</a></li>
+<li><a href="#%E4%BA%8C%E9%A6%96%E6%AC%A1%E6%90%AD%E5%BB%BA%E5%AE%8C%E6%95%B4%E6%AD%A5%E9%AA%A4">首次搭建完整步骤</a></li>
+<li><a href="#%E4%B8%89%E6%97%A5%E5%B8%B8%E5%86%99%E6%96%87%E7%AB%A0%E5%B7%A5%E4%BD%9C%E6%B5%81">日常写文章工作流</a></li>
+<li><a href="#%E5%9B%9B%E6%88%91%E7%9A%84%E6%83%85%E5%86%B5%E5%B7%B2%E6%9C%89%E5%8D%9A%E5%AE%A2%E9%87%8D%E6%96%B0%E6%90%AD%E5%BB%BA%E6%9B%BF%E6%8D%A2">我的情况：已有博客，重新搭建替换</a></li>
+<li><a href="#%E4%BA%94%E5%B8%B8%E8%A7%81%E6%8A%A5%E9%94%99%E5%A4%84%E7%90%86">常见报错处理</a></li>
+<li><a href="#%E5%85%AD%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E8%AF%B4%E6%98%8E">文件结构说明</a></li>
+</ol>
+<hr>
+<h2 id="一、技术栈说明"><a href="#一、技术栈说明" class="headerlink" title="一、技术栈说明"></a>一、技术栈说明</h2><table>
+<thead>
+<tr>
+<th>工具</th>
+<th>作用</th>
+<th>安装位置</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Node.js</td>
+<td>运行环境，Hexo 依赖它</td>
+<td>C 盘（系统级）</td>
+</tr>
+<tr>
+<td>Hexo CLI</td>
+<td>博客框架命令行工具</td>
+<td>C 盘（全局 npm 包）</td>
+</tr>
+<tr>
+<td>Butterfly</td>
+<td>Hexo 主题，决定博客外观</td>
+<td>项目 node_modules 内</td>
+</tr>
+<tr>
+<td>Git</td>
+<td>版本管理，推送到 GitHub</td>
+<td>C 盘（系统级）</td>
+</tr>
+<tr>
+<td>GitHub Pages</td>
+<td>免费静态网站托管</td>
+<td>云端</td>
+</tr>
+<tr>
+<td>GitHub Actions</td>
+<td>自动编译部署，push 后自动触发</td>
+<td>云端</td>
+</tr>
+</tbody></table>
+<p><strong>核心理解：</strong></p>
+<ul>
+<li>Hexo CLI 是”工具”，装在 C 盘，装一次不用管</li>
+<li>博客项目是”内容”，可以放在任意盘（如 <code>E:\blog</code>），路径不要有中文和空格</li>
+<li>GitHub Actions 配置好后，本地只需写文章 + <code>git push</code>，编译部署全在云端自动完成</li>
+</ul>
+<hr>
+<h2 id="二、首次搭建完整步骤"><a href="#二、首次搭建完整步骤" class="headerlink" title="二、首次搭建完整步骤"></a>二、首次搭建完整步骤</h2><h3 id="前置准备"><a href="#前置准备" class="headerlink" title="前置准备"></a>前置准备</h3><ol>
+<li>安装 Node.js（LTS 版本，需 18+）：<a href="https://nodejs.org/">https://nodejs.org</a></li>
+<li>安装 Git：<a href="https://git-scm.com/">https://git-scm.com</a></li>
+<li>注册 GitHub 账号：<a href="https://github.com/">https://github.com</a></li>
+</ol>
+<p>验证安装：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">node <span class="literal">--version</span>   <span class="comment"># v18.x.x 或更高</span></span><br><span class="line">npm <span class="literal">--version</span></span><br><span class="line">git <span class="literal">--version</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="第-1-步：在-GitHub-创建仓库"><a href="#第-1-步：在-GitHub-创建仓库" class="headerlink" title="第 1 步：在 GitHub 创建仓库"></a>第 1 步：在 GitHub 创建仓库</h3><p>仓库名必须为 <code>你的用户名.github.io</code>（固定格式，不能改）。</p>
+<ol>
+<li>登录 GitHub → 右上角 <code>+</code> → New repository</li>
+<li>Repository name 填写：<code>你的用户名.github.io</code></li>
+<li>设为 Public</li>
+<li>不要勾选 Initialize README</li>
+<li>点击 Create repository</li>
+</ol>
+<hr>
+<h3 id="第-2-步：安装-Hexo-CLI"><a href="#第-2-步：安装-Hexo-CLI" class="headerlink" title="第 2 步：安装 Hexo CLI"></a>第 2 步：安装 Hexo CLI</h3><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">npm install <span class="literal">-g</span> hexo<span class="literal">-cli</span></span><br></pre></td></tr></table></figure>
+
+<p>验证：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">hexo <span class="literal">--version</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="第-3-步：初始化博客项目"><a href="#第-3-步：初始化博客项目" class="headerlink" title="第 3 步：初始化博客项目"></a>第 3 步：初始化博客项目</h3><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 切换到 E 盘（或你想放的位置）</span></span><br><span class="line">E:</span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化项目，会创建 E:\blog 文件夹</span></span><br><span class="line">hexo init blog</span><br><span class="line"><span class="built_in">cd</span> blog</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="第-4-步：安装-Butterfly-主题"><a href="#第-4-步：安装-Butterfly-主题" class="headerlink" title="第 4 步：安装 Butterfly 主题"></a>第 4 步：安装 Butterfly 主题</h3><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">npm install hexo<span class="literal">-theme-butterfly</span> hexo<span class="literal">-renderer-pug</span> hexo<span class="literal">-renderer-stylus</span> <span class="literal">--save</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="第-5-步：配置-config-yml"><a href="#第-5-步：配置-config-yml" class="headerlink" title="第 5 步：配置 _config.yml"></a>第 5 步：配置 <code>_config.yml</code></h3><p>用 VS Code 打开 <code>E:\blog\_config.yml</code>，修改以下字段：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">title:</span> <span class="string">你的博客名</span></span><br><span class="line"><span class="attr">subtitle:</span> <span class="string">&#x27;副标题&#x27;</span></span><br><span class="line"><span class="attr">description:</span> <span class="string">&#x27;博客描述&#x27;</span></span><br><span class="line"><span class="attr">author:</span> <span class="string">你的名字</span></span><br><span class="line"></span><br><span class="line"><span class="attr">url:</span> <span class="string">https://你的用户名.github.io</span></span><br><span class="line"><span class="attr">root:</span> <span class="string">/</span></span><br><span class="line"></span><br><span class="line"><span class="attr">theme:</span> <span class="string">butterfly</span></span><br></pre></td></tr></table></figure>
+
+<p>可以删除 <code>_config.landscape.yml</code>（默认主题配置，用不到）：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">del</span> _config.landscape.yml</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="第-6-步：创建-Butterfly-主题配置"><a href="#第-6-步：创建-Butterfly-主题配置" class="headerlink" title="第 6 步：创建 Butterfly 主题配置"></a>第 6 步：创建 Butterfly 主题配置</h3><p>在 <code>E:\blog\</code> 根目录新建 <code>_config.butterfly.yml</code>：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 深色模式</span></span><br><span class="line"><span class="attr">dark_mode:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">default:</span> <span class="string">light</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 代码块</span></span><br><span class="line"><span class="attr">highlight_theme:</span> <span class="string">mac</span></span><br><span class="line"><span class="attr">highlight_copy:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">highlight_lang:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 文章封面</span></span><br><span class="line"><span class="attr">cover:</span></span><br><span class="line">  <span class="attr">index_enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">aside_enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">archives_enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">position:</span> <span class="string">both</span></span><br><span class="line">  <span class="attr">default_cover:</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 侧边栏</span></span><br><span class="line"><span class="attr">aside:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">position:</span> <span class="string">right</span></span><br><span class="line">  <span class="attr">card_author:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">description:</span> <span class="string">记录折腾过程的地方</span></span><br><span class="line">  <span class="attr">card_tags:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">card_archives:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">card_recent_post:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 页脚</span></span><br><span class="line"><span class="attr">footer:</span></span><br><span class="line">  <span class="attr">owner:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">since:</span> <span class="number">2024</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 关闭暂不需要的功能</span></span><br><span class="line"><span class="attr">aplayer:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="第-7-步：本地预览"><a href="#第-7-步：本地预览" class="headerlink" title="第 7 步：本地预览"></a>第 7 步：本地预览</h3><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo server</span><br></pre></td></tr></table></figure>
+
+<p>打开浏览器访问 <code>http://localhost:4000</code>，确认主题和样式正常。</p>
+<blockquote>
+<p><code>Ctrl+C</code> 停止预览服务器。</p>
+</blockquote>
+<hr>
+<h3 id="第-8-步：初始化-Git-并关联远程仓库"><a href="#第-8-步：初始化-Git-并关联远程仓库" class="headerlink" title="第 8 步：初始化 Git 并关联远程仓库"></a>第 8 步：初始化 Git 并关联远程仓库</h3><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">git init</span><br><span class="line">git add .</span><br><span class="line">git commit <span class="literal">-m</span> <span class="string">&quot;init: hexo + butterfly&quot;</span></span><br><span class="line">git branch <span class="literal">-M</span> main</span><br><span class="line">git remote add origin https://github.com/你的用户名/你的用户名.github.io.git</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="第-9-步：配置-GitHub-Actions-自动部署"><a href="#第-9-步：配置-GitHub-Actions-自动部署" class="headerlink" title="第 9 步：配置 GitHub Actions 自动部署"></a>第 9 步：配置 GitHub Actions 自动部署</h3><p>在项目根目录创建文件（路径如下，需手动创建文件夹）：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">E:\blog\.github\workflows\deploy.yml</span><br></pre></td></tr></table></figure>
+
+<p>文件内容：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">Deploy</span> <span class="string">Hexo</span> <span class="string">Blog</span></span><br><span class="line"></span><br><span class="line"><span class="attr">on:</span></span><br><span class="line">  <span class="attr">push:</span></span><br><span class="line">    <span class="attr">branches:</span> [<span class="string">main</span>]</span><br><span class="line"></span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="attr">deploy:</span></span><br><span class="line">    <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">actions/checkout@v4</span></span><br><span class="line"></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Setup</span> <span class="string">Node.js</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">actions/setup-node@v4</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">node-version:</span> <span class="string">&#x27;20&#x27;</span></span><br><span class="line"></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Install</span> <span class="string">dependencies</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">|</span></span><br><span class="line"><span class="string">          npm install hexo-cli -g</span></span><br><span class="line"><span class="string">          npm install</span></span><br><span class="line"><span class="string"></span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Build</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">|</span></span><br><span class="line"><span class="string">          hexo clean</span></span><br><span class="line"><span class="string">          hexo generate</span></span><br><span class="line"><span class="string"></span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Deploy</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">peaceiris/actions-gh-pages@v3</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">github_token:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.GITHUB_TOKEN</span> <span class="string">&#125;&#125;</span></span><br><span class="line">          <span class="attr">publish_dir:</span> <span class="string">./public</span></span><br><span class="line">          <span class="attr">publish_branch:</span> <span class="string">gh-pages</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="第-10-步：推送到-GitHub"><a href="#第-10-步：推送到-GitHub" class="headerlink" title="第 10 步：推送到 GitHub"></a>第 10 步：推送到 GitHub</h3><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit <span class="literal">-m</span> <span class="string">&quot;deploy: add github actions&quot;</span></span><br><span class="line"><span class="comment"># 首次推送需要 -u 指定上游，之后直接 git push 即可</span></span><br><span class="line">git push <span class="literal">-u</span> origin main</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="第-11-步：设置-GitHub-Pages-分支"><a href="#第-11-步：设置-GitHub-Pages-分支" class="headerlink" title="第 11 步：设置 GitHub Pages 分支"></a>第 11 步：设置 GitHub Pages 分支</h3><p>推送成功后（等 Actions 跑完，约 1~2 分钟）：</p>
+<ol>
+<li>打开 GitHub 仓库页面</li>
+<li>Settings → Pages</li>
+<li>Source 选择 <strong>Deploy from a branch</strong></li>
+<li>Branch 选 <strong>gh-pages</strong>，目录选 <code>/ (root)</code></li>
+<li>点击 Save</li>
+</ol>
+<p>稍等片刻，访问 <code>https://你的用户名.github.io</code> 即可看到博客上线。</p>
+<hr>
+<h2 id="三、日常写文章工作流"><a href="#三、日常写文章工作流" class="headerlink" title="三、日常写文章工作流"></a>三、日常写文章工作流</h2><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 进入项目目录</span></span><br><span class="line"><span class="built_in">cd</span> E:\blog</span><br><span class="line"></span><br><span class="line"><span class="comment"># 新建文章（会在 source/_posts/ 下生成 .md 文件）</span></span><br><span class="line">hexo new post <span class="string">&quot;文章标题&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 用 VS Code 编辑文章</span></span><br><span class="line"><span class="comment"># source/_posts/文章标题.md</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 本地预览（可选）</span></span><br><span class="line">hexo clean</span><br><span class="line">hexo server</span><br><span class="line"></span><br><span class="line"><span class="comment"># 满意后推送，GitHub Actions 自动编译部署</span></span><br><span class="line">git add .</span><br><span class="line">git commit <span class="literal">-m</span> <span class="string">&quot;新文章：文章标题&quot;</span></span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
+
+<h3 id="文章头部格式（Front-Matter）"><a href="#文章头部格式（Front-Matter）" class="headerlink" title="文章头部格式（Front Matter）"></a>文章头部格式（Front Matter）</h3><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: 文章标题</span><br><span class="line">date: 2026-03-12</span><br><span class="line">tags:</span><br><span class="line"><span class="bullet">  -</span> 标签1</span><br><span class="line"><span class="bullet">  -</span> 标签2</span><br><span class="line">categories:</span><br><span class="line"><span class="bullet">  -</span> 分类名</span><br><span class="line"><span class="section">cover: https://可选的封面图片URL</span></span><br><span class="line"><span class="section">---</span></span><br><span class="line"></span><br><span class="line">正文内容从这里开始，支持标准 Markdown 语法。</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="四、我的情况：已有博客，重新搭建替换"><a href="#四、我的情况：已有博客，重新搭建替换" class="headerlink" title="四、我的情况：已有博客，重新搭建替换"></a>四、我的情况：已有博客，重新搭建替换</h2><blockquote>
+<p>适用场景：已有 <code>用户名.github.io</code> 仓库，但本地文件丢失，想全部重来换新主题。</p>
+</blockquote>
+<h3 id="与首次搭建的区别"><a href="#与首次搭建的区别" class="headerlink" title="与首次搭建的区别"></a>与首次搭建的区别</h3><table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>首次搭建</th>
+<th>替换重建</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>创建 GitHub 仓库</td>
+<td>需要新建</td>
+<td>仓库已存在，跳过</td>
+</tr>
+<tr>
+<td>本地初始化</td>
+<td><code>hexo init</code></td>
+<td><code>hexo init</code>（一样）</td>
+</tr>
+<tr>
+<td>关联远程仓库</td>
+<td>正常 push</td>
+<td>需要<strong>强制覆盖</strong>旧仓库</td>
+</tr>
+<tr>
+<td>GitHub Pages 设置</td>
+<td>首次配置</td>
+<td>可能需要重新确认分支</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="完整操作步骤"><a href="#完整操作步骤" class="headerlink" title="完整操作步骤"></a>完整操作步骤</h3><p><strong>第 1~7 步与首次搭建完全相同</strong>（安装工具、初始化项目、配置主题、本地预览），按照第二章操作即可。</p>
+<hr>
+<p><strong>第 8 步：关联已有的远程仓库</strong></p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">git init</span><br><span class="line">git add .</span><br><span class="line">git commit <span class="literal">-m</span> <span class="string">&quot;init: hexo + butterfly&quot;</span></span><br><span class="line">git branch <span class="literal">-M</span> main</span><br><span class="line">git remote add origin https://github.com/你的用户名/你的用户名.github.io.git</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><strong>第 9 步：添加 GitHub Actions 配置</strong></p>
+<p>同首次搭建第 9 步，创建 <code>.github/workflows/deploy.yml</code>，内容完全相同。</p>
+<hr>
+<p><strong>第 10 步：强制推送覆盖旧仓库</strong></p>
+<blockquote>
+<p>⚠️ 因为旧仓库有历史提交记录，普通 <code>git push</code> 会被拒绝，需要强制覆盖。</p>
+</blockquote>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">git push <span class="operator">-f</span> <span class="literal">-u</span> origin main</span><br></pre></td></tr></table></figure>
+
+<p><code>-f</code> 表示强制覆盖，<code>-u</code> 设置上游分支。<strong>之后写文章正常 <code>git push</code> 即可，不需要再加 <code>-f</code>。</strong></p>
+<hr>
+<p><strong>第 11 步：确认 GitHub Pages 分支设置</strong></p>
+<p>等 GitHub Actions 跑完后（仓库 Actions 标签页查看进度）：</p>
+<ol>
+<li>Settings → Pages</li>
+<li>确认 Source 为 <strong>Deploy from a branch</strong>，Branch 为 <strong>gh-pages</strong></li>
+<li>如果之前设置过其他分支，重新选择 gh-pages 并保存</li>
+</ol>
+<hr>
+<h2 id="五、常见报错处理"><a href="#五、常见报错处理" class="headerlink" title="五、常见报错处理"></a>五、常见报错处理</h2><h3 id="不是有效语句分隔符"><a href="#不是有效语句分隔符" class="headerlink" title="&amp;&amp; 不是有效语句分隔符"></a><code>&amp;&amp;</code> 不是有效语句分隔符</h3><p><strong>原因</strong>：PowerShell 不支持 <code>&amp;&amp;</code>，这是 CMD&#x2F;bash 的写法。</p>
+<p><strong>解决</strong>：分开执行，或用分号：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 方式一：分开执行</span></span><br><span class="line">hexo clean</span><br><span class="line">hexo server</span><br><span class="line"></span><br><span class="line"><span class="comment"># 方式二：分号分隔（PowerShell 语法）</span></span><br><span class="line">hexo clean; hexo server</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="fatal-The-current-branch-main-has-no-upstream-branch"><a href="#fatal-The-current-branch-main-has-no-upstream-branch" class="headerlink" title="fatal: The current branch main has no upstream branch"></a><code>fatal: The current branch main has no upstream branch</code></h3><p><strong>原因</strong>：本地分支第一次推送，还没有指定远程上游。</p>
+<p><strong>解决</strong>：首次推送加 <code>-u</code> 参数：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">git push <span class="literal">-u</span> origin main</span><br></pre></td></tr></table></figure>
+
+<p>之后直接 <code>git push</code> 即可。</p>
+<hr>
+<h3 id="error-failed-to-push-some-refs（推送被拒绝）"><a href="#error-failed-to-push-some-refs（推送被拒绝）" class="headerlink" title="error: failed to push some refs（推送被拒绝）"></a><code>error: failed to push some refs</code>（推送被拒绝）</h3><p><strong>原因</strong>：远程仓库有本地没有的提交（如替换旧博客时）。</p>
+<p><strong>解决</strong>：确认要覆盖旧内容后，强制推送：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">git push <span class="operator">-f</span> origin main</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="GitHub-Actions-运行失败"><a href="#GitHub-Actions-运行失败" class="headerlink" title="GitHub Actions 运行失败"></a>GitHub Actions 运行失败</h3><ol>
+<li>打开 GitHub 仓库 → Actions 标签页</li>
+<li>点击失败的工作流，查看具体报错信息</li>
+<li>常见原因：<code>deploy.yml</code> 缩进格式错误（YAML 对缩进严格，只能用空格，不能用 Tab）</li>
+</ol>
+<hr>
+<h2 id="六、文件结构说明"><a href="#六、文件结构说明" class="headerlink" title="六、文件结构说明"></a>六、文件结构说明</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">E:\blog\</span><br><span class="line">├── .github\</span><br><span class="line">│   └── workflows\</span><br><span class="line">│       └── deploy.yml          ← GitHub Actions 自动部署配置</span><br><span class="line">├── node_modules\               ← 依赖包，自动生成，不提交 git</span><br><span class="line">├── public\                     ← 编译产物，自动生成，不提交 git</span><br><span class="line">├── scaffolds\                  ← 文章模板，一般不用动</span><br><span class="line">├── source\</span><br><span class="line">│   ├── _posts\                 ← ★ 所有文章放这里（.md 文件）</span><br><span class="line">│   └── about\</span><br><span class="line">│       └── index.md            ← 关于页</span><br><span class="line">├── themes\                     ← 主题（用 npm 安装时在 node_modules 里）</span><br><span class="line">├── .gitignore                  ← 忽略 node_modules 和 public 等</span><br><span class="line">├── _config.yml                 ← Hexo 全局配置（标题、URL、主题等）</span><br><span class="line">├── _config.butterfly.yml       ← Butterfly 主题配置（样式、功能开关）</span><br><span class="line">└── package.json                ← 项目依赖清单</span><br></pre></td></tr></table></figure>
+
+<p><strong>平时只需要动的文件：</strong></p>
+<ul>
+<li><code>source/_posts/*.md</code> — 写文章</li>
+<li><code>_config.butterfly.yml</code> — 调整博客样式和功能</li>
+<li><code>_config.yml</code> — 修改博客标题、作者等基础信息</li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
+    <title>claude使用方法备忘</title>
+    <url>/2026/03/12/claude%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%E5%A4%87%E5%BF%98/</url>
+    <content><![CDATA[<h1 id="Claude-Code-使用指南"><a href="#Claude-Code-使用指南" class="headerlink" title="Claude Code 使用指南"></a>Claude Code 使用指南</h1><blockquote>
+<p>本文记录 Claude Code 在 Windows 系统下的三种接入方式，适合个人学习与工程使用参考。</p>
+</blockquote>
+<hr>
+<h2 id="方法一：官网直充（官方订阅）"><a href="#方法一：官网直充（官方订阅）" class="headerlink" title="方法一：官网直充（官方订阅）"></a>方法一：官网直充（官方订阅）</h2><p><strong>优点：</strong> 体验最完整，使用官方原版模型，响应稳定，无中间商风险</p>
+<p><strong>缺点：</strong> 价格较贵，需要海外信用卡，国内网络可能受限</p>
+<table>
+<thead>
+<tr>
+<th>套餐</th>
+<th>价格</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Claude Pro</td>
+<td>$20&#x2F;月</td>
+<td>普通开发者，日常使用</td>
+</tr>
+<tr>
+<td>Claude Max</td>
+<td>$100–$200&#x2F;月</td>
+<td>重度使用，高速率限制</td>
+</tr>
+<tr>
+<td>Console API</td>
+<td>按量计费</td>
+<td>仅需 API，不需要网页端</td>
+</tr>
+</tbody></table>
+<p><strong>注册步骤：</strong></p>
+<ol>
+<li>访问 <a href="https://claude.ai/">https://claude.ai</a> 注册账号（建议使用 Gmail &#x2F; Outlook 等国际邮箱）</li>
+<li>订阅 Pro 或 Max 套餐，需要 Visa &#x2F; MasterCard 国际信用卡</li>
+<li>国内用户也可通过 <a href="https://console.anthropic.com/">console.anthropic.com</a> 创建 API Key，按量付费</li>
+</ol>
+<hr>
+<h2 id="方法二：使用中转站（推荐国内用户）"><a href="#方法二：使用中转站（推荐国内用户）" class="headerlink" title="方法二：使用中转站（推荐国内用户）"></a>方法二：使用中转站（推荐国内用户）</h2><p><strong>优点：</strong> 无需海外信用卡，无需翻墙，价格更低，操作简单</p>
+<p><strong>缺点：</strong> 存在数据隐私风险，稳定性依赖第三方服务，不适合传输敏感信息</p>
+<blockquote>
+<p>⚠️ <strong>安全提示</strong>：禁止通过中转站传输含个人隐私、商业机密的内容。建议仅用于学习或个人开发项目。</p>
+</blockquote>
+<p>常见中转站参考（以下均为第三方服务，请自行评估风险）：</p>
+<ul>
+<li><strong>AnyRouter</strong>：<a href="https://anyrouter.top/">https://anyrouter.top</a>（GitHub 账号登录，有免费额度）</li>
+<li><strong>302.AI</strong>：<a href="https://api.302.ai/">https://api.302.ai</a>（支持多模型中转）</li>
+<li><strong>AIHubMix</strong>：<a href="https://aihubmix.com/">https://aihubmix.com</a></li>
+</ul>
+<hr>
+<h3 id="Windows-安装步骤（以中转站接入为例）"><a href="#Windows-安装步骤（以中转站接入为例）" class="headerlink" title="Windows 安装步骤（以中转站接入为例）"></a>Windows 安装步骤（以中转站接入为例）</h3><h4 id="第-1-步：安装-Node-js"><a href="#第-1-步：安装-Node-js" class="headerlink" title="第 1 步：安装 Node.js"></a>第 1 步：安装 Node.js</h4><p>Claude Code 的 npm 安装方式需要 <strong>Node.js 18+</strong>。</p>
+<ol>
+<li>访问官网下载 LTS 版本：<a href="https://nodejs.org/">https://nodejs.org</a></li>
+<li>下载并运行安装包（默认选项即可）</li>
+<li>安装完成后，<strong>关闭并重新打开 PowerShell</strong>，验证安装：</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">node <span class="literal">--version</span>   <span class="comment"># 应输出 v18.x.x 或更高</span></span><br><span class="line">npm <span class="literal">--version</span>    <span class="comment"># 应输出对应 npm 版本</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>✅ 如果显示版本号，说明安装成功。</p>
+</blockquote>
+<hr>
+<h4 id="第-2-步：安装-Git-for-Windows"><a href="#第-2-步：安装-Git-for-Windows" class="headerlink" title="第 2 步：安装 Git for Windows"></a>第 2 步：安装 Git for Windows</h4><p>Claude Code 在 Windows 上依赖 Git Bash 运行内部命令。</p>
+<ol>
+<li>访问官网下载：<a href="https://git-scm.com/downloads/win">https://git-scm.com/downloads/win</a></li>
+<li>运行安装包，安装选项保持默认即可</li>
+<li>验证安装（在 PowerShell 中运行）：</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">git <span class="literal">--version</span>   <span class="comment"># 应输出 git version x.x.x</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="第-3-步：安装-Claude-Code"><a href="#第-3-步：安装-Claude-Code" class="headerlink" title="第 3 步：安装 Claude Code"></a>第 3 步：安装 Claude Code</h4><p>打开 <strong>PowerShell</strong>（不需要管理员权限），运行以下命令：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">npm install <span class="literal">-g</span> @anthropic<span class="literal">-ai</span>/claude<span class="literal">-code</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>⚠️ <strong>注意</strong>：不要使用 <code>sudo npm install -g</code>，会导致权限问题。</p>
+</blockquote>
+<p>验证安装：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">claude <span class="literal">--version</span></span><br></pre></td></tr></table></figure>
+
+<p>如果显示版本号，说明安装成功。</p>
+<hr>
+<h4 id="第-4-步：配置中转站-API-Key"><a href="#第-4-步：配置中转站-API-Key" class="headerlink" title="第 4 步：配置中转站 API Key"></a>第 4 步：配置中转站 API Key</h4><p>从你使用的中转站获取 API Key（格式通常为 <code>sk-</code> 开头），然后配置环境变量。</p>
+<p><strong>方式 A：通过 PowerShell 设置环境变量（永久生效）</strong></p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 替换为你的 API Key 和中转站地址</span></span><br><span class="line">[<span class="type">Environment</span>]::SetEnvironmentVariable(<span class="string">&quot;ANTHROPIC_AUTH_TOKEN&quot;</span>, <span class="string">&quot;sk-你的APIKey&quot;</span>, [<span class="type">EnvironmentVariableTarget</span>]::User)</span><br><span class="line">[<span class="type">Environment</span>]::SetEnvironmentVariable(<span class="string">&quot;ANTHROPIC_BASE_URL&quot;</span>, <span class="string">&quot;https://anyrouter.top&quot;</span>, [<span class="type">EnvironmentVariableTarget</span>]::User)</span><br></pre></td></tr></table></figure>
+
+<p>设置完成后，<strong>重新打开一个新的 PowerShell 窗口</strong>，验证：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="variable">$env:ANTHROPIC_AUTH_TOKEN</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$env:ANTHROPIC_BASE_URL</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>方式 B：通过配置文件设置（推荐，适合多项目管理）</strong></p>
+<p>首先启动一次 Claude Code 让它自动创建 <code>.claude</code> 目录：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">claude</span><br><span class="line"><span class="comment"># 出现界面后按 Ctrl+C 退出</span></span><br></pre></td></tr></table></figure>
+
+<p>然后创建&#x2F;编辑配置文件。路径为：<code>C:\Users\你的用户名\.claude\settings.json</code></p>
+<p>用记事本或 VS Code 打开该文件，写入以下内容：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;env&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;ANTHROPIC_AUTH_TOKEN&quot;</span><span class="punctuation">:</span> <span class="string">&quot;sk-你的APIKey&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;ANTHROPIC_BASE_URL&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://anyrouter.top&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="第-5-步：启动使用"><a href="#第-5-步：启动使用" class="headerlink" title="第 5 步：启动使用"></a>第 5 步：启动使用</h4><p>在项目目录下打开 PowerShell，输入：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">claude</span><br></pre></td></tr></table></figure>
+
+<p>首次启动会出现交互引导，按提示操作即可。常用命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/help      # 查看所有命令</span><br><span class="line">/config    # 查看当前配置</span><br><span class="line">/model     # 切换模型</span><br><span class="line">/clear     # 清空当前对话</span><br><span class="line">/quit      # 退出</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="方法三：接入国内大模型"><a href="#方法三：接入国内大模型" class="headerlink" title="方法三：接入国内大模型"></a>方法三：接入国内大模型</h2><p><strong>优点：</strong> 完全国内服务，无网络限制，延迟低，价格便宜，数据留在国内</p>
+<p><strong>缺点：</strong> 使用的不是原版 Claude，编程能力存在差异；部分接口兼容性不完美</p>
+<p>目前支持 Anthropic API 兼容接口的国内大模型服务：</p>
+<table>
+<thead>
+<tr>
+<th>服务商</th>
+<th>推荐模型</th>
+<th>Base URL</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>阿里云百炼（通义千问）</td>
+<td><code>qwen3-coder-plus</code>、<code>qwen3.5-plus</code></td>
+<td><code>https://dashscope.aliyuncs.com/apps/anthropic</code></td>
+</tr>
+<tr>
+<td>月之暗面（Kimi K2）</td>
+<td><code>kimi-k2-turbo-preview</code></td>
+<td><code>https://api.moonshot.cn/anthropic</code></td>
+</tr>
+<tr>
+<td>DeepSeek</td>
+<td><code>deepseek-chat</code></td>
+<td><code>https://api.deepseek.com/anthropic</code></td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="以阿里云百炼为例（接入通义千问）"><a href="#以阿里云百炼为例（接入通义千问）" class="headerlink" title="以阿里云百炼为例（接入通义千问）"></a>以阿里云百炼为例（接入通义千问）</h3><p><strong>第 1 步：获取 API Key</strong></p>
+<ol>
+<li>访问 <a href="https://bailian.console.aliyun.com/">https://bailian.console.aliyun.com</a></li>
+<li>注册&#x2F;登录阿里云账号，开通百炼服务</li>
+<li>进入 <strong>API Key 管理</strong> 页面，点击创建 API Key，复制保存</li>
+</ol>
+<p><strong>第 2 步：配置环境变量（CMD 方式）</strong></p>
+<p>打开 <strong>CMD</strong>（命令提示符），运行：</p>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">setx ANTHROPIC_API_KEY &quot;你的百炼APIKey&quot;</span><br><span class="line">setx ANTHROPIC_BASE_URL &quot;https://dashscope.aliyuncs.com/apps/anthropic&quot;</span><br><span class="line">setx ANTHROPIC_MODEL &quot;qwen3-coder-plus&quot;</span><br></pre></td></tr></table></figure>
+
+<p><strong>或者通过 PowerShell：</strong></p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">[<span class="type">Environment</span>]::SetEnvironmentVariable(<span class="string">&quot;ANTHROPIC_API_KEY&quot;</span>, <span class="string">&quot;你的百炼APIKey&quot;</span>, [<span class="type">EnvironmentVariableTarget</span>]::User)</span><br><span class="line">[<span class="type">Environment</span>]::SetEnvironmentVariable(<span class="string">&quot;ANTHROPIC_BASE_URL&quot;</span>, <span class="string">&quot;https://dashscope.aliyuncs.com/apps/anthropic&quot;</span>, [<span class="type">EnvironmentVariableTarget</span>]::User)</span><br><span class="line">[<span class="type">Environment</span>]::SetEnvironmentVariable(<span class="string">&quot;ANTHROPIC_MODEL&quot;</span>, <span class="string">&quot;qwen3-coder-plus&quot;</span>, [<span class="type">EnvironmentVariableTarget</span>]::User)</span><br></pre></td></tr></table></figure>
+
+<p>重新打开终端，验证：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="variable">$env:ANTHROPIC_API_KEY</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$env:ANTHROPIC_BASE_URL</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$env:ANTHROPIC_MODEL</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>第 3 步：也可通过 settings.json 配置</strong></p>
+<p>编辑 <code>C:\Users\你的用户名\.claude\settings.json</code>：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;env&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;ANTHROPIC_API_KEY&quot;</span><span class="punctuation">:</span> <span class="string">&quot;你的百炼APIKey&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;ANTHROPIC_BASE_URL&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://dashscope.aliyuncs.com/apps/anthropic&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;ANTHROPIC_MODEL&quot;</span><span class="punctuation">:</span> <span class="string">&quot;qwen3-coder-plus&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;ANTHROPIC_SMALL_FAST_MODEL&quot;</span><span class="punctuation">:</span> <span class="string">&quot;qwen-flash&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>ANTHROPIC_SMALL_FAST_MODEL</code> 用于指定处理简单任务时使用的快速模型，设置为较便宜的模型可以节省费用。</p>
+</blockquote>
+<p><strong>第 4 步：启动 Claude Code</strong></p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">claude</span><br></pre></td></tr></table></figure>
+
+<p>对话中可用 <code>/model &lt;模型名&gt;</code> 命令临时切换模型。</p>
+<hr>
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><p><strong>Q：安装后输入 <code>claude</code> 提示 “command not found”？</strong></p>
+<p>关闭当前终端，重新打开一个新的 PowerShell 窗口，再次尝试。这是因为 PATH 环境变量需要刷新。</p>
+<p><strong>Q：在 Windows 上提示 “Unsupported OS”？</strong></p>
+<p>使用 npm 安装方式时 Windows 需要配合 Git Bash 或 WSL。确认 Git for Windows 已安装，或考虑使用官方原生安装命令：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">irm</span> https://claude.ai/install.ps1 | <span class="built_in">iex</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Q：中转站配置后提示认证失败？</strong></p>
+<p>检查 <code>ANTHROPIC_AUTH_TOKEN</code> 和 <code>ANTHROPIC_BASE_URL</code> 是否设置正确，注意不同中转站有时要求用 <code>ANTHROPIC_API_KEY</code> 而非 <code>ANTHROPIC_AUTH_TOKEN</code>，参考对应平台文档。</p>
+<p><strong>Q：如何诊断配置问题？</strong></p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">claude doctor</span><br></pre></td></tr></table></figure>
+
+<p>该命令会自动检测 Node.js 版本、认证状态、网络连接等常见问题。</p>
+<hr>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li>Claude Code 官方文档：<a href="https://docs.claude.com/en/docs/claude-code/overview">https://docs.claude.com/en/docs/claude-code/overview</a></li>
+<li>阿里云百炼 Claude Code 接入文档：<a href="https://help.aliyun.com/zh/model-studio/claude-code">https://help.aliyun.com/zh/model-studio/claude-code</a></li>
+<li>Node.js 官网：<a href="https://nodejs.org/">https://nodejs.org</a></li>
+<li>Git for Windows：<a href="https://git-scm.com/downloads/win">https://git-scm.com/downloads/win</a></li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2026/03/13/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>openclaw使用方法备忘</title>
+    <url>/2026/03/12/openclaw%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%E5%A4%87%E5%BF%98/</url>
+    <content><![CDATA[<h1 id="OpenClaw-使用方法记录"><a href="#OpenClaw-使用方法记录" class="headerlink" title="OpenClaw 使用方法记录"></a>OpenClaw 使用方法记录</h1><blockquote>
+<p>记录个人使用 OpenClaw 的完整过程，涵盖云服务器选购、安装配置、大模型接入、Channel 接入及技能管理，供个人备忘或博客参考。</p>
+</blockquote>
+<hr>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ol>
+<li><a href="#%E4%B8%80%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%80%89%E8%B4%AD%E4%B8%8E%E9%85%8D%E7%BD%AE">云服务器选购与配置</a></li>
+<li><a href="#%E4%BA%8C%E5%AE%89%E8%A3%85-openclaw">安装 OpenClaw</a></li>
+<li><a href="#%E4%B8%89%E5%A4%A7%E6%A8%A1%E5%9E%8B-api-%E6%8E%A5%E5%85%A5">大模型 API 接入</a></li>
+<li><a href="#%E5%9B%9B%E6%8E%A5%E5%85%A5-channel">接入 Channel</a><ul>
+<li><a href="#%E6%8E%A5%E5%85%A5%E9%A3%9E%E4%B9%A6">接入飞书</a></li>
+<li><a href="#%E6%8E%A5%E5%85%A5-qq-%E6%9C%BA%E5%99%A8%E4%BA%BA">接入 QQ 机器人</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BA%94web-ui-%E8%AE%BF%E9%97%AEssh-%E9%9A%A7%E9%81%93">Web UI 访问（SSH 隧道）</a></li>
+<li><a href="#%E5%85%ADclawhub-%E7%99%BB%E5%BD%95%E9%97%AE%E9%A2%98">ClawHub 登录问题</a></li>
+<li><a href="#%E4%B8%83%E6%97%A0%E6%A1%8C%E9%9D%A2-linux-%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BD%BF%E7%94%A8%E6%B5%8F%E8%A7%88%E5%99%A8x11-%E8%BD%AC%E5%8F%91">无桌面 Linux 服务器使用浏览器（X11 转发）</a></li>
+<li><a href="#%E5%85%ABopenclaw-%E6%8A%80%E8%83%BD%E7%AE%A1%E7%90%86skills">OpenClaw 技能管理（Skills）</a></li>
+</ol>
+<hr>
+<h2 id="一、云服务器选购与配置"><a href="#一、云服务器选购与配置" class="headerlink" title="一、云服务器选购与配置"></a>一、云服务器选购与配置</h2><p><strong>优点：</strong> 可以 24 小时在线，不影响本地电脑性能，操作相对安全隔离</p>
+<p><strong>缺点：</strong> 操作便利性不如本地；无桌面环境时，浏览器调用、Web UI 访问、网页登录验证都比较麻烦</p>
+<h3 id="推荐选择海外节点"><a href="#推荐选择海外节点" class="headerlink" title="推荐选择海外节点"></a>推荐选择海外节点</h3><p>海外服务器可以直接访问外网，调用 OpenAI、Anthropic 等国外大模型无需额外代理。</p>
+<blockquote>
+<p>⚠️ 缺点：海外节点普遍比国内贵；免费套餐通常需要 Visa 或信用卡验证。</p>
+</blockquote>
+<h3 id="最低配置建议"><a href="#最低配置建议" class="headerlink" title="最低配置建议"></a>最低配置建议</h3><table>
+<thead>
+<tr>
+<th>配置项</th>
+<th>最低要求</th>
+<th>推荐配置</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CPU</td>
+<td>2 核</td>
+<td>2 核</td>
+</tr>
+<tr>
+<td>内存</td>
+<td>2 GB</td>
+<td>4 GB</td>
+</tr>
+<tr>
+<td>系统</td>
+<td>Ubuntu 20.04+</td>
+<td>Ubuntu 22.04 LTS</td>
+</tr>
+<tr>
+<td>网络</td>
+<td>有公网 IP</td>
+<td>独立公网 IP（非 NAT）</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>💡 <strong>NAT 转发 IP 的坑</strong>：部分廉价云服务器使用 NAT 公网 IP，端口映射受限，可能导致 WebSocket 长连接不稳定、ClawHub 登录回调失败等问题（本人踩坑记录）。</p>
+</blockquote>
+<h3 id="本次测试使用"><a href="#本次测试使用" class="headerlink" title="本次测试使用"></a>本次测试使用</h3><ul>
+<li><strong>服务商</strong>：<a href="https://www.peiqianyun.com/">沛千云</a>（4 元&#x2F;月测试机）</li>
+<li><strong>系统</strong>：Ubuntu（无桌面版）</li>
+<li><strong>注意</strong>：无桌面系统无法直接调用浏览器，详见<a href="#%E4%B8%83%E6%97%A0%E6%A1%8C%E9%9D%A2-linux-%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BD%BF%E7%94%A8%E6%B5%8F%E8%A7%88%E5%99%A8x11-%E8%BD%AC%E5%8F%91">第七节</a></li>
+</ul>
+<hr>
+<h2 id="二、安装-OpenClaw"><a href="#二、安装-OpenClaw" class="headerlink" title="二、安装 OpenClaw"></a>二、安装 OpenClaw</h2><blockquote>
+<p><strong>官方文档</strong>：<a href="https://docs.openclaw.dev/">https://docs.openclaw.dev</a>（请以最新官方文档为准）</p>
+</blockquote>
+<h3 id="前置依赖"><a href="#前置依赖" class="headerlink" title="前置依赖"></a>前置依赖</h3><p>确保服务器已安装 Node.js 18+ 和 npm：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 检查版本</span></span><br><span class="line">node --version   <span class="comment"># 需要 v18.x.x 或更高</span></span><br><span class="line">npm --version</span><br></pre></td></tr></table></figure>
+
+<p>如未安装，执行以下命令安装 Node.js LTS（Ubuntu）：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -fsSL https://deb.nodesource.com/setup_lts.x | <span class="built_in">sudo</span> -E bash -</span><br><span class="line"><span class="built_in">sudo</span> apt-get install -y nodejs</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装-OpenClaw"><a href="#安装-OpenClaw" class="headerlink" title="安装 OpenClaw"></a>安装 OpenClaw</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install -g openclaw@latest</span><br></pre></td></tr></table></figure>
+
+<p>验证安装：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openclaw --version</span><br></pre></td></tr></table></figure>
+
+<h3 id="初始化配置"><a href="#初始化配置" class="headerlink" title="初始化配置"></a>初始化配置</h3><p>安装完成后，执行以下命令进行初始化引导：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openclaw onboard --install-daemon</span><br></pre></td></tr></table></figure>
+
+<p>该命令会自动：</p>
+<ul>
+<li>检测运行环境</li>
+<li>安装后台守护进程（daemon）</li>
+<li>引导填写大模型 API Key 等初始配置</li>
+</ul>
+<p>按照终端提示逐步完成配置即可。</p>
+<hr>
+<h2 id="三、大模型-API-接入"><a href="#三、大模型-API-接入" class="headerlink" title="三、大模型 API 接入"></a>三、大模型 API 接入</h2><p>OpenClaw 需要通过 API Key 调用大模型。</p>
+<h3 id="国内可用服务"><a href="#国内可用服务" class="headerlink" title="国内可用服务"></a>国内可用服务</h3><table>
+<thead>
+<tr>
+<th>服务商</th>
+<th>特点</th>
+<th>官网</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>阿里云百炼（通义千问）</td>
+<td>免费额度多，支持多模型</td>
+<td><a href="https://bailian.console.aliyun.com/">https://bailian.console.aliyun.com</a></td>
+</tr>
+<tr>
+<td>火山引擎（豆包）</td>
+<td>Coding Plan 专项套餐，性价比高</td>
+<td><a href="https://www.volcengine.com/">https://www.volcengine.com</a></td>
+</tr>
+<tr>
+<td>DeepSeek</td>
+<td>价格极低，代码能力强</td>
+<td><a href="https://platform.deepseek.com/">https://platform.deepseek.com</a></td>
+</tr>
+<tr>
+<td>月之暗面（Kimi）</td>
+<td>长上下文能力强</td>
+<td><a href="https://platform.moonshot.cn/">https://platform.moonshot.cn</a></td>
+</tr>
+</tbody></table>
+<h3 id="本次使用"><a href="#本次使用" class="headerlink" title="本次使用"></a>本次使用</h3><p><strong>火山引擎 Coding Plan</strong>（¥8.9&#x2F;月）进行测试，适合代码类任务，性价比较高。</p>
+<p>获取 API Key 步骤：</p>
+<ol>
+<li>登录 <a href="https://console.volcengine.com/ark">https://console.volcengine.com/ark</a></li>
+<li>进入「API Key 管理」，创建并复制 API Key</li>
+<li>在 <code>openclaw onboard</code> 引导步骤中填入，或后续通过配置文件修改</li>
+</ol>
+<hr>
+<h2 id="四、接入-Channel"><a href="#四、接入-Channel" class="headerlink" title="四、接入 Channel"></a>四、接入 Channel</h2><p>OpenClaw 支持接入飞书、Telegram、QQ、企业微信、钉钉等 IM 平台，实现通过聊天软件直接与 AI 交互，方便日常使用。</p>
+<hr>
+<h3 id="接入飞书"><a href="#接入飞书" class="headerlink" title="接入飞书"></a>接入飞书</h3><h4 id="飞书开放平台侧配置"><a href="#飞书开放平台侧配置" class="headerlink" title="飞书开放平台侧配置"></a>飞书开放平台侧配置</h4><h5 id="1-创建企业自建应用"><a href="#1-创建企业自建应用" class="headerlink" title="1. 创建企业自建应用"></a>1. 创建企业自建应用</h5><p>登录 <a href="https://open.feishu.cn/app">https://open.feishu.cn/app</a>，点击「创建企业自建应用」（注意：选「企业自建应用」而非「商店应用」），填写应用名称和描述。</p>
+<p><img src="https://pic3.zhimg.com/v2-304b909ecfaa36a7a48fb39702505cd8_1440w.jpg" alt="飞书创建企业自建应用"></p>
+<h5 id="2-获取应用凭证"><a href="#2-获取应用凭证" class="headerlink" title="2. 获取应用凭证"></a>2. 获取应用凭证</h5><p>进入应用详情页，在「凭证与基础信息」中记录 <strong>App ID</strong> 和 <strong>App Secret</strong>，后续配置 OpenClaw 时需要用到。</p>
+<p><img src="https://pica.zhimg.com/v2-2747e6ec8f9c34e831cc007dd54b33fe_1440w.jpg" alt="获取 App ID 和 App Secret"></p>
+<h5 id="3-添加机器人能力"><a href="#3-添加机器人能力" class="headerlink" title="3. 添加机器人能力"></a>3. 添加机器人能力</h5><p>进入「应用能力」→「添加应用能力」→「按能力添加」，选择【机器人】并点击配置。</p>
+<p><img src="https://pic3.zhimg.com/v2-bce7cef95f071c6032e6387191b2361e_1440w.jpg" alt="添加机器人能力"></p>
+<h5 id="4-设置事件订阅为长连接（WebSocket）"><a href="#4-设置事件订阅为长连接（WebSocket）" class="headerlink" title="4. 设置事件订阅为长连接（WebSocket）"></a>4. 设置事件订阅为长连接（WebSocket）</h5><p>在「事件与回调」→「事件配置」中，将订阅方式改为<strong>长连接</strong>，并添加「接收消息」订阅事件。</p>
+<blockquote>
+<p>💡 使用长连接模式无需公网 IP 和域名，服务器主动建立 WebSocket 连接到飞书服务器，对国内服务器更友好。</p>
+</blockquote>
+<p><img src="https://pic2.zhimg.com/v2-2d172519e54ed320a87a56094d268fad_1440w.jpg" alt="设置长连接事件订阅 1"></p>
+<p><img src="https://pic2.zhimg.com/v2-358b6de9ea88ee21a5d16a6232caa95f_1440w.jpg" alt="设置长连接事件订阅 2"></p>
+<p><img src="https://pica.zhimg.com/v2-12c61ce934e90f2d2a63967a7fb4b09a_1440w.jpg" alt="添加「接收消息」事件"></p>
+<h5 id="5-配置长连接回调"><a href="#5-配置长连接回调" class="headerlink" title="5. 配置长连接回调"></a>5. 配置长连接回调</h5><p>切换到右侧「回调配置」Tab，同样设为长连接，并添加回调「卡片回传交互」，用于处理卡片按钮点击等交互事件。</p>
+<p><img src="https://pic4.zhimg.com/v2-549b063df1a55adb4e29899e4f62df21_1440w.jpg" alt="回调配置长连接 1"></p>
+<p><img src="https://pic4.zhimg.com/v2-4abb2e5d969b1c9def87feab0bcf3a7d_1440w.jpg" alt="回调配置长连接 2"></p>
+<h5 id="6-批量导入权限"><a href="#6-批量导入权限" class="headerlink" title="6. 批量导入权限"></a>6. 批量导入权限</h5><p>进入「权限管理」，清空默认内容，将以下权限配置 JSON <strong>整体粘贴进去</strong>，点击下一步确认。</p>
+<blockquote>
+<p>✅ 以下权限均为<strong>免审权限</strong>，无需飞书管理员审核，可直接生效。</p>
+</blockquote>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;scopes&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;tenant&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">      <span class="string">&quot;application:bot.menu:write&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;calendar:timeoff&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;cardkit:card:write&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;contact:contact.base:readonly&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;contact:user.base:readonly&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;directory:employee.base.background_image:read&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;docs:document:import&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:chat&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:chat.access_event.bot_p2p_chat:read&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:chat.announcement:read&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:chat.announcement:write_only&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:chat.managers:write_only&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:chat.members:bot_access&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:chat.members:read&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:chat.members:write_only&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:chat.menu_tree:read&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:chat.menu_tree:write_only&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:chat.moderation:read&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:chat.tabs:read&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:chat.tabs:write_only&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:chat.top_notice:write_only&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:chat.widgets:read&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:chat.widgets:write_only&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:chat:create&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:chat:delete&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:chat:moderation:write_only&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:chat:operate_as_owner&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:chat:read&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:chat:readonly&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:chat:update&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:message&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:message.group_at_msg:readonly&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:message.group_msg&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:message.p2p_msg:readonly&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:message.pins:read&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:message.pins:write_only&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:message.reactions:read&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:message.reactions:write_only&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:message.urgent&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:message.urgent.status:write&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:message:readonly&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:message:recall&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:message:send_as_bot&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:message:send_multi_depts&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:message:send_multi_users&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:message:send_sys_msg&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:message:update&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:resource&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:url_preview.update&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:user_agent:read&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;optical_char_recognition:image&quot;</span></span><br><span class="line">    <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;user&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">      <span class="string">&quot;directory:employee.base.background_image:read&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;docs:document:import&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:chat&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:chat.access_event.bot_p2p_chat:read&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:chat.announcement:read&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:chat.announcement:write_only&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:chat.managers:write_only&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:chat.members:read&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:chat.members:write_only&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:chat.moderation:read&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:chat.tabs:read&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:chat.tabs:write_only&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:chat.top_notice:write_only&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:chat:delete&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:chat:moderation:write_only&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:chat:read&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:chat:readonly&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:chat:update&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:message&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:message.pins:read&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:message.pins:write_only&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:message.reactions:read&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:message.reactions:write_only&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:message.urgent.status:write&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:message:readonly&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:message:recall&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;im:message:update&quot;</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="7-创建版本并发布"><a href="#7-创建版本并发布" class="headerlink" title="7. 创建版本并发布"></a>7. 创建版本并发布</h5><p>创建版本号（如 <code>v1.0.0</code>）并提交发布，等待审核通过（自建应用通常即时生效）。</p>
+<p><img src="https://picx.zhimg.com/v2-634f6752b40d4018f211fe9de040c4f1_1440w.jpg" alt="创建版本"></p>
+<p><img src="https://pic1.zhimg.com/v2-65dfa339de09bb824136be9bf5895ad2_1440w.jpg" alt="发布应用"></p>
+<h4 id="OpenClaw-侧配置"><a href="#OpenClaw-侧配置" class="headerlink" title="OpenClaw 侧配置"></a>OpenClaw 侧配置</h4><p>在 OpenClaw 中添加飞书 Channel，填入上面获取的 App ID 和 App Secret：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openclaw channels add --channel feishu --app-id <span class="string">&quot;你的AppID&quot;</span> --app-secret <span class="string">&quot;你的AppSecret&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>重启服务生效：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openclaw gateway restart</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="接入-QQ-机器人"><a href="#接入-QQ-机器人" class="headerlink" title="接入 QQ 机器人"></a>接入 QQ 机器人</h3><blockquote>
+<p>本方式使用原生方法（非腾讯云一键部署），适合使用非腾讯云服务器的用户。</p>
+</blockquote>
+<h5 id="第-1-步：创建-QQ-机器人"><a href="#第-1-步：创建-QQ-机器人" class="headerlink" title="第 1 步：创建 QQ 机器人"></a>第 1 步：创建 QQ 机器人</h5><p>访问 <a href="https://q.qq.com/">https://q.qq.com</a> —— QQ 开放平台，创建机器人应用。</p>
+<p>记录好以下信息（后续配置需要用到）：</p>
+<ul>
+<li><strong>AppID</strong></li>
+<li><strong>AppSecret</strong></li>
+</ul>
+<h5 id="第-2-步：安装-QQ-Bot-插件"><a href="#第-2-步：安装-QQ-Bot-插件" class="headerlink" title="第 2 步：安装 QQ Bot 插件"></a>第 2 步：安装 QQ Bot 插件</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openclaw plugins install @tencent-connect/openclaw-qqbot@latest</span><br></pre></td></tr></table></figure>
+
+<h5 id="第-3-步：绑定-QQ-机器人"><a href="#第-3-步：绑定-QQ-机器人" class="headerlink" title="第 3 步：绑定 QQ 机器人"></a>第 3 步：绑定 QQ 机器人</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 将 AppID:AppSecret 替换为你的实际凭证</span></span><br><span class="line">openclaw channels add --channel qqbot --token <span class="string">&quot;你的AppID:你的AppSecret&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="第-4-步：重启-OpenClaw-服务"><a href="#第-4-步：重启-OpenClaw-服务" class="headerlink" title="第 4 步：重启 OpenClaw 服务"></a>第 4 步：重启 OpenClaw 服务</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openclaw gateway restart</span><br></pre></td></tr></table></figure>
+
+<p>验证是否接入成功：在 QQ 中 @ 机器人发送消息，观察是否有响应。</p>
+<hr>
+<h2 id="五、Web-UI-访问（SSH-隧道）"><a href="#五、Web-UI-访问（SSH-隧道）" class="headerlink" title="五、Web UI 访问（SSH 隧道）"></a>五、Web UI 访问（SSH 隧道）</h2><p>OpenClaw 自带 Web UI 管理面板，默认监听 <code>127.0.0.1:18789</code>（仅本地访问）。</p>
+<p>在无公网 IP 或不想暴露端口的情况下，可通过 <strong>SSH 隧道</strong>将云服务器的端口映射到本地访问。</p>
+<h3 id="建立-SSH-隧道"><a href="#建立-SSH-隧道" class="headerlink" title="建立 SSH 隧道"></a>建立 SSH 隧道</h3><p>在<strong>本地电脑</strong>终端（Windows PowerShell &#x2F; macOS Terminal）执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 格式：ssh -L 本地端口:远端地址:远端端口 -p SSH端口 用户名@服务器IP</span></span><br><span class="line">ssh -L 18789:127.0.0.1:18789 -p 10022 root@你的服务器IP</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>将 <code>10022</code> 替换为你服务器的 SSH 端口，<code>你的服务器IP</code> 替换为实际 IP。</p>
+</blockquote>
+<p>隧道建立后，打开本地浏览器访问：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://localhost:18789</span><br></pre></td></tr></table></figure>
+
+<p>即可看到 OpenClaw Web UI 管理面板。</p>
+<h3 id="保持隧道后台运行（可选）"><a href="#保持隧道后台运行（可选）" class="headerlink" title="保持隧道后台运行（可选）"></a>保持隧道后台运行（可选）</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 在后台静默运行隧道（-N 不执行远程命令，-f 后台运行）</span></span><br><span class="line">ssh -N -f -L 18789:127.0.0.1:18789 -p 10022 root@你的服务器IP</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="六、ClawHub-登录问题"><a href="#六、ClawHub-登录问题" class="headerlink" title="六、ClawHub 登录问题"></a>六、ClawHub 登录问题</h2><h3 id="为什么需要登录-ClawHub？"><a href="#为什么需要登录-ClawHub？" class="headerlink" title="为什么需要登录 ClawHub？"></a>为什么需要登录 ClawHub？</h3><p>未登录状态下从 ClawHub 下载技能（Skills）有速率限制：几分钟内只能下载一个，频繁下载还会被封 IP，报错信息类似：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Error: Rate limit exceeded. Please login to download more skills.</span><br></pre></td></tr></table></figure>
+
+<h3 id="登录方式"><a href="#登录方式" class="headerlink" title="登录方式"></a>登录方式</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npx clawhub@latest login</span><br></pre></td></tr></table></figure>
+
+<p>正常情况下会自动打开浏览器完成 OAuth 登录。</p>
+<h3 id="问题：无桌面服务器登录失败"><a href="#问题：无桌面服务器登录失败" class="headerlink" title="问题：无桌面服务器登录失败"></a>问题：无桌面服务器登录失败</h3><p>无桌面 Linux 服务器没有浏览器，执行登录命令会报错：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Error: spawn xdg-open ENOENT</span><br></pre></td></tr></table></figure>
+
+<p><strong>解决方案一：SSH 隧道 + 本地浏览器（推荐）</strong></p>
+<p>先建立 SSH 隧道（见第五节），然后在命令中指定本地回调：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npx clawhub@latest login --no-browser</span><br></pre></td></tr></table></figure>
+
+<p>复制输出的授权 URL，在本地浏览器中打开完成登录。</p>
+<p><strong>解决方案二：手动输入 Token（最终有效方案）</strong></p>
+<blockquote>
+<p>2026&#x2F;3&#x2F;12 16：54 修改</p>
+<p>本地电脑浏览器登录clawhub，设置里找到token，然后服务器输入下面命令即可</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npx clawhub@latest login --token 输入你的token</span><br></pre></td></tr></table></figure></blockquote>
+<p>如果 SSH 隧道方式也不成功（如服务器使用 NAT 转发 IP、端口受限），可以手动获取 Token 登录：</p>
+<ol>
+<li><p>在本地电脑上执行 <code>npx clawhub@latest login</code>，完成登录</p>
+</li>
+<li><p>查看本地生成的 Token：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># macOS / Linux 本地</span></span><br><span class="line"><span class="built_in">cat</span> ~/.clawhub/token</span><br><span class="line"></span><br><span class="line"><span class="comment"># Windows PowerShell 本地</span></span><br><span class="line"><span class="built_in">type</span> <span class="variable">$env</span>:USERPROFILE\.clawhub\token</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在云服务器上手动写入 Token：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p ~/.clawhub</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;你复制的token内容&quot;</span> &gt; ~/.clawhub/token</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>验证登录状态：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npx clawhub@latest <span class="built_in">whoami</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<blockquote>
+<p>📝 <strong>踩坑记录</strong>：上述 X11 和 SSH 隧道方式在本机测试均未成功，怀疑原因是云服务器使用了 NAT 转发公网 IP，端口映射存在限制。最终通过手动写入 Token 解决。</p>
+</blockquote>
+<hr>
+<h2 id="七、无桌面-Linux-服务器使用浏览器（X11-转发）"><a href="#七、无桌面-Linux-服务器使用浏览器（X11-转发）" class="headerlink" title="七、无桌面 Linux 服务器使用浏览器（X11 转发）"></a>七、无桌面 Linux 服务器使用浏览器（X11 转发）</h2><p>适用场景：需要在服务器上打开浏览器（如完成网页登录验证）时使用。</p>
+<blockquote>
+<p>⚠️ 此方案需要 Windows 本地安装 <a href="https://mobaxterm.mobatek.net/download-home-edition.html">MobaXterm</a>（免费版即可），其内置 X11 Server。</p>
+</blockquote>
+<h3 id="第-1-步：MobaXterm-开启-X11-转发"><a href="#第-1-步：MobaXterm-开启-X11-转发" class="headerlink" title="第 1 步：MobaXterm 开启 X11 转发"></a>第 1 步：MobaXterm 开启 X11 转发</h3><ol>
+<li>打开 MobaXterm，右键编辑你的服务器 Session</li>
+<li>进入 <strong>「Advanced SSH settings」</strong> 标签页</li>
+<li>勾选 <strong>「X11-forwarding」</strong>（必须勾选）</li>
+<li>保存后<strong>重新连接服务器</strong></li>
+</ol>
+<blockquote>
+<p>连接成功后，MobaXterm 底部状态栏会显示 <code>X11-forwarding enabled</code>，说明 X Server 已启动。</p>
+</blockquote>
+<h3 id="第-2-步：服务器安装-Firefox"><a href="#第-2-步：服务器安装-Firefox" class="headerlink" title="第 2 步：服务器安装 Firefox"></a>第 2 步：服务器安装 Firefox</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Ubuntu / Debian</span></span><br><span class="line">apt update &amp;&amp; apt install -y firefox</span><br></pre></td></tr></table></figure>
+
+<p>验证安装：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">firefox --version</span><br><span class="line"><span class="comment"># 输出类似：Mozilla Firefox 124.0</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>安装过程中若出现图形库需要重启的提示，按 Tab 键选择「OK」回车即可继续。</p>
+</blockquote>
+<h3 id="第-3-步：启动-Firefox（X11-转发到本地）"><a href="#第-3-步：启动-Firefox（X11-转发到本地）" class="headerlink" title="第 3 步：启动 Firefox（X11 转发到本地）"></a>第 3 步：启动 Firefox（X11 转发到本地）</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># root 用户必须加 --no-sandbox，否则会报权限错误</span></span><br><span class="line">firefox --no-sandbox --display <span class="variable">$DISPLAY</span></span><br></pre></td></tr></table></figure>
+
+<p>如果 X11 转发配置正确，<strong>你的 Windows 本地桌面上会弹出一个 Firefox 窗口</strong>，这个窗口实际运行在服务器上，但显示在本地屏幕。</p>
+<blockquote>
+<p>💡 首次启动较慢，耐心等待 3-5 秒。</p>
+</blockquote>
+<h3 id="第-4-步：在弹出的-Firefox-中完成登录"><a href="#第-4-步：在弹出的-Firefox-中完成登录" class="headerlink" title="第 4 步：在弹出的 Firefox 中完成登录"></a>第 4 步：在弹出的 Firefox 中完成登录</h3><p>浏览器弹出后，访问 ClawHub 或其他需要网页登录的地址，完成扫码或账号登录即可。</p>
+<hr>
+<h2 id="八、OpenClaw-技能管理（Skills）"><a href="#八、OpenClaw-技能管理（Skills）" class="headerlink" title="八、OpenClaw 技能管理（Skills）"></a>八、OpenClaw 技能管理（Skills）</h2><blockquote>
+<p>参考：<a href="https://www.cnblogs.com/informatics/p/19679935">https://www.cnblogs.com/informatics/p/19679935</a></p>
+</blockquote>
+<h3 id="ClawHub-CLI-常用命令"><a href="#ClawHub-CLI-常用命令" class="headerlink" title="ClawHub CLI 常用命令"></a>ClawHub CLI 常用命令</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装 ClawHub CLI（如未安装）</span></span><br><span class="line">npm i -g clawhub</span><br><span class="line"></span><br><span class="line"><span class="comment"># 搜索技能</span></span><br><span class="line">clawhub search <span class="string">&quot;browser automation&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装技能</span></span><br><span class="line">clawhub install &lt;skill-slug&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看已安装的技能列表</span></span><br><span class="line">clawhub list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新所有技能到最新版</span></span><br><span class="line">clawhub update --all</span><br><span class="line"></span><br><span class="line"><span class="comment"># 卸载技能</span></span><br><span class="line">clawhub uninstall &lt;skill-slug&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Skills-加载优先级"><a href="#Skills-加载优先级" class="headerlink" title="Skills 加载优先级"></a>Skills 加载优先级</h3><p>OpenClaw 按以下优先级加载技能，<strong>高优先级同名技能会覆盖低优先级</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">优先级 1（最高）：工作区技能   &lt;workspace&gt;/skills/</span><br><span class="line">优先级 2         ：用户技能     ~/.openclaw/skills/</span><br><span class="line">优先级 3（最低）：内置技能     随 OpenClaw 安装包附带</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>💡 可以将任意 Skill Fork 到工作区目录（<code>&lt;workspace&gt;/skills/</code>）下进行自定义修改，不影响原版。</p>
+</blockquote>
+<h3 id="⚠️-安全警告：ClawHavoc-供应链攻击事件"><a href="#⚠️-安全警告：ClawHavoc-供应链攻击事件" class="headerlink" title="⚠️ 安全警告：ClawHavoc 供应链攻击事件"></a>⚠️ 安全警告：ClawHavoc 供应链攻击事件</h3><p>2025 年末至 2026 年初，ClawHub 曾遭遇大规模供应链投毒攻击（<strong>ClawHavoc 事件</strong>），安全公司 Koi Security 识别出 341~1184 个恶意 Skills，感染率约 12%。攻击者主要伪装成<strong>加密货币工具、YouTube 工具</strong>等热门类目投放恶意技能。</p>
+<p><strong>安装任何 Skill 前，务必检查以下几项：</strong></p>
+<ul>
+<li>✅ 优先选择<strong>高星数、高安装量</strong>的 Skills</li>
+<li>✅ 确认 ClawHub 页面上 <strong>Security Scan 结果为 “Benign”</strong>（绿色标签）</li>
+<li>✅ 查看 ClawHub 页面上的 <strong>VirusTotal 扫描结果</strong></li>
+<li>✅ 阅读 <code>SKILL.md</code> 源码，检查是否有可疑的「前置条件」或不明网络请求</li>
+<li>✅ 使用 ClawdStrike 工具进行安全审计（详见 ClawHub 安全文档）</li>
+</ul>
+<hr>
+<h3 id="推荐技能列表"><a href="#推荐技能列表" class="headerlink" title="推荐技能列表"></a>推荐技能列表</h3><h4 id="🟢-低风险必装"><a href="#🟢-低风险必装" class="headerlink" title="🟢 低风险必装"></a>🟢 低风险必装</h4><table>
+<thead>
+<tr>
+<th>技能名</th>
+<th>功能</th>
+<th>安装命令</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>summarize</code></td>
+<td>对网页、PDF、播客、长文进行智能摘要。40 分钟播客 20 秒出摘要，据用户反馈每周可节省 5 小时以上</td>
+<td><code>clawhub install summarize</code></td>
+</tr>
+<tr>
+<td><code>weather</code></td>
+<td>获取本地天气预报，免费无需 API Key，即装即用，配合每日简报效果佳</td>
+<td><code>clawhub install weather</code></td>
+</tr>
+</tbody></table>
+<h4 id="🔴-高风险（谨慎使用）"><a href="#🔴-高风险（谨慎使用）" class="headerlink" title="🔴 高风险（谨慎使用）"></a>🔴 高风险（谨慎使用）</h4><table>
+<thead>
+<tr>
+<th>技能名</th>
+<th>功能</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>himalaya</code></td>
+<td>通用 IMAP&#x2F;SMTP 邮件收发，适合非 Gmail 邮箱用户</td>
+<td>需要存储邮箱账号密码，存在凭证泄露风险，请仅在可信环境中使用</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="实时搜索：Tavily-Search"><a href="#实时搜索：Tavily-Search" class="headerlink" title="实时搜索：Tavily Search"></a>实时搜索：Tavily Search</h3><p><strong>功能说明</strong>：OpenClaw 默认知识有截止日期，安装此技能后 AI 可实时搜索全网信息（新闻、天气、最新动态等），是摆脱”幻觉”和知识过期的第一步。</p>
+<p><strong>安装命令：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">clawhub install tavily-search</span><br></pre></td></tr></table></figure>
+
+<p><strong>API Key 配置：</strong></p>
+<ol>
+<li>访问 <a href="https://tavily.com/">https://tavily.com</a> 注册账号（免费额度对个人使用完全够用）</li>
+<li>在 Dashboard 中获取 API Key</li>
+<li>在终端配置：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">clawhub config <span class="built_in">set</span> TAVILY_API_KEY 你的TavilyAPIKey</span><br></pre></td></tr></table></figure>
+
+<p><strong>使用示例：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">用户：帮我查询一下佛山今天的天气。</span><br><span class="line">用户：最近有哪些 AI 新闻？</span><br><span class="line">用户：查一下比特币现在的价格。</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="附录：常用命令速查"><a href="#附录：常用命令速查" class="headerlink" title="附录：常用命令速查"></a>附录：常用命令速查</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看 OpenClaw 版本</span></span><br><span class="line">openclaw --version</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看运行状态</span></span><br><span class="line">openclaw status</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启后台服务</span></span><br><span class="line">openclaw gateway restart</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看已接入的 Channel 列表</span></span><br><span class="line">openclaw channels list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看日志（排查问题用）</span></span><br><span class="line">openclaw logs --<span class="built_in">tail</span> 100</span><br><span class="line"></span><br><span class="line"><span class="comment"># SSH 隧道（本地执行，访问 Web UI）</span></span><br><span class="line">ssh -L 18789:127.0.0.1:18789 -p 10022 root@你的服务器IP</span><br><span class="line"></span><br><span class="line"><span class="comment"># ClawHub 登录</span></span><br><span class="line">npx clawhub@latest login</span><br><span class="line"></span><br><span class="line"><span class="comment"># ClawHub 查看登录状态</span></span><br><span class="line">npx clawhub@latest <span class="built_in">whoami</span></span><br></pre></td></tr></table></figure>
+]]></content>
+  </entry>
+  <entry>
+    <title>skill概念理解、使用与创建</title>
+    <url>/2026/03/12/skill%E6%A6%82%E5%BF%B5%E7%90%86%E8%A7%A3%E3%80%81%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%88%9B%E5%BB%BA/</url>
+    <content><![CDATA[<h1 id="Skill-详解：概念、使用与创建"><a href="#Skill-详解：概念、使用与创建" class="headerlink" title="Skill 详解：概念、使用与创建"></a>Skill 详解：概念、使用与创建</h1><blockquote>
+<p>以 OpenClaw &#x2F; Claude 平台为例，记录 Skill 的完整使用方式，供个人学习与备忘。</p>
+</blockquote>
+<hr>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ol>
+<li><a href="#%E4%B8%80%E4%BB%80%E4%B9%88%E6%98%AF-skill">什么是 Skill</a></li>
+<li><a href="#%E4%BA%8Cskill-%E8%83%BD%E5%81%9A%E4%BB%80%E4%B9%88%E5%85%B7%E4%BD%93%E4%B8%BE%E4%BE%8B">Skill 能做什么：具体举例</a></li>
+<li><a href="#%E4%B8%89skill-%E7%9A%84%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84">Skill 的文件结构</a></li>
+<li><a href="#%E5%9B%9B%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-skillclawhub-%E5%AE%89%E8%A3%85%E4%B8%8E%E7%AE%A1%E7%90%86">如何使用 Skill（ClawHub 安装与管理）</a></li>
+<li><a href="#%E4%BA%94%E5%A6%82%E4%BD%95%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84-skill">如何创建自己的 Skill</a></li>
+<li><a href="#%E5%85%ADopenclaw-%E5%AE%9E%E6%88%98%E4%B8%BE%E4%BE%8B">OpenClaw 实战举例</a></li>
+<li><a href="#%E4%B8%83%E5%AE%89%E5%85%A8%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9">安全注意事项</a></li>
+<li><a href="#%E5%85%AB%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5">常用命令速查</a></li>
+</ol>
+<hr>
+<h2 id="一、什么是-Skill"><a href="#一、什么是-Skill" class="headerlink" title="一、什么是 Skill"></a>一、什么是 Skill</h2><h3 id="一句话定义"><a href="#一句话定义" class="headerlink" title="一句话定义"></a>一句话定义</h3><p><strong>Skill（技能）是一段给 AI 看的”操作说明书”</strong>，它告诉 AI 在遇到特定任务时应该怎么做、按什么步骤做、输出什么格式。</p>
+<h3 id="类比理解"><a href="#类比理解" class="headerlink" title="类比理解"></a>类比理解</h3><p>可以把 AI 理解成一个能力很强但什么都不专精的新员工。</p>
+<ul>
+<li><strong>没有 Skill</strong>：你每次都要手动告诉它”帮我搜索这个关键词，用这个 API，返回这个格式……”</li>
+<li><strong>有了 Skill</strong>：你只需要说”帮我搜索一下佛山天气”，AI 自动知道该调用哪个工具、怎么处理结果、用什么格式回复你</li>
+</ul>
+<p>Skill 本质上是<strong>将复杂的、重复的任务流程提前写好</strong>，让 AI 每次遇到类似任务时直接按方案执行，不需要重新”教”它。</p>
+<h3 id="和”插件”有什么区别？"><a href="#和”插件”有什么区别？" class="headerlink" title="和”插件”有什么区别？"></a>和”插件”有什么区别？</h3><table>
+<thead>
+<tr>
+<th>概念</th>
+<th>本质</th>
+<th>谁来写</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>插件（Plugin）</td>
+<td>一段可执行代码，扩展软件功能</td>
+<td>开发者</td>
+</tr>
+<tr>
+<td>Skill</td>
+<td>一份 Markdown 说明文档，指导 AI 行为</td>
+<td>任何人都可以写</td>
+</tr>
+</tbody></table>
+<p>Skill 不是代码插件，<strong>核心文件是一个 Markdown 文本文件</strong>（<code>SKILL.md</code>），普通用户也能创建。</p>
+<hr>
+<h2 id="二、Skill-能做什么：具体举例"><a href="#二、Skill-能做什么：具体举例" class="headerlink" title="二、Skill 能做什么：具体举例"></a>二、Skill 能做什么：具体举例</h2><h3 id="例-1：天气查询（weather）"><a href="#例-1：天气查询（weather）" class="headerlink" title="例 1：天气查询（weather）"></a>例 1：天气查询（weather）</h3><p><strong>没有 Skill 时：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">用户：佛山今天天气怎么样？</span><br><span class="line">AI：我没有实时数据，无法告诉你当前天气。</span><br></pre></td></tr></table></figure>
+
+<p><strong>安装 weather Skill 后：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">用户：佛山今天天气怎么样？</span><br><span class="line">AI：（自动调用天气 API）佛山今日多云，气温 22~28°C，东南风 3 级，</span><br><span class="line">    体感舒适，无需带伞。</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="例-2：网页-PDF-摘要（summarize）"><a href="#例-2：网页-PDF-摘要（summarize）" class="headerlink" title="例 2：网页&#x2F;PDF 摘要（summarize）"></a>例 2：网页&#x2F;PDF 摘要（summarize）</h3><p><strong>没有 Skill 时：</strong></p>
+<p>需要手动把内容复制粘贴给 AI，再告诉它”帮我总结一下”。</p>
+<p><strong>安装 summarize Skill 后：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">用户：帮我总结这篇文章 https://example.com/long-article</span><br><span class="line">AI：（自动抓取网页、提取正文、生成摘要）</span><br><span class="line">    核心观点：……</span><br><span class="line">    关键数据：……</span><br><span class="line">    结论：……</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="例-3：实时搜索（tavily-search）"><a href="#例-3：实时搜索（tavily-search）" class="headerlink" title="例 3：实时搜索（tavily-search）"></a>例 3：实时搜索（tavily-search）</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">用户：马斯克今天发了什么推特？</span><br><span class="line">AI：（调用 Tavily 搜索 API，检索最新内容）</span><br><span class="line">    根据今日搜索结果：……</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="例-4：邮件管理（himalaya）"><a href="#例-4：邮件管理（himalaya）" class="headerlink" title="例 4：邮件管理（himalaya）"></a>例 4：邮件管理（himalaya）</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">用户：帮我查一下有没有新邮件</span><br><span class="line">AI：（通过 IMAP 协议连接邮箱，读取未读邮件列表）</span><br><span class="line">    你有 3 封未读邮件：</span><br><span class="line">    1. [发件人] 主题 …… (10分钟前)</span><br><span class="line">    ……</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="三、Skill-的文件结构"><a href="#三、Skill-的文件结构" class="headerlink" title="三、Skill 的文件结构"></a>三、Skill 的文件结构</h2><p>一个完整的 Skill 由以下文件组成：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">skill-name/</span><br><span class="line">├── SKILL.md          ← 核心文件（必须），AI 的&quot;操作说明书&quot;</span><br><span class="line">├── scripts/          ← 可选，可执行脚本（处理复杂逻辑）</span><br><span class="line">├── references/       ← 可选，参考文档（AI 按需读取）</span><br><span class="line">└── assets/           ← 可选，附带资源（模板、图标等）</span><br></pre></td></tr></table></figure>
+
+<h3 id="SKILL-md-的结构"><a href="#SKILL-md-的结构" class="headerlink" title="SKILL.md 的结构"></a>SKILL.md 的结构</h3><p><code>SKILL.md</code> 是 Skill 最重要的文件，分为两部分：</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">name: skill-name</span><br><span class="line">description: 这里描述这个 Skill 做什么、什么时候触发。</span><br><span class="line"><span class="section">             AI 会读这段描述来决定要不要使用这个 Skill。</span></span><br><span class="line"><span class="section">---</span></span><br><span class="line"></span><br><span class="line"><span class="section"># Skill 正文</span></span><br><span class="line"></span><br><span class="line">这里写具体的操作步骤、注意事项、输出格式要求……</span><br><span class="line">（普通 Markdown 格式，AI 会按照这里的说明行动）</span><br></pre></td></tr></table></figure>
+
+<p><strong><code>description</code> 字段非常关键</strong>：AI 是根据 description 来判断当前任务是否需要调用这个 Skill 的。描述写得越准确，触发越精准。</p>
+<h3 id="三级加载机制"><a href="#三级加载机制" class="headerlink" title="三级加载机制"></a>三级加载机制</h3><p>Skill 采用按需加载，避免占用过多 AI 上下文：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">第 1 级：name + description   ← 始终在 AI 视野里（约 100 字）</span><br><span class="line">第 2 级：SKILL.md 正文        ← Skill 触发时才加载（建议 500 行以内）</span><br><span class="line">第 3 级：scripts / references ← 需要时才读取（大小不限）</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="四、如何使用-Skill（ClawHub-安装与管理）"><a href="#四、如何使用-Skill（ClawHub-安装与管理）" class="headerlink" title="四、如何使用 Skill（ClawHub 安装与管理）"></a>四、如何使用 Skill（ClawHub 安装与管理）</h2><p>ClawHub 是 OpenClaw 的技能市场，类似于手机的”应用商店”。</p>
+<p>官网：<a href="https://clawhub.com/">https://clawhub.com</a></p>
+<h3 id="安装-ClawHub-CLI"><a href="#安装-ClawHub-CLI" class="headerlink" title="安装 ClawHub CLI"></a>安装 ClawHub CLI</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm i -g clawhub</span><br></pre></td></tr></table></figure>
+
+<h3 id="常用管理命令"><a href="#常用管理命令" class="headerlink" title="常用管理命令"></a>常用管理命令</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 搜索技能</span></span><br><span class="line">clawhub search <span class="string">&quot;weather&quot;</span></span><br><span class="line">clawhub search <span class="string">&quot;browser automation&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装技能</span></span><br><span class="line">clawhub install tavily-search</span><br><span class="line">clawhub install summarize</span><br><span class="line">clawhub install weather</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看已安装的技能列表</span></span><br><span class="line">clawhub list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新所有技能到最新版</span></span><br><span class="line">clawhub update --all</span><br><span class="line"></span><br><span class="line"><span class="comment"># 卸载技能</span></span><br><span class="line">clawhub uninstall &lt;skill-name&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Skill-的加载优先级"><a href="#Skill-的加载优先级" class="headerlink" title="Skill 的加载优先级"></a>Skill 的加载优先级</h3><p>当多个位置存在同名 Skill 时，按以下顺序加载，<strong>高优先级覆盖低优先级</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">优先级 1（最高）：工作区技能   &lt;你的项目目录&gt;/skills/</span><br><span class="line">优先级 2         ：用户技能     ~/.openclaw/skills/</span><br><span class="line">优先级 3（最低）：内置技能     随 OpenClaw 安装包自带</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>💡 <strong>实用技巧</strong>：想修改某个公开 Skill 的行为？把它复制到你的项目 <code>skills/</code> 目录下改，不影响原版，也不用等官方更新。</p>
+</blockquote>
+<h3 id="登录-ClawHub（下载限速解除）"><a href="#登录-ClawHub（下载限速解除）" class="headerlink" title="登录 ClawHub（下载限速解除）"></a>登录 ClawHub（下载限速解除）</h3><p>未登录时下载 Skill 有频率限制（几分钟只能下一个），登录后解除限制：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npx clawhub@latest login</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="五、如何创建自己的-Skill"><a href="#五、如何创建自己的-Skill" class="headerlink" title="五、如何创建自己的 Skill"></a>五、如何创建自己的 Skill</h2><p>任何人都可以创建 Skill，不需要会编程，核心就是写一个 <code>SKILL.md</code> 文件。</p>
+<h3 id="创建流程"><a href="#创建流程" class="headerlink" title="创建流程"></a>创建流程</h3><h4 id="第-1-步：明确你要解决的问题"><a href="#第-1-步：明确你要解决的问题" class="headerlink" title="第 1 步：明确你要解决的问题"></a>第 1 步：明确你要解决的问题</h4><p>在写 Skill 之前，先想清楚三件事：</p>
+<ol>
+<li><strong>这个 Skill 要让 AI 做什么？</strong>（目标）</li>
+<li><strong>用户说什么话时应该触发？</strong>（触发条件）</li>
+<li><strong>期望 AI 输出什么格式？</strong>（输出规范）</li>
+</ol>
+<h4 id="第-2-步：创建-Skill-文件夹"><a href="#第-2-步：创建-Skill-文件夹" class="headerlink" title="第 2 步：创建 Skill 文件夹"></a>第 2 步：创建 Skill 文件夹</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 在你的项目 skills 目录下创建</span></span><br><span class="line"><span class="built_in">mkdir</span> -p skills/my-skill</span><br></pre></td></tr></table></figure>
+
+<h4 id="第-3-步：编写-SKILL-md"><a href="#第-3-步：编写-SKILL-md" class="headerlink" title="第 3 步：编写 SKILL.md"></a>第 3 步：编写 SKILL.md</h4><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">name: my-skill</span><br><span class="line">description: |</span><br><span class="line">  这个 Skill 用于做 XXX。</span><br><span class="line">  当用户说&quot;帮我XXX&quot;、&quot;查询XXX&quot;、&quot;处理XXX文件&quot;时触发。</span><br><span class="line"><span class="section">  适合 XXX 场景，能够自动完成 XXX 步骤。</span></span><br><span class="line"><span class="section">---</span></span><br><span class="line"></span><br><span class="line"><span class="section"># My Skill</span></span><br><span class="line"></span><br><span class="line"><span class="section">## 功能说明</span></span><br><span class="line"></span><br><span class="line">这个 Skill 的主要功能是……</span><br><span class="line"></span><br><span class="line"><span class="section">## 操作步骤</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">1.</span> 首先，……</span><br><span class="line"><span class="bullet">2.</span> 然后，……</span><br><span class="line"><span class="bullet">3.</span> 最后，以以下格式输出结果：</span><br><span class="line"></span><br><span class="line"><span class="section">## 输出格式</span></span><br><span class="line"></span><br><span class="line">\<span class="code">`\`</span>\`</span><br><span class="line">标题：xxx</span><br><span class="line">内容：xxx</span><br><span class="line">来源：xxx</span><br><span class="line">\<span class="code">`\`</span>\`</span><br><span class="line"></span><br><span class="line"><span class="section">## 注意事项</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> 如果遇到 XX 情况，应该……</span><br><span class="line"><span class="bullet">-</span> 不要……</span><br></pre></td></tr></table></figure>
+
+<h4 id="第-4-步：测试-Skill"><a href="#第-4-步：测试-Skill" class="headerlink" title="第 4 步：测试 Skill"></a>第 4 步：测试 Skill</h4><p>把 <code>SKILL.md</code> 放到项目 <code>skills/</code> 目录后，重启 OpenClaw 服务，然后向 AI 发送触发语句，观察是否按预期执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openclaw gateway restart</span><br></pre></td></tr></table></figure>
+
+<h4 id="第-5-步：发布到-ClawHub（可选）"><a href="#第-5-步：发布到-ClawHub（可选）" class="headerlink" title="第 5 步：发布到 ClawHub（可选）"></a>第 5 步：发布到 ClawHub（可选）</h4><p>如果想分享给其他人使用，可以打包发布：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 打包成 .skill 文件</span></span><br><span class="line">npm run package-skill skills/my-skill</span><br><span class="line"></span><br><span class="line"><span class="comment"># 按 ClawHub 官网引导上传发布</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="一个完整的创建示例：「每日简报」Skill"><a href="#一个完整的创建示例：「每日简报」Skill" class="headerlink" title="一个完整的创建示例：「每日简报」Skill"></a>一个完整的创建示例：「每日简报」Skill</h3><p><strong>需求</strong>：每天早上问 AI “今天有什么值得关注的新闻？”，AI 自动搜索并用固定格式输出简报。</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">name: daily-brief</span><br><span class="line">description: |</span><br><span class="line">  生成每日信息简报。当用户说&quot;今天有什么新闻&quot;、&quot;帮我出一份早报&quot;、</span><br><span class="line">  &quot;今日简报&quot;、&quot;最近有什么大事&quot;时触发。</span><br><span class="line"><span class="section">  会自动搜索科技、财经、AI 领域的最新动态，整理成简洁的摘要格式。</span></span><br><span class="line"><span class="section">---</span></span><br><span class="line"></span><br><span class="line"><span class="section"># Daily Brief</span></span><br><span class="line"></span><br><span class="line"><span class="section">## 执行步骤</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">1.</span> 使用搜索工具，依次搜索以下关键词：</span><br><span class="line"><span class="bullet">   -</span> &quot;今日科技新闻&quot;</span><br><span class="line"><span class="bullet">   -</span> &quot;今日 AI 进展&quot;</span><br><span class="line"><span class="bullet">   -</span> &quot;今日财经要闻&quot;</span><br><span class="line"></span><br><span class="line"><span class="bullet">2.</span> 从结果中筛选出最近 24 小时内的内容</span><br><span class="line"></span><br><span class="line"><span class="bullet">3.</span> 按以下格式输出：</span><br><span class="line"></span><br><span class="line"><span class="section">## 输出格式</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>📅 今日简报 - {日期}</p>
+<p>🤖 AI 动态<br>• [标题]：[一句话摘要]<br>• [标题]：[一句话摘要]</p>
+<p>💻 科技要闻<br>• [标题]：[一句话摘要]</p>
+<p>💰 财经简讯<br>• [标题]：[一句话摘要]</p>
+<hr>
+<p>数据来源：[搜索结果来源]</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">## 注意</span><br><span class="line"></span><br><span class="line">- 每个分类最多列 3 条，保持简洁</span><br><span class="line">- 摘要不超过 30 字</span><br><span class="line">- 如果某分类没有近 24 小时的新内容，注明&quot;暂无最新动态&quot;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="六、OpenClaw-实战举例"><a href="#六、OpenClaw-实战举例" class="headerlink" title="六、OpenClaw 实战举例"></a>六、OpenClaw 实战举例</h2><h3 id="场景：搭建一个「技术助手机器人」"><a href="#场景：搭建一个「技术助手机器人」" class="headerlink" title="场景：搭建一个「技术助手机器人」"></a>场景：搭建一个「技术助手机器人」</h3><p>目标：在飞书里 @ 机器人，让它能帮你搜索技术文档、总结文章、查询天气。</p>
+<h4 id="安装需要的-Skills"><a href="#安装需要的-Skills" class="headerlink" title="安装需要的 Skills"></a>安装需要的 Skills</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 实时搜索（最重要，解锁联网能力）</span></span><br><span class="line">clawhub install tavily-search</span><br><span class="line"></span><br><span class="line"><span class="comment"># 文章/网页摘要</span></span><br><span class="line">clawhub install summarize</span><br><span class="line"></span><br><span class="line"><span class="comment"># 天气查询</span></span><br><span class="line">clawhub install weather</span><br></pre></td></tr></table></figure>
+
+<h4 id="配置-Tavily-API-Key"><a href="#配置-Tavily-API-Key" class="headerlink" title="配置 Tavily API Key"></a>配置 Tavily API Key</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 去 https://tavily.com 注册，获取免费 API Key</span></span><br><span class="line">clawhub config <span class="built_in">set</span> TAVILY_API_KEY 你的TavilyAPIKey</span><br></pre></td></tr></table></figure>
+
+<h4 id="重启服务让-Skills-生效"><a href="#重启服务让-Skills-生效" class="headerlink" title="重启服务让 Skills 生效"></a>重启服务让 Skills 生效</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openclaw gateway restart</span><br></pre></td></tr></table></figure>
+
+<h4 id="效果演示"><a href="#效果演示" class="headerlink" title="效果演示"></a>效果演示</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 在飞书中 @ 机器人：</span><br><span class="line"></span><br><span class="line">用户：帮我搜索一下 Hexo butterfly 主题怎么配置深色模式</span><br><span class="line"></span><br><span class="line">AI：（调用 tavily-search Skill，搜索后返回）</span><br><span class="line">    根据搜索结果，Butterfly 主题配置深色模式的方法如下：</span><br><span class="line">    在 _config.butterfly.yml 中添加：</span><br><span class="line">    dark_mode:</span><br><span class="line">      enable: true</span><br><span class="line">      default: light</span><br><span class="line">    ……</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">用户：总结一下这篇文章 https://example.com/article</span><br><span class="line"></span><br><span class="line">AI：（调用 summarize Skill，抓取并总结）</span><br><span class="line">    文章核心观点：……</span><br><span class="line">    主要数据：……</span><br><span class="line">    结论：……</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">用户：广州明天天气</span><br><span class="line"></span><br><span class="line">AI：（调用 weather Skill）</span><br><span class="line">    广州明日：晴，26~32°C，南风 2 级，紫外线较强，建议防晒。</span><br></pre></td></tr></table></figure>
+
+<h3 id="自定义一个「代码审查」Skill（放入项目目录）"><a href="#自定义一个「代码审查」Skill（放入项目目录）" class="headerlink" title="自定义一个「代码审查」Skill（放入项目目录）"></a>自定义一个「代码审查」Skill（放入项目目录）</h3><p>项目目录结构：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">my-openclaw-project/</span><br><span class="line">└── skills/</span><br><span class="line">    └── code-review/</span><br><span class="line">        └── SKILL.md</span><br></pre></td></tr></table></figure>
+
+<p><code>SKILL.md</code> 内容：</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">name: code-review</span><br><span class="line">description: |</span><br><span class="line">  对用户提交的代码进行审查。当用户说&quot;帮我看看这段代码&quot;、</span><br><span class="line">  &quot;代码 review&quot;、&quot;检查一下代码&quot;、&quot;有没有 bug&quot; 时触发。</span><br><span class="line"><span class="section">  会检查代码规范、潜在 bug、性能问题，并给出改进建议。</span></span><br><span class="line"><span class="section">---</span></span><br><span class="line"></span><br><span class="line"><span class="section"># Code Review Skill</span></span><br><span class="line"></span><br><span class="line"><span class="section">## 审查维度</span></span><br><span class="line"></span><br><span class="line">对收到的代码，依次从以下维度分析：</span><br><span class="line"></span><br><span class="line"><span class="bullet">1.</span> <span class="strong">**正确性**</span>：逻辑是否正确，有无明显 bug</span><br><span class="line"><span class="bullet">2.</span> <span class="strong">**安全性**</span>：有无 SQL 注入、XSS 等安全隐患</span><br><span class="line"><span class="bullet">3.</span> <span class="strong">**性能**</span>：有无不必要的循环、重复计算</span><br><span class="line"><span class="bullet">4.</span> <span class="strong">**可读性**</span>：命名是否清晰，注释是否充分</span><br><span class="line"><span class="bullet">5.</span> <span class="strong">**规范性**</span>：是否符合该语言的通用编码规范</span><br><span class="line"></span><br><span class="line"><span class="section">## 输出格式</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="代码审查报告"><a href="#代码审查报告" class="headerlink" title="代码审查报告"></a>代码审查报告</h2><p><strong>总体评分</strong>：x&#x2F;10</p>
+<h3 id="🐛-发现的问题"><a href="#🐛-发现的问题" class="headerlink" title="🐛 发现的问题"></a>🐛 发现的问题</h3><table>
+<thead>
+<tr>
+<th>行号</th>
+<th>严重程度</th>
+<th>问题描述</th>
+<th>修改建议</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>L12</td>
+<td>🔴 严重</td>
+<td>……</td>
+<td>……</td>
+</tr>
+<tr>
+<td>L25</td>
+<td>🟡 警告</td>
+<td>……</td>
+<td>……</td>
+</tr>
+</tbody></table>
+<h3 id="✅-改进后的代码"><a href="#✅-改进后的代码" class="headerlink" title="✅ 改进后的代码"></a>✅ 改进后的代码</h3><p>（给出修改后的完整代码片段）</p>
+<h3 id="💡-其他建议"><a href="#💡-其他建议" class="headerlink" title="💡 其他建议"></a>💡 其他建议</h3><p>……</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="七、安全注意事项"><a href="#七、安全注意事项" class="headerlink" title="七、安全注意事项"></a>七、安全注意事项</h2><blockquote>
+<p>⚠️ <strong>2025 年末 ClawHavoc 供应链攻击事件</strong>：ClawHub 曾出现大规模恶意 Skill 投毒，341~1184 个 Skill 受影响，感染率约 12%，主要伪装成加密货币工具和 YouTube 工具。</p>
+</blockquote>
+<h3 id="安装-Skill-前必须检查"><a href="#安装-Skill-前必须检查" class="headerlink" title="安装 Skill 前必须检查"></a>安装 Skill 前必须检查</h3><ul>
+<li>✅ <strong>Security Scan 为绿色 “Benign”</strong>（ClawHub 页面上的安全扫描结果）</li>
+<li>✅ <strong>VirusTotal 扫描通过</strong>（ClawHub 页面有展示）</li>
+<li>✅ <strong>高星数 + 高安装量</strong>（社区验证过的）</li>
+<li>✅ <strong>阅读 SKILL.md 源码</strong>，检查有无可疑的网络请求或”前置条件”</li>
+<li>❌ <strong>避免安装低星、新上架、无人维护的 Skill</strong>，尤其是涉及钱包、密钥的</li>
+</ul>
+<h3 id="高风险-Skill-类型"><a href="#高风险-Skill-类型" class="headerlink" title="高风险 Skill 类型"></a>高风险 Skill 类型</h3><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>风险原因</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>加密货币相关</td>
+<td>可能窃取钱包私钥</td>
+</tr>
+<tr>
+<td>邮件类（如 himalaya）</td>
+<td>需要存储邮箱账号密码</td>
+</tr>
+<tr>
+<td>浏览器自动化</td>
+<td>可能读取 Cookie 和账号信息</td>
+</tr>
+<tr>
+<td>文件系统操作</td>
+<td>可能读取或删除本地文件</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="八、常用命令速查"><a href="#八、常用命令速查" class="headerlink" title="八、常用命令速查"></a>八、常用命令速查</h2><h3 id="ClawHub-技能管理"><a href="#ClawHub-技能管理" class="headerlink" title="ClawHub 技能管理"></a>ClawHub 技能管理</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm i -g clawhub                      <span class="comment"># 安装 ClawHub CLI</span></span><br><span class="line">npx clawhub@latest login              <span class="comment"># 登录（解除下载限速）</span></span><br><span class="line">clawhub search <span class="string">&quot;关键词&quot;</span>               <span class="comment"># 搜索技能</span></span><br><span class="line">clawhub install &lt;skill-name&gt;          <span class="comment"># 安装技能</span></span><br><span class="line">clawhub list                          <span class="comment"># 查看已安装列表</span></span><br><span class="line">clawhub update --all                  <span class="comment"># 更新所有技能</span></span><br><span class="line">clawhub uninstall &lt;skill-name&gt;        <span class="comment"># 卸载技能</span></span><br><span class="line">clawhub config <span class="built_in">set</span> KEY value          <span class="comment"># 配置 API Key 等参数</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="OpenClaw-服务管理"><a href="#OpenClaw-服务管理" class="headerlink" title="OpenClaw 服务管理"></a>OpenClaw 服务管理</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openclaw gateway restart              <span class="comment"># 重启服务（安装新 Skill 后执行）</span></span><br><span class="line">openclaw status                       <span class="comment"># 查看运行状态</span></span><br><span class="line">openclaw logs --<span class="built_in">tail</span> 100              <span class="comment"># 查看日志（排查问题）</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Skill-文件位置"><a href="#Skill-文件位置" class="headerlink" title="Skill 文件位置"></a>Skill 文件位置</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">工作区技能（最高优先级）：&lt;你的项目目录&gt;/skills/</span><br><span class="line">用户技能：                ~/.openclaw/skills/</span><br><span class="line">内置技能（最低优先级）：  随 OpenClaw 安装包自带</span><br></pre></td></tr></table></figure>
+]]></content>
+  </entry>
+</search>
