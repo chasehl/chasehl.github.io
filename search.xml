@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Hello World</title>
+    <url>/2026/03/17/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
     <title>Github Pages 博客搭建指南</title>
     <url>/2026/03/12/Github-Pages-%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/</url>
     <content><![CDATA[<h1 id="GitHub-Pages-博客搭建指南"><a href="#GitHub-Pages-博客搭建指南" class="headerlink" title="GitHub Pages 博客搭建指南"></a>GitHub Pages 博客搭建指南</h1><blockquote>
@@ -413,24 +431,6 @@
 ]]></content>
   </entry>
   <entry>
-    <title>Hello World</title>
-    <url>/2026/03/13/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
     <title>openclaw使用方法备忘</title>
     <url>/2026/03/12/openclaw%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%E5%A4%87%E5%BF%98/</url>
     <content><![CDATA[<h1 id="OpenClaw-使用方法记录"><a href="#OpenClaw-使用方法记录" class="headerlink" title="OpenClaw 使用方法记录"></a>OpenClaw 使用方法记录</h1><blockquote>
@@ -763,6 +763,473 @@
 <hr>
 <h2 id="附录：常用命令速查"><a href="#附录：常用命令速查" class="headerlink" title="附录：常用命令速查"></a>附录：常用命令速查</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看 OpenClaw 版本</span></span><br><span class="line">openclaw --version</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看运行状态</span></span><br><span class="line">openclaw status</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启后台服务</span></span><br><span class="line">openclaw gateway restart</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看已接入的 Channel 列表</span></span><br><span class="line">openclaw channels list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看日志（排查问题用）</span></span><br><span class="line">openclaw logs --<span class="built_in">tail</span> 100</span><br><span class="line"></span><br><span class="line"><span class="comment"># SSH 隧道（本地执行，访问 Web UI）</span></span><br><span class="line">ssh -L 18789:127.0.0.1:18789 -p 10022 root@你的服务器IP</span><br><span class="line"></span><br><span class="line"><span class="comment"># ClawHub 登录</span></span><br><span class="line">npx clawhub@latest login</span><br><span class="line"></span><br><span class="line"><span class="comment"># ClawHub 查看登录状态</span></span><br><span class="line">npx clawhub@latest <span class="built_in">whoami</span></span><br></pre></td></tr></table></figure>
 ]]></content>
+  </entry>
+  <entry>
+    <title>NAS完全指南</title>
+    <url>/2026/03/17/NAS%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97/</url>
+    <content><![CDATA[<h1 id="NAS-完全指南：介绍、用途与用法"><a href="#NAS-完全指南：介绍、用途与用法" class="headerlink" title="NAS 完全指南：介绍、用途与用法"></a>NAS 完全指南：介绍、用途与用法</h1><blockquote>
+<p>📦 <strong>Network Attached Storage</strong> — 你的私人云存储中心<br>适用读者：家庭用户 &#x2F; 小型团队 &#x2F; 技术爱好者<br>最后更新：2025年</p>
+</blockquote>
+<hr>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ol>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF-nas">什么是 NAS</a></li>
+<li><a href="#nas-%E7%9A%84%E6%A0%B8%E5%BF%83%E4%BC%98%E5%8A%BF">NAS 的核心优势</a></li>
+<li><a href="#nas-%E7%9A%84%E4%B8%BB%E8%A6%81%E7%94%A8%E9%80%94">NAS 的主要用途</a></li>
+<li><a href="#%E4%B8%BB%E6%B5%81-nas-%E5%93%81%E7%89%8C%E4%B8%8E%E9%80%89%E8%B4%AD%E5%BB%BA%E8%AE%AE">主流 NAS 品牌与选购建议</a></li>
+<li><a href="#%E7%A1%AC%E4%BB%B6%E7%BB%84%E6%88%90%E8%AF%A6%E8%A7%A3">硬件组成详解</a></li>
+<li><a href="#raid-%E6%A8%A1%E5%BC%8F%E8%AF%A6%E8%A7%A3">RAID 模式详解</a></li>
+<li><a href="#nas-%E7%9A%84%E5%88%9D%E5%A7%8B%E9%85%8D%E7%BD%AE">NAS 的初始配置</a></li>
+<li><a href="#%E5%B8%B8%E8%A7%81%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF%E4%B8%8E%E6%93%8D%E4%BD%9C%E6%96%B9%E6%B3%95">常见使用场景与操作方法</a></li>
+<li><a href="#%E5%AE%89%E5%85%A8%E9%85%8D%E7%BD%AE%E5%BB%BA%E8%AE%AE">安全配置建议</a></li>
+<li><a href="#nas-vs-%E5%85%B6%E4%BB%96%E5%AD%98%E5%82%A8%E6%96%B9%E6%A1%88%E5%AF%B9%E6%AF%94">NAS vs 其他存储方案对比</a></li>
+<li><a href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E4%B8%8E%E6%8E%92%E6%9F%A5">常见问题与排查</a></li>
+<li><a href="#%E8%BF%9B%E9%98%B6%E7%8E%A9%E6%B3%95">进阶玩法</a></li>
+</ol>
+<hr>
+<h2 id="什么是-NAS"><a href="#什么是-NAS" class="headerlink" title="什么是 NAS"></a>什么是 NAS</h2><p><strong>NAS（Network Attached Storage，网络附加存储）</strong> 是一种通过局域网（LAN）或互联网提供文件存储与共享服务的专用设备。</p>
+<p>简单来说，NAS 就是一台<strong>连接在网络上、可以被多人同时访问的私人硬盘</strong>。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">       局域网 / 互联网</span><br><span class="line">            │</span><br><span class="line">  ┌─────────┼──────────┐</span><br><span class="line">  │         │          │</span><br><span class="line">电脑      手机       平板</span><br><span class="line">  │         │          │</span><br><span class="line">  └────── NAS ─────────┘</span><br><span class="line">       (文件存储中心)</span><br></pre></td></tr></table></figure>
+
+<h3 id="NAS-与普通移动硬盘的区别"><a href="#NAS-与普通移动硬盘的区别" class="headerlink" title="NAS 与普通移动硬盘的区别"></a>NAS 与普通移动硬盘的区别</h3><table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>移动硬盘</th>
+<th>NAS</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>访问方式</td>
+<td>物理连接（USB）</td>
+<td>网络访问（随时随地）</td>
+</tr>
+<tr>
+<td>同时访问人数</td>
+<td>1人</td>
+<td>多人并发</td>
+</tr>
+<tr>
+<td>自动运行</td>
+<td>需要手动插拔</td>
+<td>24小时待机</td>
+</tr>
+<tr>
+<td>数据冗余保护</td>
+<td>无</td>
+<td>支持 RAID</td>
+</tr>
+<tr>
+<td>远程访问</td>
+<td>不支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>扩展性</td>
+<td>受限</td>
+<td>可随时扩容</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="NAS-的核心优势"><a href="#NAS-的核心优势" class="headerlink" title="NAS 的核心优势"></a>NAS 的核心优势</h2><h3 id="✅-数据自主可控"><a href="#✅-数据自主可控" class="headerlink" title="✅ 数据自主可控"></a>✅ 数据自主可控</h3><p>数据存储在自己家里，不依赖第三方云服务（如 iCloud、百度网盘），隐私更有保障，也不受服务商涨价或停服影响。</p>
+<h3 id="✅-低成本大容量"><a href="#✅-低成本大容量" class="headerlink" title="✅ 低成本大容量"></a>✅ 低成本大容量</h3><p>以购买一块 4TB 企业级硬盘（约 ¥600）为例，1GB 成本约 ¥0.15，远低于各类云存储订阅费用。</p>
+<h3 id="✅-局域网高速传输"><a href="#✅-局域网高速传输" class="headerlink" title="✅ 局域网高速传输"></a>✅ 局域网高速传输</h3><p>通过千兆或万兆网络，局域网内传输速度可达 <strong>100MB&#x2F;s～1000MB&#x2F;s</strong>，远超网盘下载速度。</p>
+<h3 id="✅-数据冗余保护"><a href="#✅-数据冗余保护" class="headerlink" title="✅ 数据冗余保护"></a>✅ 数据冗余保护</h3><p>配合 RAID，即使一块硬盘损坏，数据也不会丢失，大幅降低数据损失风险。</p>
+<h3 id="✅-功能极度可扩展"><a href="#✅-功能极度可扩展" class="headerlink" title="✅ 功能极度可扩展"></a>✅ 功能极度可扩展</h3><p>现代 NAS 系统（如群晖 DSM）拥有丰富的应用生态，可作为：</p>
+<ul>
+<li>私有云 &#x2F; 家庭媒体中心 &#x2F; 下载机 &#x2F; 开发服务器…</li>
+</ul>
+<hr>
+<h2 id="NAS-的主要用途"><a href="#NAS-的主要用途" class="headerlink" title="NAS 的主要用途"></a>NAS 的主要用途</h2><h3 id="1-📁-家庭文件存储与共享"><a href="#1-📁-家庭文件存储与共享" class="headerlink" title="1. 📁 家庭文件存储与共享"></a>1. 📁 家庭文件存储与共享</h3><p>将所有家庭成员的文档、照片、视频统一存放在 NAS 上。每个成员拥有独立账号与权限，既共享又互不干扰。</p>
+<p><strong>典型场景：</strong></p>
+<ul>
+<li>家庭相册统一备份，手机拍的照片自动上传</li>
+<li>家人共享电影资源库</li>
+<li>工作文档随时从不同设备访问</li>
+</ul>
+<h3 id="2-📷-照片-视频自动备份"><a href="#2-📷-照片-视频自动备份" class="headerlink" title="2. 📷 照片&#x2F;视频自动备份"></a>2. 📷 照片&#x2F;视频自动备份</h3><p>取代 iCloud、Google Photos，打造<strong>自托管照片管理系统</strong>：</p>
+<ul>
+<li><strong>群晖 Moments &#x2F; Photos</strong>：媲美 Google Photos 的人脸识别、AI 相册管理</li>
+<li><strong>Immich</strong>（开源）：高度还原 Google Photos 体验，可自行部署</li>
+<li><strong>PhotoPrism</strong>：基于 AI 的照片整理</li>
+</ul>
+<h3 id="3-🎬-家庭影音媒体服务器"><a href="#3-🎬-家庭影音媒体服务器" class="headerlink" title="3. 🎬 家庭影音媒体服务器"></a>3. 🎬 家庭影音媒体服务器</h3><p>配合媒体软件，将 NAS 变成家庭影院中心：</p>
+<table>
+<thead>
+<tr>
+<th>软件</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Plex</strong></td>
+<td>功能强大，支持转码，有手机&#x2F;TV App</td>
+</tr>
+<tr>
+<td><strong>Jellyfin</strong></td>
+<td>完全开源免费，无需订阅</td>
+</tr>
+<tr>
+<td><strong>Emby</strong></td>
+<td>界面美观，部分功能收费</td>
+</tr>
+<tr>
+<td><strong>群晖 Video Station</strong></td>
+<td>DSM 内置，操作简单</td>
+</tr>
+</tbody></table>
+<h3 id="4-⬇️-下载机（PT-BT-离线下载）"><a href="#4-⬇️-下载机（PT-BT-离线下载）" class="headerlink" title="4. ⬇️ 下载机（PT &#x2F; BT &#x2F; 离线下载）"></a>4. ⬇️ 下载机（PT &#x2F; BT &#x2F; 离线下载）</h3><p>让 NAS 24小时在后台下载，不占用电脑资源：</p>
+<ul>
+<li><strong>qBittorrent &#x2F; Transmission</strong>：BT&#x2F;PT 下载</li>
+<li><strong>Aria2</strong>：多协议下载（HTTP&#x2F;BT&#x2F;磁力）</li>
+<li><strong>群晖 Download Station</strong>：图形界面友好</li>
+</ul>
+<h3 id="5-☁️-私有云同步（取代百度网盘-Dropbox）"><a href="#5-☁️-私有云同步（取代百度网盘-Dropbox）" class="headerlink" title="5. ☁️ 私有云同步（取代百度网盘&#x2F;Dropbox）"></a>5. ☁️ 私有云同步（取代百度网盘&#x2F;Dropbox）</h3><ul>
+<li><strong>Synology Drive</strong>：完整复刻 Dropbox 体验，支持多设备同步</li>
+<li><strong>Nextcloud</strong>：功能最全的开源私有云，支持文档协作</li>
+<li><strong>Seafile</strong>：注重性能，适合大量小文件</li>
+</ul>
+<h3 id="6-💻-代码与项目备份"><a href="#6-💻-代码与项目备份" class="headerlink" title="6. 💻 代码与项目备份"></a>6. 💻 代码与项目备份</h3><p>开发者可以在 NAS 上部署 Git 服务：</p>
+<ul>
+<li><strong>Gitea</strong>：轻量级 Git 平台，类似私有 GitHub</li>
+<li><strong>GitLab</strong>（资源要求较高）</li>
+</ul>
+<h3 id="7-🔄-系统-虚拟机备份"><a href="#7-🔄-系统-虚拟机备份" class="headerlink" title="7. 🔄 系统&#x2F;虚拟机备份"></a>7. 🔄 系统&#x2F;虚拟机备份</h3><ul>
+<li><strong>Active Backup for Business</strong>（群晖）：备份 PC、Mac、服务器</li>
+<li><strong>Time Machine 目标</strong>：为 Mac 提供 Time Machine 备份</li>
+<li><strong>Hyper Backup</strong>：NAS 数据异地备份</li>
+</ul>
+<h3 id="8-🖥️-运行-Docker-容器-虚拟机"><a href="#8-🖥️-运行-Docker-容器-虚拟机" class="headerlink" title="8. 🖥️ 运行 Docker 容器 &#x2F; 虚拟机"></a>8. 🖥️ 运行 Docker 容器 &#x2F; 虚拟机</h3><p>高性能 NAS 可运行各类服务：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">常见 Docker 应用：</span><br><span class="line">- Home Assistant（智能家居）</span><br><span class="line">- Bitwarden（密码管理器）</span><br><span class="line">- Pi-hole（广告拦截）</span><br><span class="line">- Nginx Proxy Manager（反向代理）</span><br><span class="line">- Portainer（Docker 管理界面）</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="主流-NAS-品牌与选购建议"><a href="#主流-NAS-品牌与选购建议" class="headerlink" title="主流 NAS 品牌与选购建议"></a>主流 NAS 品牌与选购建议</h2><h3 id="品牌对比"><a href="#品牌对比" class="headerlink" title="品牌对比"></a>品牌对比</h3><table>
+<thead>
+<tr>
+<th>品牌</th>
+<th>代表型号</th>
+<th>系统</th>
+<th>特点</th>
+<th>适合人群</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>群晖 Synology</strong></td>
+<td>DS223, DS923+</td>
+<td>DSM</td>
+<td>生态最完整，操作最友好</td>
+<td>所有用户首选</td>
+</tr>
+<tr>
+<td><strong>威联通 QNAP</strong></td>
+<td>TS-233, TVS-h874</td>
+<td>QTS</td>
+<td>硬件性能强，功能多</td>
+<td>进阶用户</td>
+</tr>
+<tr>
+<td><strong>铁威马 TerraMaster</strong></td>
+<td>F2-423, F4-423</td>
+<td>TOS</td>
+<td>性价比高</td>
+<td>预算有限用户</td>
+</tr>
+<tr>
+<td><strong>自组 NAS</strong></td>
+<td>-</td>
+<td>TrueNAS&#x2F;OMV</td>
+<td>完全自定义</td>
+<td>折腾党 &#x2F; 企业</td>
+</tr>
+</tbody></table>
+<h3 id="选购要点"><a href="#选购要点" class="headerlink" title="选购要点"></a>选购要点</h3><p><strong>盘位数量：</strong></p>
+<ul>
+<li><strong>2盘位</strong>：家庭入门，最多两块硬盘，支持 RAID 1</li>
+<li><strong>4盘位</strong>：家庭进阶&#x2F;SOHO，灵活配置 RAID 5&#x2F;6</li>
+<li><strong>6盘位及以上</strong>：重度用户 &#x2F; 小型企业</li>
+</ul>
+<p><strong>处理器：</strong></p>
+<ul>
+<li>仅文件存储：入门 ARM 处理器即可</li>
+<li>需要 4K 转码 &#x2F; Docker &#x2F; 虚拟机：建议 Intel Core 系列（J4125 起步，i3&#x2F;i5 更佳）</li>
+</ul>
+<p><strong>内存：</strong></p>
+<ul>
+<li>基础使用：2-4GB</li>
+<li>运行多个 Docker 容器：8GB+</li>
+<li>虚拟机：16GB+</li>
+</ul>
+<p><strong>网络接口：</strong></p>
+<ul>
+<li>千兆网口：日常够用</li>
+<li>2.5G&#x2F;10G 网口：大文件传输、视频剪辑素材访问</li>
+</ul>
+<hr>
+<h2 id="硬件组成详解"><a href="#硬件组成详解" class="headerlink" title="硬件组成详解"></a>硬件组成详解</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">NAS 设备</span><br><span class="line">├── 机箱（散热设计很重要）</span><br><span class="line">├── 主板（含 CPU、内存）</span><br><span class="line">├── 硬盘槽（2/4/6/8盘位）</span><br><span class="line">│   ├── 系统盘（部分机型内置 DOM/eMMC）</span><br><span class="line">│   └── 存储盘（用户自行购买）</span><br><span class="line">├── 网络接口（1G/2.5G/10G）</span><br><span class="line">└── USB 接口（外接硬盘/UPS）</span><br></pre></td></tr></table></figure>
+
+<h3 id="硬盘选择建议"><a href="#硬盘选择建议" class="headerlink" title="硬盘选择建议"></a>硬盘选择建议</h3><p>推荐选用专为 NAS 设计的<strong>企业级&#x2F;NAS 专用盘</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>品牌</th>
+<th>系列</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>西部数据</td>
+<td>WD Red Plus &#x2F; Red Pro</td>
+<td>性价比高，7x24小时设计</td>
+</tr>
+<tr>
+<td>希捷</td>
+<td>IronWolf &#x2F; IronWolf Pro</td>
+<td>内置健康监测，故障率低</td>
+</tr>
+<tr>
+<td>东芝</td>
+<td>N300</td>
+<td>性价比选择</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>⚠️ <strong>避免使用</strong>桌面级硬盘（WD Blue&#x2F;Seagate Barracuda）长期在 NAS 中运行，不适应 24小时振动与连续读写。</p>
+</blockquote>
+<hr>
+<h2 id="RAID-模式详解"><a href="#RAID-模式详解" class="headerlink" title="RAID 模式详解"></a>RAID 模式详解</h2><p>RAID（独立磁盘冗余阵列）通过多块硬盘的组合方式提供性能提升或数据冗余保护。</p>
+<h3 id="常用-RAID-级别"><a href="#常用-RAID-级别" class="headerlink" title="常用 RAID 级别"></a>常用 RAID 级别</h3><table>
+<thead>
+<tr>
+<th>RAID 类型</th>
+<th>最少磁盘数</th>
+<th>可用容量</th>
+<th>可承受损坏数</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>JBOD</strong></td>
+<td>1</td>
+<td>100%</td>
+<td>0</td>
+<td>无冗余，容量叠加</td>
+</tr>
+<tr>
+<td><strong>RAID 0</strong></td>
+<td>2</td>
+<td>100%</td>
+<td>0</td>
+<td>速度快，无保护</td>
+</tr>
+<tr>
+<td><strong>RAID 1</strong></td>
+<td>2</td>
+<td>50%</td>
+<td>1</td>
+<td>完全镜像，最安全</td>
+</tr>
+<tr>
+<td><strong>RAID 5</strong></td>
+<td>3</td>
+<td>(n-1)&#x2F;n</td>
+<td>1</td>
+<td>均衡选择，最常用</td>
+</tr>
+<tr>
+<td><strong>RAID 6</strong></td>
+<td>4</td>
+<td>(n-2)&#x2F;n</td>
+<td>2</td>
+<td>双校验，更安全</td>
+</tr>
+<tr>
+<td><strong>SHR</strong>（群晖专属）</td>
+<td>1</td>
+<td>灵活</td>
+<td>1-2</td>
+<td>支持混搭不同容量硬盘</td>
+</tr>
+</tbody></table>
+<h3 id="如何选择？"><a href="#如何选择？" class="headerlink" title="如何选择？"></a>如何选择？</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">只有 2 块盘  →  RAID 1（镜像保护）</span><br><span class="line">有 3 块盘    →  RAID 5（容量与保护均衡）</span><br><span class="line">有 4+ 块盘   →  RAID 5 或 RAID 6（更强保护）</span><br><span class="line">硬盘大小不一 →  群晖 SHR</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>🔴 <strong>重要提示：RAID ≠ 备份！</strong><br>RAID 保护的是硬件故障，无法防范误删、勒索病毒、火灾等情况。<br>请遵循 <strong>3-2-1 备份原则</strong>：3份数据 &#x2F; 2种介质 &#x2F; 1份异地。</p>
+</blockquote>
+<hr>
+<h2 id="NAS-的初始配置"><a href="#NAS-的初始配置" class="headerlink" title="NAS 的初始配置"></a>NAS 的初始配置</h2><p>以<strong>群晖 DSM</strong> 为例（其他品牌流程类似）：</p>
+<h3 id="第一步：硬件安装"><a href="#第一步：硬件安装" class="headerlink" title="第一步：硬件安装"></a>第一步：硬件安装</h3><ol>
+<li>将硬盘安装到硬盘托架</li>
+<li>连接网线（建议直连路由器）</li>
+<li>连接电源，开机</li>
+</ol>
+<h3 id="第二步：系统初始化"><a href="#第二步：系统初始化" class="headerlink" title="第二步：系统初始化"></a>第二步：系统初始化</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">浏览器访问：http://find.synology.com</span><br><span class="line">或直接访问：http://[NAS的IP地址]:5000</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>安装 DSM 系统（约 10 分钟）</li>
+<li>创建管理员账号</li>
+<li>配置存储池和存储空间（选择 RAID 模式）</li>
+<li>完成基础向导</li>
+</ol>
+<h3 id="第三步：网络配置"><a href="#第三步：网络配置" class="headerlink" title="第三步：网络配置"></a>第三步：网络配置</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">控制面板 → 网络 → 网络界面</span><br><span class="line">推荐设置：</span><br><span class="line">- 为 NAS 分配固定 IP（静态 IP 或路由器绑定 MAC）</span><br><span class="line">- 启用 IPv6（可选）</span><br></pre></td></tr></table></figure>
+
+<h3 id="第四步：账户与权限"><a href="#第四步：账户与权限" class="headerlink" title="第四步：账户与权限"></a>第四步：账户与权限</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">控制面板 → 用户账号与群组</span><br><span class="line">- 为每位家庭成员创建独立账号</span><br><span class="line">- 设置共享文件夹权限（读取/读写/无权限）</span><br></pre></td></tr></table></figure>
+
+<h3 id="第五步：远程访问配置"><a href="#第五步：远程访问配置" class="headerlink" title="第五步：远程访问配置"></a>第五步：远程访问配置</h3><p><strong>方法一：QuickConnect（最简单）</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">控制面板 → QuickConnect</span><br><span class="line">启用后获得专属 ID，如：https://QuickConnect.to/你的ID</span><br></pre></td></tr></table></figure>
+
+<p><strong>方法二：DDNS + 端口映射</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">控制面板 → 外部访问 → DDNS</span><br><span class="line">→ 注册 Synology DDNS 域名（*.synology.me）</span><br><span class="line">→ 在路由器设置端口映射（5001 → NAS IP:5001）</span><br></pre></td></tr></table></figure>
+
+<p><strong>方法三：VPN（最安全）</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">套件中心 → 安装 VPN Server</span><br><span class="line">→ 配置 OpenVPN 或 WireGuard</span><br><span class="line">→ 在外网通过 VPN 连接后访问内网 NAS</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="常见使用场景与操作方法"><a href="#常见使用场景与操作方法" class="headerlink" title="常见使用场景与操作方法"></a>常见使用场景与操作方法</h2><h3 id="📂-Windows-映射网络驱动器"><a href="#📂-Windows-映射网络驱动器" class="headerlink" title="📂 Windows 映射网络驱动器"></a>📂 Windows 映射网络驱动器</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">文件资源管理器 → 此电脑 → 映射网络驱动器</span><br><span class="line">输入地址：\\192.168.1.100\shared_folder</span><br><span class="line"></span><br><span class="line">或使用 SMB 协议：</span><br><span class="line">控制面板 → 文件服务 → SMB → 启用</span><br></pre></td></tr></table></figure>
+
+<h3 id="🍎-macOS-连接-NAS"><a href="#🍎-macOS-连接-NAS" class="headerlink" title="🍎 macOS 连接 NAS"></a>🍎 macOS 连接 NAS</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Finder → 前往 → 连接服务器（⌘K）</span><br><span class="line">输入：smb://192.168.1.100</span><br><span class="line">或：afp://192.168.1.100（AFP 协议）</span><br></pre></td></tr></table></figure>
+
+<h3 id="📱-手机访问（群晖-DS-File-App）"><a href="#📱-手机访问（群晖-DS-File-App）" class="headerlink" title="📱 手机访问（群晖 DS File App）"></a>📱 手机访问（群晖 DS File App）</h3><ol>
+<li>下载 <strong>DS File</strong>（iOS&#x2F;Android）</li>
+<li>输入服务器地址（局域网 IP 或 QuickConnect ID）</li>
+<li>输入账号密码即可浏览文件</li>
+</ol>
+<h3 id="⬆️-照片自动同步（群晖-Moments）"><a href="#⬆️-照片自动同步（群晖-Moments）" class="headerlink" title="⬆️ 照片自动同步（群晖 Moments）"></a>⬆️ 照片自动同步（群晖 Moments）</h3><ol>
+<li>NAS 安装 <strong>Synology Photos</strong></li>
+<li>手机安装 <strong>Synology Photos App</strong></li>
+<li>开启”自动备份”，手机拍照即时上传至 NAS</li>
+</ol>
+<h3 id="🎬-Plex-媒体服务器配置"><a href="#🎬-Plex-媒体服务器配置" class="headerlink" title="🎬 Plex 媒体服务器配置"></a>🎬 Plex 媒体服务器配置</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">套件中心 → 安装 Plex Media Server</span><br><span class="line">→ 添加媒体库（电影/电视/音乐）</span><br><span class="line">→ 指向 NAS 上的媒体文件夹</span><br><span class="line">→ 手机/平板安装 Plex App 即可观看</span><br></pre></td></tr></table></figure>
+
+<h3 id="🐳-Docker-部署示例（以-Nginx-为例）"><a href="#🐳-Docker-部署示例（以-Nginx-为例）" class="headerlink" title="🐳 Docker 部署示例（以 Nginx 为例）"></a>🐳 Docker 部署示例（以 Nginx 为例）</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 群晖 Container Manager → 项目 → 新增</span></span><br><span class="line"><span class="comment"># 或 SSH 进入 NAS 执行：</span></span><br><span class="line"></span><br><span class="line">docker run -d \</span><br><span class="line">  --name nginx \</span><br><span class="line">  -p 8080:80 \</span><br><span class="line">  -v /volume1/docker/nginx:/usr/share/nginx/html \</span><br><span class="line">  nginx:latest</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="安全配置建议"><a href="#安全配置建议" class="headerlink" title="安全配置建议"></a>安全配置建议</h2><h3 id="🔐-基础安全"><a href="#🔐-基础安全" class="headerlink" title="🔐 基础安全"></a>🔐 基础安全</h3><ul>
+<li><input disabled="" type="checkbox"> <strong>修改默认 SSH 端口</strong>（默认 22，改为 10022 等非标准端口）</li>
+<li><input disabled="" type="checkbox"> <strong>禁用 admin 账号</strong>，使用自定义管理员名称</li>
+<li><input disabled="" type="checkbox"> <strong>启用两步验证（2FA）</strong>：控制面板 → 用户 → 2 步骤验证</li>
+<li><input disabled="" type="checkbox"> <strong>启用防火墙</strong>：控制面板 → 安全性 → 防火墙</li>
+<li><input disabled="" type="checkbox"> <strong>开启自动封锁</strong>：多次登录失败自动封锁 IP</li>
+</ul>
+<h3 id="🔒-网络安全"><a href="#🔒-网络安全" class="headerlink" title="🔒 网络安全"></a>🔒 网络安全</h3><ul>
+<li><input disabled="" type="checkbox"> <strong>关闭不必要的对外端口</strong>，仅开放需要的服务</li>
+<li><input disabled="" type="checkbox"> <strong>使用 HTTPS</strong>（DSM 5001 端口），避免明文传输</li>
+<li><input disabled="" type="checkbox"> <strong>申请免费 SSL 证书</strong>：控制面板 → 安全性 → 证书 → Let’s Encrypt</li>
+<li><input disabled="" type="checkbox"> <strong>考虑使用 VPN</strong>而非直接暴露 NAS 端口到公网</li>
+</ul>
+<h3 id="💾-数据安全"><a href="#💾-数据安全" class="headerlink" title="💾 数据安全"></a>💾 数据安全</h3><ul>
+<li><input disabled="" type="checkbox"> <strong>定期快照</strong>（群晖 Snapshot Replication）</li>
+<li><input disabled="" type="checkbox"> <strong>异地备份</strong>：将重要数据备份到另一台 NAS 或云存储（Backblaze B2）</li>
+<li><input disabled="" type="checkbox"> <strong>开启勒索病毒防护</strong>（群晖 Storage Analyzer）</li>
+</ul>
+<hr>
+<h2 id="NAS-vs-其他存储方案对比"><a href="#NAS-vs-其他存储方案对比" class="headerlink" title="NAS vs 其他存储方案对比"></a>NAS vs 其他存储方案对比</h2><table>
+<thead>
+<tr>
+<th>方案</th>
+<th>初始成本</th>
+<th>长期成本</th>
+<th>隐私安全</th>
+<th>访问便利性</th>
+<th>数据安全性</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>NAS</strong></td>
+<td>¥2000-8000</td>
+<td>极低（电费）</td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>⭐⭐⭐⭐</td>
+<td>⭐⭐⭐⭐⭐</td>
+</tr>
+<tr>
+<td>公有云（iCloud等）</td>
+<td>免费起步</td>
+<td>¥200-2000&#x2F;年</td>
+<td>⭐⭐</td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>⭐⭐⭐</td>
+</tr>
+<tr>
+<td>百度网盘&#x2F;阿里云盘</td>
+<td>免费</td>
+<td>¥100-300&#x2F;年</td>
+<td>⭐</td>
+<td>⭐⭐⭐⭐</td>
+<td>⭐⭐</td>
+</tr>
+<tr>
+<td>移动硬盘</td>
+<td>¥300-600</td>
+<td>极低</td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>⭐⭐</td>
+<td>⭐⭐</td>
+</tr>
+<tr>
+<td>家庭 PC 共享</td>
+<td>已有PC</td>
+<td>电费较高</td>
+<td>⭐⭐⭐⭐</td>
+<td>⭐⭐⭐</td>
+<td>⭐⭐⭐</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>结论：</strong> NAS 的最大优势在于<strong>隐私控制</strong>与<strong>长期低成本</strong>，适合存储超过 2TB 以上数据且注重数据主权的用户。</p>
+</blockquote>
+<hr>
+<h2 id="常见问题与排查"><a href="#常见问题与排查" class="headerlink" title="常见问题与排查"></a>常见问题与排查</h2><h3 id="Q：NAS-噪音很大怎么办？"><a href="#Q：NAS-噪音很大怎么办？" class="headerlink" title="Q：NAS 噪音很大怎么办？"></a>Q：NAS 噪音很大怎么办？</h3><ul>
+<li>更换低噪音风扇（如 Noctua 品牌）</li>
+<li>在 DSM 中调低风扇转速（控制面板 → 硬件和电源 → 风扇速度）</li>
+<li>将 NAS 放置在通风但隔音的储物间</li>
+</ul>
+<h3 id="Q：硬盘读写指示灯一直在闪是什么问题？"><a href="#Q：硬盘读写指示灯一直在闪是什么问题？" class="headerlink" title="Q：硬盘读写指示灯一直在闪是什么问题？"></a>Q：硬盘读写指示灯一直在闪是什么问题？</h3><ul>
+<li>正常现象：系统索引、健康扫描（后台任务）</li>
+<li>检查方法：控制面板 → 任务计划 → 查看正在运行的任务</li>
+</ul>
+<h3 id="Q：外网访问速度很慢？"><a href="#Q：外网访问速度很慢？" class="headerlink" title="Q：外网访问速度很慢？"></a>Q：外网访问速度很慢？</h3><ul>
+<li>检查家庭宽带的<strong>上行带宽</strong>（上传速度决定外网访问速度）</li>
+<li>使用 DDNS + 端口映射比 QuickConnect 更快</li>
+<li>考虑在路由器端启用 QoS 优先级</li>
+</ul>
+<h3 id="Q：文件被误删如何恢复？"><a href="#Q：文件被误删如何恢复？" class="headerlink" title="Q：文件被误删如何恢复？"></a>Q：文件被误删如何恢复？</h3><ul>
+<li>查看<strong>回收站</strong>（共享文件夹 → 启用回收站功能）</li>
+<li>使用<strong>快照</strong>恢复（需提前配置 Snapshot Replication）</li>
+<li>第三方数据恢复软件（如 R-Studio）</li>
+</ul>
+<h3 id="Q：NAS-耗电量大吗？"><a href="#Q：NAS-耗电量大吗？" class="headerlink" title="Q：NAS 耗电量大吗？"></a>Q：NAS 耗电量大吗？</h3><ul>
+<li>典型 2盘位 NAS（如 DS223）：约 <strong>15-20W</strong>（工作状态）</li>
+<li>休眠状态：约 5-8W</li>
+<li>全年电费（按 ¥0.6&#x2F;度）：约 <strong>¥80-¥100</strong></li>
+</ul>
+<hr>
+<h2 id="进阶玩法"><a href="#进阶玩法" class="headerlink" title="进阶玩法"></a>进阶玩法</h2><h3 id="🔧-SSH-命令行访问"><a href="#🔧-SSH-命令行访问" class="headerlink" title="🔧 SSH 命令行访问"></a>🔧 SSH 命令行访问</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 启用：控制面板 → 终端机和SNMP → 启动SSH</span></span><br><span class="line">ssh admin@192.168.1.100 -p 22</span><br><span class="line"></span><br><span class="line"><span class="comment"># 常用命令</span></span><br><span class="line"><span class="built_in">df</span> -h              <span class="comment"># 查看磁盘使用情况</span></span><br><span class="line">top                <span class="comment"># 查看系统资源</span></span><br><span class="line">synoinfo get       <span class="comment"># 查看系统信息</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="🐳-Docker-Compose-部署-Nextcloud"><a href="#🐳-Docker-Compose-部署-Nextcloud" class="headerlink" title="🐳 Docker Compose 部署 Nextcloud"></a>🐳 Docker Compose 部署 Nextcloud</h3><figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># /volume1/docker/nextcloud/docker-compose.yml</span></span><br><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3&#x27;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">nextcloud:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">nextcloud:latest</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;8080:80&quot;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./data:/var/www/html</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">MYSQL_HOST=db</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">MYSQL_DATABASE=nextcloud</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">MYSQL_USER=nextcloud</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">MYSQL_PASSWORD=your_password</span></span><br><span class="line">  <span class="attr">db:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">mariadb:latest</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">MYSQL_ROOT_PASSWORD=root_password</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">MYSQL_DATABASE=nextcloud</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">MYSQL_USER=nextcloud</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">MYSQL_PASSWORD=your_password</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./db:/var/lib/mysql</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="📊-监控与告警"><a href="#📊-监控与告警" class="headerlink" title="📊 监控与告警"></a>📊 监控与告警</h3><ul>
+<li><strong>群晖 SNMP</strong>：配合 Grafana + InfluxDB 实现可视化监控</li>
+<li><strong>DS Finder App</strong>：手机接收 NAS 告警推送（硬盘温度过高、RAID 降级等）</li>
+<li><strong>邮件通知</strong>：控制面板 → 通知 → 配置 SMTP 邮件告警</li>
+</ul>
+<h3 id="🌐-反向代理配置"><a href="#🌐-反向代理配置" class="headerlink" title="🌐 反向代理配置"></a>🌐 反向代理配置</h3><p>通过一个域名访问 NAS 上的多个服务：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">控制面板 → 登录门户 → 反向代理 → 新增</span><br><span class="line"></span><br><span class="line">示例：</span><br><span class="line">  来源：https://plex.yourdomain.com</span><br><span class="line">  目标：http://localhost:32400</span><br><span class="line"></span><br><span class="line">  来源：https://nextcloud.yourdomain.com  </span><br><span class="line">  目标：http://localhost:8080</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="推荐学习资源"><a href="#推荐学习资源" class="headerlink" title="推荐学习资源"></a>推荐学习资源</h2><ul>
+<li>📖 <a href="https://kb.synology.com/zh-cn">群晖官方知识库</a></li>
+<li>🎥 <a href="https://www.youtube.com/synology">群晖官方 YouTube 频道</a></li>
+<li>💬 <a href="https://www.nasforum.cn/">NASforum 中文论坛</a></li>
+<li>📚 <a href="https://github.com/awesome-selfhosted/awesome-selfhosted">Self-Hosted 中文社区</a></li>
+<li>🔧 <a href="https://technotim.live/">TechnoTim 博客（英文）</a> — Docker&#x2F;NAS 进阶教程</li>
+</ul>
+<hr>
+<p><em>📝 本文档持续更新中。如有疑问或补充，欢迎留言。</em></p>
+<hr>
+<p><strong>标签：</strong> <code>NAS</code> <code>群晖</code> <code>Synology</code> <code>家庭存储</code> <code>私有云</code> <code>RAID</code> <code>Docker</code> <code>自托管</code> <code>HomeServer</code></p>
+]]></content>
+      <tags>
+        <tag>生活技能</tag>
+      </tags>
   </entry>
   <entry>
     <title>skill概念理解、使用与创建</title>

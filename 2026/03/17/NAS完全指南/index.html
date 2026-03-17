@@ -1,0 +1,696 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>NAS完全指南 | ChaseLog</title><meta name="author" content="Chase King"><meta name="copyright" content="Chase King"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="NAS 完全指南：介绍、用途与用法 📦 Network Attached Storage — 你的私人云存储中心适用读者：家庭用户 &#x2F; 小型团队 &#x2F; 技术爱好者最后更新：2025年   目录 什么是 NAS NAS 的核心优势 NAS 的主要用途 主流 NAS 品牌与选购建议 硬件组成详解 RAID 模式详解 NAS 的初始配置 常见使用场景与操作方法 安全配置建议 NAS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NAS完全指南">
+<meta property="og:url" content="https://chaseking.github.io/2026/03/17/NAS%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97/index.html">
+<meta property="og:site_name" content="ChaseLog">
+<meta property="og:description" content="NAS 完全指南：介绍、用途与用法 📦 Network Attached Storage — 你的私人云存储中心适用读者：家庭用户 &#x2F; 小型团队 &#x2F; 技术爱好者最后更新：2025年   目录 什么是 NAS NAS 的核心优势 NAS 的主要用途 主流 NAS 品牌与选购建议 硬件组成详解 RAID 模式详解 NAS 的初始配置 常见使用场景与操作方法 安全配置建议 NAS">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://chaseking.github.io/img/covers/3.jpg">
+<meta property="article:published_time" content="2026-03-17T22:12:32.000Z">
+<meta property="article:modified_time" content="2026-03-17T14:26:42.312Z">
+<meta property="article:author" content="Chase King">
+<meta property="article:tag" content="生活技能">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://chaseking.github.io/img/covers/3.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "NAS完全指南",
+  "url": "https://chaseking.github.io/2026/03/17/NAS%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97/",
+  "image": "https://chaseking.github.io/img/covers/3.jpg",
+  "datePublished": "2026-03-17T22:12:32.000Z",
+  "dateModified": "2026-03-17T14:26:42.312Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Chase King",
+      "url": "https://chaseking.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://chaseking.github.io/2026/03/17/NAS%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css?v=5.5.4"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"No results found for: ${query}","hits_stats":"${hits} articles found"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'NAS完全指南',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/custom.css"><meta name="generator" content="Hexo 8.1.1"></head><body><div class="bg-animation" id="web_bg" style="background-image: url(/img/website_bg.jpg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">6</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/covers/3.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">ChaseLog</span></a><a class="nav-page-title" href="/"><span class="site-name">NAS完全指南</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  Back to Home</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">NAS完全指南</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2026-03-17T22:12:32.000Z" title="Created 2026-03-17 22:12:32">2026-03-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2026-03-17T14:26:42.312Z" title="Updated 2026-03-17 14:26:42">2026-03-17</time></span></div><div class="meta-secondline"></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="NAS-完全指南：介绍、用途与用法"><a href="#NAS-完全指南：介绍、用途与用法" class="headerlink" title="NAS 完全指南：介绍、用途与用法"></a>NAS 完全指南：介绍、用途与用法</h1><blockquote>
+<p>📦 <strong>Network Attached Storage</strong> — 你的私人云存储中心<br>适用读者：家庭用户 &#x2F; 小型团队 &#x2F; 技术爱好者<br>最后更新：2025年</p>
+</blockquote>
+<hr>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ol>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF-nas">什么是 NAS</a></li>
+<li><a href="#nas-%E7%9A%84%E6%A0%B8%E5%BF%83%E4%BC%98%E5%8A%BF">NAS 的核心优势</a></li>
+<li><a href="#nas-%E7%9A%84%E4%B8%BB%E8%A6%81%E7%94%A8%E9%80%94">NAS 的主要用途</a></li>
+<li><a href="#%E4%B8%BB%E6%B5%81-nas-%E5%93%81%E7%89%8C%E4%B8%8E%E9%80%89%E8%B4%AD%E5%BB%BA%E8%AE%AE">主流 NAS 品牌与选购建议</a></li>
+<li><a href="#%E7%A1%AC%E4%BB%B6%E7%BB%84%E6%88%90%E8%AF%A6%E8%A7%A3">硬件组成详解</a></li>
+<li><a href="#raid-%E6%A8%A1%E5%BC%8F%E8%AF%A6%E8%A7%A3">RAID 模式详解</a></li>
+<li><a href="#nas-%E7%9A%84%E5%88%9D%E5%A7%8B%E9%85%8D%E7%BD%AE">NAS 的初始配置</a></li>
+<li><a href="#%E5%B8%B8%E8%A7%81%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF%E4%B8%8E%E6%93%8D%E4%BD%9C%E6%96%B9%E6%B3%95">常见使用场景与操作方法</a></li>
+<li><a href="#%E5%AE%89%E5%85%A8%E9%85%8D%E7%BD%AE%E5%BB%BA%E8%AE%AE">安全配置建议</a></li>
+<li><a href="#nas-vs-%E5%85%B6%E4%BB%96%E5%AD%98%E5%82%A8%E6%96%B9%E6%A1%88%E5%AF%B9%E6%AF%94">NAS vs 其他存储方案对比</a></li>
+<li><a href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E4%B8%8E%E6%8E%92%E6%9F%A5">常见问题与排查</a></li>
+<li><a href="#%E8%BF%9B%E9%98%B6%E7%8E%A9%E6%B3%95">进阶玩法</a></li>
+</ol>
+<hr>
+<h2 id="什么是-NAS"><a href="#什么是-NAS" class="headerlink" title="什么是 NAS"></a>什么是 NAS</h2><p><strong>NAS（Network Attached Storage，网络附加存储）</strong> 是一种通过局域网（LAN）或互联网提供文件存储与共享服务的专用设备。</p>
+<p>简单来说，NAS 就是一台<strong>连接在网络上、可以被多人同时访问的私人硬盘</strong>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">       局域网 / 互联网</span><br><span class="line">            │</span><br><span class="line">  ┌─────────┼──────────┐</span><br><span class="line">  │         │          │</span><br><span class="line">电脑      手机       平板</span><br><span class="line">  │         │          │</span><br><span class="line">  └────── NAS ─────────┘</span><br><span class="line">       (文件存储中心)</span><br></pre></td></tr></table></figure>
+
+<h3 id="NAS-与普通移动硬盘的区别"><a href="#NAS-与普通移动硬盘的区别" class="headerlink" title="NAS 与普通移动硬盘的区别"></a>NAS 与普通移动硬盘的区别</h3><table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>移动硬盘</th>
+<th>NAS</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>访问方式</td>
+<td>物理连接（USB）</td>
+<td>网络访问（随时随地）</td>
+</tr>
+<tr>
+<td>同时访问人数</td>
+<td>1人</td>
+<td>多人并发</td>
+</tr>
+<tr>
+<td>自动运行</td>
+<td>需要手动插拔</td>
+<td>24小时待机</td>
+</tr>
+<tr>
+<td>数据冗余保护</td>
+<td>无</td>
+<td>支持 RAID</td>
+</tr>
+<tr>
+<td>远程访问</td>
+<td>不支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>扩展性</td>
+<td>受限</td>
+<td>可随时扩容</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="NAS-的核心优势"><a href="#NAS-的核心优势" class="headerlink" title="NAS 的核心优势"></a>NAS 的核心优势</h2><h3 id="✅-数据自主可控"><a href="#✅-数据自主可控" class="headerlink" title="✅ 数据自主可控"></a>✅ 数据自主可控</h3><p>数据存储在自己家里，不依赖第三方云服务（如 iCloud、百度网盘），隐私更有保障，也不受服务商涨价或停服影响。</p>
+<h3 id="✅-低成本大容量"><a href="#✅-低成本大容量" class="headerlink" title="✅ 低成本大容量"></a>✅ 低成本大容量</h3><p>以购买一块 4TB 企业级硬盘（约 ¥600）为例，1GB 成本约 ¥0.15，远低于各类云存储订阅费用。</p>
+<h3 id="✅-局域网高速传输"><a href="#✅-局域网高速传输" class="headerlink" title="✅ 局域网高速传输"></a>✅ 局域网高速传输</h3><p>通过千兆或万兆网络，局域网内传输速度可达 <strong>100MB&#x2F;s～1000MB&#x2F;s</strong>，远超网盘下载速度。</p>
+<h3 id="✅-数据冗余保护"><a href="#✅-数据冗余保护" class="headerlink" title="✅ 数据冗余保护"></a>✅ 数据冗余保护</h3><p>配合 RAID，即使一块硬盘损坏，数据也不会丢失，大幅降低数据损失风险。</p>
+<h3 id="✅-功能极度可扩展"><a href="#✅-功能极度可扩展" class="headerlink" title="✅ 功能极度可扩展"></a>✅ 功能极度可扩展</h3><p>现代 NAS 系统（如群晖 DSM）拥有丰富的应用生态，可作为：</p>
+<ul>
+<li>私有云 &#x2F; 家庭媒体中心 &#x2F; 下载机 &#x2F; 开发服务器…</li>
+</ul>
+<hr>
+<h2 id="NAS-的主要用途"><a href="#NAS-的主要用途" class="headerlink" title="NAS 的主要用途"></a>NAS 的主要用途</h2><h3 id="1-📁-家庭文件存储与共享"><a href="#1-📁-家庭文件存储与共享" class="headerlink" title="1. 📁 家庭文件存储与共享"></a>1. 📁 家庭文件存储与共享</h3><p>将所有家庭成员的文档、照片、视频统一存放在 NAS 上。每个成员拥有独立账号与权限，既共享又互不干扰。</p>
+<p><strong>典型场景：</strong></p>
+<ul>
+<li>家庭相册统一备份，手机拍的照片自动上传</li>
+<li>家人共享电影资源库</li>
+<li>工作文档随时从不同设备访问</li>
+</ul>
+<h3 id="2-📷-照片-视频自动备份"><a href="#2-📷-照片-视频自动备份" class="headerlink" title="2. 📷 照片&#x2F;视频自动备份"></a>2. 📷 照片&#x2F;视频自动备份</h3><p>取代 iCloud、Google Photos，打造<strong>自托管照片管理系统</strong>：</p>
+<ul>
+<li><strong>群晖 Moments &#x2F; Photos</strong>：媲美 Google Photos 的人脸识别、AI 相册管理</li>
+<li><strong>Immich</strong>（开源）：高度还原 Google Photos 体验，可自行部署</li>
+<li><strong>PhotoPrism</strong>：基于 AI 的照片整理</li>
+</ul>
+<h3 id="3-🎬-家庭影音媒体服务器"><a href="#3-🎬-家庭影音媒体服务器" class="headerlink" title="3. 🎬 家庭影音媒体服务器"></a>3. 🎬 家庭影音媒体服务器</h3><p>配合媒体软件，将 NAS 变成家庭影院中心：</p>
+<table>
+<thead>
+<tr>
+<th>软件</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Plex</strong></td>
+<td>功能强大，支持转码，有手机&#x2F;TV App</td>
+</tr>
+<tr>
+<td><strong>Jellyfin</strong></td>
+<td>完全开源免费，无需订阅</td>
+</tr>
+<tr>
+<td><strong>Emby</strong></td>
+<td>界面美观，部分功能收费</td>
+</tr>
+<tr>
+<td><strong>群晖 Video Station</strong></td>
+<td>DSM 内置，操作简单</td>
+</tr>
+</tbody></table>
+<h3 id="4-⬇️-下载机（PT-BT-离线下载）"><a href="#4-⬇️-下载机（PT-BT-离线下载）" class="headerlink" title="4. ⬇️ 下载机（PT &#x2F; BT &#x2F; 离线下载）"></a>4. ⬇️ 下载机（PT &#x2F; BT &#x2F; 离线下载）</h3><p>让 NAS 24小时在后台下载，不占用电脑资源：</p>
+<ul>
+<li><strong>qBittorrent &#x2F; Transmission</strong>：BT&#x2F;PT 下载</li>
+<li><strong>Aria2</strong>：多协议下载（HTTP&#x2F;BT&#x2F;磁力）</li>
+<li><strong>群晖 Download Station</strong>：图形界面友好</li>
+</ul>
+<h3 id="5-☁️-私有云同步（取代百度网盘-Dropbox）"><a href="#5-☁️-私有云同步（取代百度网盘-Dropbox）" class="headerlink" title="5. ☁️ 私有云同步（取代百度网盘&#x2F;Dropbox）"></a>5. ☁️ 私有云同步（取代百度网盘&#x2F;Dropbox）</h3><ul>
+<li><strong>Synology Drive</strong>：完整复刻 Dropbox 体验，支持多设备同步</li>
+<li><strong>Nextcloud</strong>：功能最全的开源私有云，支持文档协作</li>
+<li><strong>Seafile</strong>：注重性能，适合大量小文件</li>
+</ul>
+<h3 id="6-💻-代码与项目备份"><a href="#6-💻-代码与项目备份" class="headerlink" title="6. 💻 代码与项目备份"></a>6. 💻 代码与项目备份</h3><p>开发者可以在 NAS 上部署 Git 服务：</p>
+<ul>
+<li><strong>Gitea</strong>：轻量级 Git 平台，类似私有 GitHub</li>
+<li><strong>GitLab</strong>（资源要求较高）</li>
+</ul>
+<h3 id="7-🔄-系统-虚拟机备份"><a href="#7-🔄-系统-虚拟机备份" class="headerlink" title="7. 🔄 系统&#x2F;虚拟机备份"></a>7. 🔄 系统&#x2F;虚拟机备份</h3><ul>
+<li><strong>Active Backup for Business</strong>（群晖）：备份 PC、Mac、服务器</li>
+<li><strong>Time Machine 目标</strong>：为 Mac 提供 Time Machine 备份</li>
+<li><strong>Hyper Backup</strong>：NAS 数据异地备份</li>
+</ul>
+<h3 id="8-🖥️-运行-Docker-容器-虚拟机"><a href="#8-🖥️-运行-Docker-容器-虚拟机" class="headerlink" title="8. 🖥️ 运行 Docker 容器 &#x2F; 虚拟机"></a>8. 🖥️ 运行 Docker 容器 &#x2F; 虚拟机</h3><p>高性能 NAS 可运行各类服务：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">常见 Docker 应用：</span><br><span class="line">- Home Assistant（智能家居）</span><br><span class="line">- Bitwarden（密码管理器）</span><br><span class="line">- Pi-hole（广告拦截）</span><br><span class="line">- Nginx Proxy Manager（反向代理）</span><br><span class="line">- Portainer（Docker 管理界面）</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="主流-NAS-品牌与选购建议"><a href="#主流-NAS-品牌与选购建议" class="headerlink" title="主流 NAS 品牌与选购建议"></a>主流 NAS 品牌与选购建议</h2><h3 id="品牌对比"><a href="#品牌对比" class="headerlink" title="品牌对比"></a>品牌对比</h3><table>
+<thead>
+<tr>
+<th>品牌</th>
+<th>代表型号</th>
+<th>系统</th>
+<th>特点</th>
+<th>适合人群</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>群晖 Synology</strong></td>
+<td>DS223, DS923+</td>
+<td>DSM</td>
+<td>生态最完整，操作最友好</td>
+<td>所有用户首选</td>
+</tr>
+<tr>
+<td><strong>威联通 QNAP</strong></td>
+<td>TS-233, TVS-h874</td>
+<td>QTS</td>
+<td>硬件性能强，功能多</td>
+<td>进阶用户</td>
+</tr>
+<tr>
+<td><strong>铁威马 TerraMaster</strong></td>
+<td>F2-423, F4-423</td>
+<td>TOS</td>
+<td>性价比高</td>
+<td>预算有限用户</td>
+</tr>
+<tr>
+<td><strong>自组 NAS</strong></td>
+<td>-</td>
+<td>TrueNAS&#x2F;OMV</td>
+<td>完全自定义</td>
+<td>折腾党 &#x2F; 企业</td>
+</tr>
+</tbody></table>
+<h3 id="选购要点"><a href="#选购要点" class="headerlink" title="选购要点"></a>选购要点</h3><p><strong>盘位数量：</strong></p>
+<ul>
+<li><strong>2盘位</strong>：家庭入门，最多两块硬盘，支持 RAID 1</li>
+<li><strong>4盘位</strong>：家庭进阶&#x2F;SOHO，灵活配置 RAID 5&#x2F;6</li>
+<li><strong>6盘位及以上</strong>：重度用户 &#x2F; 小型企业</li>
+</ul>
+<p><strong>处理器：</strong></p>
+<ul>
+<li>仅文件存储：入门 ARM 处理器即可</li>
+<li>需要 4K 转码 &#x2F; Docker &#x2F; 虚拟机：建议 Intel Core 系列（J4125 起步，i3&#x2F;i5 更佳）</li>
+</ul>
+<p><strong>内存：</strong></p>
+<ul>
+<li>基础使用：2-4GB</li>
+<li>运行多个 Docker 容器：8GB+</li>
+<li>虚拟机：16GB+</li>
+</ul>
+<p><strong>网络接口：</strong></p>
+<ul>
+<li>千兆网口：日常够用</li>
+<li>2.5G&#x2F;10G 网口：大文件传输、视频剪辑素材访问</li>
+</ul>
+<hr>
+<h2 id="硬件组成详解"><a href="#硬件组成详解" class="headerlink" title="硬件组成详解"></a>硬件组成详解</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">NAS 设备</span><br><span class="line">├── 机箱（散热设计很重要）</span><br><span class="line">├── 主板（含 CPU、内存）</span><br><span class="line">├── 硬盘槽（2/4/6/8盘位）</span><br><span class="line">│   ├── 系统盘（部分机型内置 DOM/eMMC）</span><br><span class="line">│   └── 存储盘（用户自行购买）</span><br><span class="line">├── 网络接口（1G/2.5G/10G）</span><br><span class="line">└── USB 接口（外接硬盘/UPS）</span><br></pre></td></tr></table></figure>
+
+<h3 id="硬盘选择建议"><a href="#硬盘选择建议" class="headerlink" title="硬盘选择建议"></a>硬盘选择建议</h3><p>推荐选用专为 NAS 设计的<strong>企业级&#x2F;NAS 专用盘</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>品牌</th>
+<th>系列</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>西部数据</td>
+<td>WD Red Plus &#x2F; Red Pro</td>
+<td>性价比高，7x24小时设计</td>
+</tr>
+<tr>
+<td>希捷</td>
+<td>IronWolf &#x2F; IronWolf Pro</td>
+<td>内置健康监测，故障率低</td>
+</tr>
+<tr>
+<td>东芝</td>
+<td>N300</td>
+<td>性价比选择</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>⚠️ <strong>避免使用</strong>桌面级硬盘（WD Blue&#x2F;Seagate Barracuda）长期在 NAS 中运行，不适应 24小时振动与连续读写。</p>
+</blockquote>
+<hr>
+<h2 id="RAID-模式详解"><a href="#RAID-模式详解" class="headerlink" title="RAID 模式详解"></a>RAID 模式详解</h2><p>RAID（独立磁盘冗余阵列）通过多块硬盘的组合方式提供性能提升或数据冗余保护。</p>
+<h3 id="常用-RAID-级别"><a href="#常用-RAID-级别" class="headerlink" title="常用 RAID 级别"></a>常用 RAID 级别</h3><table>
+<thead>
+<tr>
+<th>RAID 类型</th>
+<th>最少磁盘数</th>
+<th>可用容量</th>
+<th>可承受损坏数</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>JBOD</strong></td>
+<td>1</td>
+<td>100%</td>
+<td>0</td>
+<td>无冗余，容量叠加</td>
+</tr>
+<tr>
+<td><strong>RAID 0</strong></td>
+<td>2</td>
+<td>100%</td>
+<td>0</td>
+<td>速度快，无保护</td>
+</tr>
+<tr>
+<td><strong>RAID 1</strong></td>
+<td>2</td>
+<td>50%</td>
+<td>1</td>
+<td>完全镜像，最安全</td>
+</tr>
+<tr>
+<td><strong>RAID 5</strong></td>
+<td>3</td>
+<td>(n-1)&#x2F;n</td>
+<td>1</td>
+<td>均衡选择，最常用</td>
+</tr>
+<tr>
+<td><strong>RAID 6</strong></td>
+<td>4</td>
+<td>(n-2)&#x2F;n</td>
+<td>2</td>
+<td>双校验，更安全</td>
+</tr>
+<tr>
+<td><strong>SHR</strong>（群晖专属）</td>
+<td>1</td>
+<td>灵活</td>
+<td>1-2</td>
+<td>支持混搭不同容量硬盘</td>
+</tr>
+</tbody></table>
+<h3 id="如何选择？"><a href="#如何选择？" class="headerlink" title="如何选择？"></a>如何选择？</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">只有 2 块盘  →  RAID 1（镜像保护）</span><br><span class="line">有 3 块盘    →  RAID 5（容量与保护均衡）</span><br><span class="line">有 4+ 块盘   →  RAID 5 或 RAID 6（更强保护）</span><br><span class="line">硬盘大小不一 →  群晖 SHR</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>🔴 <strong>重要提示：RAID ≠ 备份！</strong><br>RAID 保护的是硬件故障，无法防范误删、勒索病毒、火灾等情况。<br>请遵循 <strong>3-2-1 备份原则</strong>：3份数据 &#x2F; 2种介质 &#x2F; 1份异地。</p>
+</blockquote>
+<hr>
+<h2 id="NAS-的初始配置"><a href="#NAS-的初始配置" class="headerlink" title="NAS 的初始配置"></a>NAS 的初始配置</h2><p>以<strong>群晖 DSM</strong> 为例（其他品牌流程类似）：</p>
+<h3 id="第一步：硬件安装"><a href="#第一步：硬件安装" class="headerlink" title="第一步：硬件安装"></a>第一步：硬件安装</h3><ol>
+<li>将硬盘安装到硬盘托架</li>
+<li>连接网线（建议直连路由器）</li>
+<li>连接电源，开机</li>
+</ol>
+<h3 id="第二步：系统初始化"><a href="#第二步：系统初始化" class="headerlink" title="第二步：系统初始化"></a>第二步：系统初始化</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">浏览器访问：http://find.synology.com</span><br><span class="line">或直接访问：http://[NAS的IP地址]:5000</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>安装 DSM 系统（约 10 分钟）</li>
+<li>创建管理员账号</li>
+<li>配置存储池和存储空间（选择 RAID 模式）</li>
+<li>完成基础向导</li>
+</ol>
+<h3 id="第三步：网络配置"><a href="#第三步：网络配置" class="headerlink" title="第三步：网络配置"></a>第三步：网络配置</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">控制面板 → 网络 → 网络界面</span><br><span class="line">推荐设置：</span><br><span class="line">- 为 NAS 分配固定 IP（静态 IP 或路由器绑定 MAC）</span><br><span class="line">- 启用 IPv6（可选）</span><br></pre></td></tr></table></figure>
+
+<h3 id="第四步：账户与权限"><a href="#第四步：账户与权限" class="headerlink" title="第四步：账户与权限"></a>第四步：账户与权限</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">控制面板 → 用户账号与群组</span><br><span class="line">- 为每位家庭成员创建独立账号</span><br><span class="line">- 设置共享文件夹权限（读取/读写/无权限）</span><br></pre></td></tr></table></figure>
+
+<h3 id="第五步：远程访问配置"><a href="#第五步：远程访问配置" class="headerlink" title="第五步：远程访问配置"></a>第五步：远程访问配置</h3><p><strong>方法一：QuickConnect（最简单）</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">控制面板 → QuickConnect</span><br><span class="line">启用后获得专属 ID，如：https://QuickConnect.to/你的ID</span><br></pre></td></tr></table></figure>
+
+<p><strong>方法二：DDNS + 端口映射</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">控制面板 → 外部访问 → DDNS</span><br><span class="line">→ 注册 Synology DDNS 域名（*.synology.me）</span><br><span class="line">→ 在路由器设置端口映射（5001 → NAS IP:5001）</span><br></pre></td></tr></table></figure>
+
+<p><strong>方法三：VPN（最安全）</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">套件中心 → 安装 VPN Server</span><br><span class="line">→ 配置 OpenVPN 或 WireGuard</span><br><span class="line">→ 在外网通过 VPN 连接后访问内网 NAS</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="常见使用场景与操作方法"><a href="#常见使用场景与操作方法" class="headerlink" title="常见使用场景与操作方法"></a>常见使用场景与操作方法</h2><h3 id="📂-Windows-映射网络驱动器"><a href="#📂-Windows-映射网络驱动器" class="headerlink" title="📂 Windows 映射网络驱动器"></a>📂 Windows 映射网络驱动器</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">文件资源管理器 → 此电脑 → 映射网络驱动器</span><br><span class="line">输入地址：\\192.168.1.100\shared_folder</span><br><span class="line"></span><br><span class="line">或使用 SMB 协议：</span><br><span class="line">控制面板 → 文件服务 → SMB → 启用</span><br></pre></td></tr></table></figure>
+
+<h3 id="🍎-macOS-连接-NAS"><a href="#🍎-macOS-连接-NAS" class="headerlink" title="🍎 macOS 连接 NAS"></a>🍎 macOS 连接 NAS</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Finder → 前往 → 连接服务器（⌘K）</span><br><span class="line">输入：smb://192.168.1.100</span><br><span class="line">或：afp://192.168.1.100（AFP 协议）</span><br></pre></td></tr></table></figure>
+
+<h3 id="📱-手机访问（群晖-DS-File-App）"><a href="#📱-手机访问（群晖-DS-File-App）" class="headerlink" title="📱 手机访问（群晖 DS File App）"></a>📱 手机访问（群晖 DS File App）</h3><ol>
+<li>下载 <strong>DS File</strong>（iOS&#x2F;Android）</li>
+<li>输入服务器地址（局域网 IP 或 QuickConnect ID）</li>
+<li>输入账号密码即可浏览文件</li>
+</ol>
+<h3 id="⬆️-照片自动同步（群晖-Moments）"><a href="#⬆️-照片自动同步（群晖-Moments）" class="headerlink" title="⬆️ 照片自动同步（群晖 Moments）"></a>⬆️ 照片自动同步（群晖 Moments）</h3><ol>
+<li>NAS 安装 <strong>Synology Photos</strong></li>
+<li>手机安装 <strong>Synology Photos App</strong></li>
+<li>开启”自动备份”，手机拍照即时上传至 NAS</li>
+</ol>
+<h3 id="🎬-Plex-媒体服务器配置"><a href="#🎬-Plex-媒体服务器配置" class="headerlink" title="🎬 Plex 媒体服务器配置"></a>🎬 Plex 媒体服务器配置</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">套件中心 → 安装 Plex Media Server</span><br><span class="line">→ 添加媒体库（电影/电视/音乐）</span><br><span class="line">→ 指向 NAS 上的媒体文件夹</span><br><span class="line">→ 手机/平板安装 Plex App 即可观看</span><br></pre></td></tr></table></figure>
+
+<h3 id="🐳-Docker-部署示例（以-Nginx-为例）"><a href="#🐳-Docker-部署示例（以-Nginx-为例）" class="headerlink" title="🐳 Docker 部署示例（以 Nginx 为例）"></a>🐳 Docker 部署示例（以 Nginx 为例）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 群晖 Container Manager → 项目 → 新增</span></span><br><span class="line"><span class="comment"># 或 SSH 进入 NAS 执行：</span></span><br><span class="line"></span><br><span class="line">docker run -d \</span><br><span class="line">  --name nginx \</span><br><span class="line">  -p 8080:80 \</span><br><span class="line">  -v /volume1/docker/nginx:/usr/share/nginx/html \</span><br><span class="line">  nginx:latest</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="安全配置建议"><a href="#安全配置建议" class="headerlink" title="安全配置建议"></a>安全配置建议</h2><h3 id="🔐-基础安全"><a href="#🔐-基础安全" class="headerlink" title="🔐 基础安全"></a>🔐 基础安全</h3><ul>
+<li><input disabled="" type="checkbox"> <strong>修改默认 SSH 端口</strong>（默认 22，改为 10022 等非标准端口）</li>
+<li><input disabled="" type="checkbox"> <strong>禁用 admin 账号</strong>，使用自定义管理员名称</li>
+<li><input disabled="" type="checkbox"> <strong>启用两步验证（2FA）</strong>：控制面板 → 用户 → 2 步骤验证</li>
+<li><input disabled="" type="checkbox"> <strong>启用防火墙</strong>：控制面板 → 安全性 → 防火墙</li>
+<li><input disabled="" type="checkbox"> <strong>开启自动封锁</strong>：多次登录失败自动封锁 IP</li>
+</ul>
+<h3 id="🔒-网络安全"><a href="#🔒-网络安全" class="headerlink" title="🔒 网络安全"></a>🔒 网络安全</h3><ul>
+<li><input disabled="" type="checkbox"> <strong>关闭不必要的对外端口</strong>，仅开放需要的服务</li>
+<li><input disabled="" type="checkbox"> <strong>使用 HTTPS</strong>（DSM 5001 端口），避免明文传输</li>
+<li><input disabled="" type="checkbox"> <strong>申请免费 SSL 证书</strong>：控制面板 → 安全性 → 证书 → Let’s Encrypt</li>
+<li><input disabled="" type="checkbox"> <strong>考虑使用 VPN</strong>而非直接暴露 NAS 端口到公网</li>
+</ul>
+<h3 id="💾-数据安全"><a href="#💾-数据安全" class="headerlink" title="💾 数据安全"></a>💾 数据安全</h3><ul>
+<li><input disabled="" type="checkbox"> <strong>定期快照</strong>（群晖 Snapshot Replication）</li>
+<li><input disabled="" type="checkbox"> <strong>异地备份</strong>：将重要数据备份到另一台 NAS 或云存储（Backblaze B2）</li>
+<li><input disabled="" type="checkbox"> <strong>开启勒索病毒防护</strong>（群晖 Storage Analyzer）</li>
+</ul>
+<hr>
+<h2 id="NAS-vs-其他存储方案对比"><a href="#NAS-vs-其他存储方案对比" class="headerlink" title="NAS vs 其他存储方案对比"></a>NAS vs 其他存储方案对比</h2><table>
+<thead>
+<tr>
+<th>方案</th>
+<th>初始成本</th>
+<th>长期成本</th>
+<th>隐私安全</th>
+<th>访问便利性</th>
+<th>数据安全性</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>NAS</strong></td>
+<td>¥2000-8000</td>
+<td>极低（电费）</td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>⭐⭐⭐⭐</td>
+<td>⭐⭐⭐⭐⭐</td>
+</tr>
+<tr>
+<td>公有云（iCloud等）</td>
+<td>免费起步</td>
+<td>¥200-2000&#x2F;年</td>
+<td>⭐⭐</td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>⭐⭐⭐</td>
+</tr>
+<tr>
+<td>百度网盘&#x2F;阿里云盘</td>
+<td>免费</td>
+<td>¥100-300&#x2F;年</td>
+<td>⭐</td>
+<td>⭐⭐⭐⭐</td>
+<td>⭐⭐</td>
+</tr>
+<tr>
+<td>移动硬盘</td>
+<td>¥300-600</td>
+<td>极低</td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>⭐⭐</td>
+<td>⭐⭐</td>
+</tr>
+<tr>
+<td>家庭 PC 共享</td>
+<td>已有PC</td>
+<td>电费较高</td>
+<td>⭐⭐⭐⭐</td>
+<td>⭐⭐⭐</td>
+<td>⭐⭐⭐</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>结论：</strong> NAS 的最大优势在于<strong>隐私控制</strong>与<strong>长期低成本</strong>，适合存储超过 2TB 以上数据且注重数据主权的用户。</p>
+</blockquote>
+<hr>
+<h2 id="常见问题与排查"><a href="#常见问题与排查" class="headerlink" title="常见问题与排查"></a>常见问题与排查</h2><h3 id="Q：NAS-噪音很大怎么办？"><a href="#Q：NAS-噪音很大怎么办？" class="headerlink" title="Q：NAS 噪音很大怎么办？"></a>Q：NAS 噪音很大怎么办？</h3><ul>
+<li>更换低噪音风扇（如 Noctua 品牌）</li>
+<li>在 DSM 中调低风扇转速（控制面板 → 硬件和电源 → 风扇速度）</li>
+<li>将 NAS 放置在通风但隔音的储物间</li>
+</ul>
+<h3 id="Q：硬盘读写指示灯一直在闪是什么问题？"><a href="#Q：硬盘读写指示灯一直在闪是什么问题？" class="headerlink" title="Q：硬盘读写指示灯一直在闪是什么问题？"></a>Q：硬盘读写指示灯一直在闪是什么问题？</h3><ul>
+<li>正常现象：系统索引、健康扫描（后台任务）</li>
+<li>检查方法：控制面板 → 任务计划 → 查看正在运行的任务</li>
+</ul>
+<h3 id="Q：外网访问速度很慢？"><a href="#Q：外网访问速度很慢？" class="headerlink" title="Q：外网访问速度很慢？"></a>Q：外网访问速度很慢？</h3><ul>
+<li>检查家庭宽带的<strong>上行带宽</strong>（上传速度决定外网访问速度）</li>
+<li>使用 DDNS + 端口映射比 QuickConnect 更快</li>
+<li>考虑在路由器端启用 QoS 优先级</li>
+</ul>
+<h3 id="Q：文件被误删如何恢复？"><a href="#Q：文件被误删如何恢复？" class="headerlink" title="Q：文件被误删如何恢复？"></a>Q：文件被误删如何恢复？</h3><ul>
+<li>查看<strong>回收站</strong>（共享文件夹 → 启用回收站功能）</li>
+<li>使用<strong>快照</strong>恢复（需提前配置 Snapshot Replication）</li>
+<li>第三方数据恢复软件（如 R-Studio）</li>
+</ul>
+<h3 id="Q：NAS-耗电量大吗？"><a href="#Q：NAS-耗电量大吗？" class="headerlink" title="Q：NAS 耗电量大吗？"></a>Q：NAS 耗电量大吗？</h3><ul>
+<li>典型 2盘位 NAS（如 DS223）：约 <strong>15-20W</strong>（工作状态）</li>
+<li>休眠状态：约 5-8W</li>
+<li>全年电费（按 ¥0.6&#x2F;度）：约 <strong>¥80-¥100</strong></li>
+</ul>
+<hr>
+<h2 id="进阶玩法"><a href="#进阶玩法" class="headerlink" title="进阶玩法"></a>进阶玩法</h2><h3 id="🔧-SSH-命令行访问"><a href="#🔧-SSH-命令行访问" class="headerlink" title="🔧 SSH 命令行访问"></a>🔧 SSH 命令行访问</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启用：控制面板 → 终端机和SNMP → 启动SSH</span></span><br><span class="line">ssh admin@192.168.1.100 -p 22</span><br><span class="line"></span><br><span class="line"><span class="comment"># 常用命令</span></span><br><span class="line"><span class="built_in">df</span> -h              <span class="comment"># 查看磁盘使用情况</span></span><br><span class="line">top                <span class="comment"># 查看系统资源</span></span><br><span class="line">synoinfo get       <span class="comment"># 查看系统信息</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="🐳-Docker-Compose-部署-Nextcloud"><a href="#🐳-Docker-Compose-部署-Nextcloud" class="headerlink" title="🐳 Docker Compose 部署 Nextcloud"></a>🐳 Docker Compose 部署 Nextcloud</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># /volume1/docker/nextcloud/docker-compose.yml</span></span><br><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3&#x27;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">nextcloud:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">nextcloud:latest</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;8080:80&quot;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./data:/var/www/html</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">MYSQL_HOST=db</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">MYSQL_DATABASE=nextcloud</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">MYSQL_USER=nextcloud</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">MYSQL_PASSWORD=your_password</span></span><br><span class="line">  <span class="attr">db:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">mariadb:latest</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">MYSQL_ROOT_PASSWORD=root_password</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">MYSQL_DATABASE=nextcloud</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">MYSQL_USER=nextcloud</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">MYSQL_PASSWORD=your_password</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./db:/var/lib/mysql</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="📊-监控与告警"><a href="#📊-监控与告警" class="headerlink" title="📊 监控与告警"></a>📊 监控与告警</h3><ul>
+<li><strong>群晖 SNMP</strong>：配合 Grafana + InfluxDB 实现可视化监控</li>
+<li><strong>DS Finder App</strong>：手机接收 NAS 告警推送（硬盘温度过高、RAID 降级等）</li>
+<li><strong>邮件通知</strong>：控制面板 → 通知 → 配置 SMTP 邮件告警</li>
+</ul>
+<h3 id="🌐-反向代理配置"><a href="#🌐-反向代理配置" class="headerlink" title="🌐 反向代理配置"></a>🌐 反向代理配置</h3><p>通过一个域名访问 NAS 上的多个服务：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">控制面板 → 登录门户 → 反向代理 → 新增</span><br><span class="line"></span><br><span class="line">示例：</span><br><span class="line">  来源：https://plex.yourdomain.com</span><br><span class="line">  目标：http://localhost:32400</span><br><span class="line"></span><br><span class="line">  来源：https://nextcloud.yourdomain.com  </span><br><span class="line">  目标：http://localhost:8080</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="推荐学习资源"><a href="#推荐学习资源" class="headerlink" title="推荐学习资源"></a>推荐学习资源</h2><ul>
+<li>📖 <a target="_blank" rel="noopener" href="https://kb.synology.com/zh-cn">群晖官方知识库</a></li>
+<li>🎥 <a target="_blank" rel="noopener" href="https://www.youtube.com/synology">群晖官方 YouTube 频道</a></li>
+<li>💬 <a target="_blank" rel="noopener" href="https://www.nasforum.cn/">NASforum 中文论坛</a></li>
+<li>📚 <a target="_blank" rel="noopener" href="https://github.com/awesome-selfhosted/awesome-selfhosted">Self-Hosted 中文社区</a></li>
+<li>🔧 <a target="_blank" rel="noopener" href="https://technotim.live/">TechnoTim 博客（英文）</a> — Docker&#x2F;NAS 进阶教程</li>
+</ul>
+<hr>
+<p><em>📝 本文档持续更新中。如有疑问或补充，欢迎留言。</em></p>
+<hr>
+<p><strong>标签：</strong> <code>NAS</code> <code>群晖</code> <code>Synology</code> <code>家庭存储</code> <code>私有云</code> <code>RAID</code> <code>Docker</code> <code>自托管</code> <code>HomeServer</code></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://chaseking.github.io">Chase King</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://chaseking.github.io/2026/03/17/NAS%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97/">https://chaseking.github.io/2026/03/17/NAS%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%94%9F%E6%B4%BB%E6%8A%80%E8%83%BD/">生活技能</a></div><div class="post-share"><div class="social-share" data-image="/img/covers/3.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/03/17/hello-world/" title="Hello World"><div class="cover" style="background: none"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">Hello World</div></div><div class="info-2"><div class="info-item-1">Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new &quot;My New Post&quot;  More info: Writing Run server1$ hexo server  More info: Server Generate static files1$ hexo generate  More info: Generating Deploy to remote sites1$ hexo deploy  More info: Deployment </div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> Comments</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Chase King</div><div class="author-info-description">记录折腾过程的地方</div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">6</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#NAS-%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97%EF%BC%9A%E4%BB%8B%E7%BB%8D%E3%80%81%E7%94%A8%E9%80%94%E4%B8%8E%E7%94%A8%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">NAS 完全指南：介绍、用途与用法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95"><span class="toc-number">1.1.</span> <span class="toc-text">目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-NAS"><span class="toc-number">1.2.</span> <span class="toc-text">什么是 NAS</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#NAS-%E4%B8%8E%E6%99%AE%E9%80%9A%E7%A7%BB%E5%8A%A8%E7%A1%AC%E7%9B%98%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.2.1.</span> <span class="toc-text">NAS 与普通移动硬盘的区别</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NAS-%E7%9A%84%E6%A0%B8%E5%BF%83%E4%BC%98%E5%8A%BF"><span class="toc-number">1.3.</span> <span class="toc-text">NAS 的核心优势</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%85-%E6%95%B0%E6%8D%AE%E8%87%AA%E4%B8%BB%E5%8F%AF%E6%8E%A7"><span class="toc-number">1.3.1.</span> <span class="toc-text">✅ 数据自主可控</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%85-%E4%BD%8E%E6%88%90%E6%9C%AC%E5%A4%A7%E5%AE%B9%E9%87%8F"><span class="toc-number">1.3.2.</span> <span class="toc-text">✅ 低成本大容量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%85-%E5%B1%80%E5%9F%9F%E7%BD%91%E9%AB%98%E9%80%9F%E4%BC%A0%E8%BE%93"><span class="toc-number">1.3.3.</span> <span class="toc-text">✅ 局域网高速传输</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%85-%E6%95%B0%E6%8D%AE%E5%86%97%E4%BD%99%E4%BF%9D%E6%8A%A4"><span class="toc-number">1.3.4.</span> <span class="toc-text">✅ 数据冗余保护</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%85-%E5%8A%9F%E8%83%BD%E6%9E%81%E5%BA%A6%E5%8F%AF%E6%89%A9%E5%B1%95"><span class="toc-number">1.3.5.</span> <span class="toc-text">✅ 功能极度可扩展</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NAS-%E7%9A%84%E4%B8%BB%E8%A6%81%E7%94%A8%E9%80%94"><span class="toc-number">1.4.</span> <span class="toc-text">NAS 的主要用途</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%F0%9F%93%81-%E5%AE%B6%E5%BA%AD%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E4%B8%8E%E5%85%B1%E4%BA%AB"><span class="toc-number">1.4.1.</span> <span class="toc-text">1. 📁 家庭文件存储与共享</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%F0%9F%93%B7-%E7%85%A7%E7%89%87-%E8%A7%86%E9%A2%91%E8%87%AA%E5%8A%A8%E5%A4%87%E4%BB%BD"><span class="toc-number">1.4.2.</span> <span class="toc-text">2. 📷 照片&#x2F;视频自动备份</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%F0%9F%8E%AC-%E5%AE%B6%E5%BA%AD%E5%BD%B1%E9%9F%B3%E5%AA%92%E4%BD%93%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">1.4.3.</span> <span class="toc-text">3. 🎬 家庭影音媒体服务器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E2%AC%87%EF%B8%8F-%E4%B8%8B%E8%BD%BD%E6%9C%BA%EF%BC%88PT-BT-%E7%A6%BB%E7%BA%BF%E4%B8%8B%E8%BD%BD%EF%BC%89"><span class="toc-number">1.4.4.</span> <span class="toc-text">4. ⬇️ 下载机（PT &#x2F; BT &#x2F; 离线下载）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E2%98%81%EF%B8%8F-%E7%A7%81%E6%9C%89%E4%BA%91%E5%90%8C%E6%AD%A5%EF%BC%88%E5%8F%96%E4%BB%A3%E7%99%BE%E5%BA%A6%E7%BD%91%E7%9B%98-Dropbox%EF%BC%89"><span class="toc-number">1.4.5.</span> <span class="toc-text">5. ☁️ 私有云同步（取代百度网盘&#x2F;Dropbox）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%F0%9F%92%BB-%E4%BB%A3%E7%A0%81%E4%B8%8E%E9%A1%B9%E7%9B%AE%E5%A4%87%E4%BB%BD"><span class="toc-number">1.4.6.</span> <span class="toc-text">6. 💻 代码与项目备份</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%F0%9F%94%84-%E7%B3%BB%E7%BB%9F-%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%87%E4%BB%BD"><span class="toc-number">1.4.7.</span> <span class="toc-text">7. 🔄 系统&#x2F;虚拟机备份</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-%F0%9F%96%A5%EF%B8%8F-%E8%BF%90%E8%A1%8C-Docker-%E5%AE%B9%E5%99%A8-%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="toc-number">1.4.8.</span> <span class="toc-text">8. 🖥️ 运行 Docker 容器 &#x2F; 虚拟机</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BB%E6%B5%81-NAS-%E5%93%81%E7%89%8C%E4%B8%8E%E9%80%89%E8%B4%AD%E5%BB%BA%E8%AE%AE"><span class="toc-number">1.5.</span> <span class="toc-text">主流 NAS 品牌与选购建议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%93%81%E7%89%8C%E5%AF%B9%E6%AF%94"><span class="toc-number">1.5.1.</span> <span class="toc-text">品牌对比</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%89%E8%B4%AD%E8%A6%81%E7%82%B9"><span class="toc-number">1.5.2.</span> <span class="toc-text">选购要点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A1%AC%E4%BB%B6%E7%BB%84%E6%88%90%E8%AF%A6%E8%A7%A3"><span class="toc-number">1.6.</span> <span class="toc-text">硬件组成详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A1%AC%E7%9B%98%E9%80%89%E6%8B%A9%E5%BB%BA%E8%AE%AE"><span class="toc-number">1.6.1.</span> <span class="toc-text">硬盘选择建议</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RAID-%E6%A8%A1%E5%BC%8F%E8%AF%A6%E8%A7%A3"><span class="toc-number">1.7.</span> <span class="toc-text">RAID 模式详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8-RAID-%E7%BA%A7%E5%88%AB"><span class="toc-number">1.7.1.</span> <span class="toc-text">常用 RAID 级别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%EF%BC%9F"><span class="toc-number">1.7.2.</span> <span class="toc-text">如何选择？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NAS-%E7%9A%84%E5%88%9D%E5%A7%8B%E9%85%8D%E7%BD%AE"><span class="toc-number">1.8.</span> <span class="toc-text">NAS 的初始配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E7%A1%AC%E4%BB%B6%E5%AE%89%E8%A3%85"><span class="toc-number">1.8.1.</span> <span class="toc-text">第一步：硬件安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E7%B3%BB%E7%BB%9F%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">1.8.2.</span> <span class="toc-text">第二步：系统初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE"><span class="toc-number">1.8.3.</span> <span class="toc-text">第三步：网络配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5%EF%BC%9A%E8%B4%A6%E6%88%B7%E4%B8%8E%E6%9D%83%E9%99%90"><span class="toc-number">1.8.4.</span> <span class="toc-text">第四步：账户与权限</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E6%AD%A5%EF%BC%9A%E8%BF%9C%E7%A8%8B%E8%AE%BF%E9%97%AE%E9%85%8D%E7%BD%AE"><span class="toc-number">1.8.5.</span> <span class="toc-text">第五步：远程访问配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF%E4%B8%8E%E6%93%8D%E4%BD%9C%E6%96%B9%E6%B3%95"><span class="toc-number">1.9.</span> <span class="toc-text">常见使用场景与操作方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%93%82-Windows-%E6%98%A0%E5%B0%84%E7%BD%91%E7%BB%9C%E9%A9%B1%E5%8A%A8%E5%99%A8"><span class="toc-number">1.9.1.</span> <span class="toc-text">📂 Windows 映射网络驱动器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%8D%8E-macOS-%E8%BF%9E%E6%8E%A5-NAS"><span class="toc-number">1.9.2.</span> <span class="toc-text">🍎 macOS 连接 NAS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%93%B1-%E6%89%8B%E6%9C%BA%E8%AE%BF%E9%97%AE%EF%BC%88%E7%BE%A4%E6%99%96-DS-File-App%EF%BC%89"><span class="toc-number">1.9.3.</span> <span class="toc-text">📱 手机访问（群晖 DS File App）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%AC%86%EF%B8%8F-%E7%85%A7%E7%89%87%E8%87%AA%E5%8A%A8%E5%90%8C%E6%AD%A5%EF%BC%88%E7%BE%A4%E6%99%96-Moments%EF%BC%89"><span class="toc-number">1.9.4.</span> <span class="toc-text">⬆️ 照片自动同步（群晖 Moments）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%8E%AC-Plex-%E5%AA%92%E4%BD%93%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE"><span class="toc-number">1.9.5.</span> <span class="toc-text">🎬 Plex 媒体服务器配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%90%B3-Docker-%E9%83%A8%E7%BD%B2%E7%A4%BA%E4%BE%8B%EF%BC%88%E4%BB%A5-Nginx-%E4%B8%BA%E4%BE%8B%EF%BC%89"><span class="toc-number">1.9.6.</span> <span class="toc-text">🐳 Docker 部署示例（以 Nginx 为例）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E5%85%A8%E9%85%8D%E7%BD%AE%E5%BB%BA%E8%AE%AE"><span class="toc-number">1.10.</span> <span class="toc-text">安全配置建议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%94%90-%E5%9F%BA%E7%A1%80%E5%AE%89%E5%85%A8"><span class="toc-number">1.10.1.</span> <span class="toc-text">🔐 基础安全</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%94%92-%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8"><span class="toc-number">1.10.2.</span> <span class="toc-text">🔒 网络安全</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%92%BE-%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8"><span class="toc-number">1.10.3.</span> <span class="toc-text">💾 数据安全</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NAS-vs-%E5%85%B6%E4%BB%96%E5%AD%98%E5%82%A8%E6%96%B9%E6%A1%88%E5%AF%B9%E6%AF%94"><span class="toc-number">1.11.</span> <span class="toc-text">NAS vs 其他存储方案对比</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E4%B8%8E%E6%8E%92%E6%9F%A5"><span class="toc-number">1.12.</span> <span class="toc-text">常见问题与排查</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q%EF%BC%9ANAS-%E5%99%AA%E9%9F%B3%E5%BE%88%E5%A4%A7%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F"><span class="toc-number">1.12.1.</span> <span class="toc-text">Q：NAS 噪音很大怎么办？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q%EF%BC%9A%E7%A1%AC%E7%9B%98%E8%AF%BB%E5%86%99%E6%8C%87%E7%A4%BA%E7%81%AF%E4%B8%80%E7%9B%B4%E5%9C%A8%E9%97%AA%E6%98%AF%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="toc-number">1.12.2.</span> <span class="toc-text">Q：硬盘读写指示灯一直在闪是什么问题？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q%EF%BC%9A%E5%A4%96%E7%BD%91%E8%AE%BF%E9%97%AE%E9%80%9F%E5%BA%A6%E5%BE%88%E6%85%A2%EF%BC%9F"><span class="toc-number">1.12.3.</span> <span class="toc-text">Q：外网访问速度很慢？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q%EF%BC%9A%E6%96%87%E4%BB%B6%E8%A2%AB%E8%AF%AF%E5%88%A0%E5%A6%82%E4%BD%95%E6%81%A2%E5%A4%8D%EF%BC%9F"><span class="toc-number">1.12.4.</span> <span class="toc-text">Q：文件被误删如何恢复？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q%EF%BC%9ANAS-%E8%80%97%E7%94%B5%E9%87%8F%E5%A4%A7%E5%90%97%EF%BC%9F"><span class="toc-number">1.12.5.</span> <span class="toc-text">Q：NAS 耗电量大吗？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E9%98%B6%E7%8E%A9%E6%B3%95"><span class="toc-number">1.13.</span> <span class="toc-text">进阶玩法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%94%A7-SSH-%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%AE%BF%E9%97%AE"><span class="toc-number">1.13.1.</span> <span class="toc-text">🔧 SSH 命令行访问</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%90%B3-Docker-Compose-%E9%83%A8%E7%BD%B2-Nextcloud"><span class="toc-number">1.13.2.</span> <span class="toc-text">🐳 Docker Compose 部署 Nextcloud</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%93%8A-%E7%9B%91%E6%8E%A7%E4%B8%8E%E5%91%8A%E8%AD%A6"><span class="toc-number">1.13.3.</span> <span class="toc-text">📊 监控与告警</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%8C%90-%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E9%85%8D%E7%BD%AE"><span class="toc-number">1.13.4.</span> <span class="toc-text">🌐 反向代理配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A8%E8%8D%90%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%BA%90"><span class="toc-number">1.14.</span> <span class="toc-text">推荐学习资源</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/03/17/NAS%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97/" title="NAS完全指南"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/covers/3.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="NAS完全指南"/></a><div class="content"><a class="title" href="/2026/03/17/NAS%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97/" title="NAS完全指南">NAS完全指南</a><time datetime="2026-03-17T22:12:32.000Z" title="Created 2026-03-17 22:12:32">2026-03-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/03/17/hello-world/" title="Hello World"><div style="background: none"></div></a><div class="content"><a class="title" href="/2026/03/17/hello-world/" title="Hello World">Hello World</a><time datetime="2026-03-17T14:26:42.312Z" title="Created 2026-03-17 14:26:42">2026-03-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/03/12/skill%E6%A6%82%E5%BF%B5%E7%90%86%E8%A7%A3%E3%80%81%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%88%9B%E5%BB%BA/" title="skill概念理解、使用与创建"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/covers/1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="skill概念理解、使用与创建"/></a><div class="content"><a class="title" href="/2026/03/12/skill%E6%A6%82%E5%BF%B5%E7%90%86%E8%A7%A3%E3%80%81%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%88%9B%E5%BB%BA/" title="skill概念理解、使用与创建">skill概念理解、使用与创建</a><time datetime="2026-03-12T21:36:10.000Z" title="Created 2026-03-12 21:36:10">2026-03-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/03/12/Github-Pages-%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/" title="Github Pages 博客搭建指南"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://picsum.photos/800/400?random=1" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Github Pages 博客搭建指南"/></a><div class="content"><a class="title" href="/2026/03/12/Github-Pages-%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/" title="Github Pages 博客搭建指南">Github Pages 博客搭建指南</a><time datetime="2026-03-12T00:42:38.000Z" title="Created 2026-03-12 00:42:38">2026-03-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/03/12/openclaw%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%E5%A4%87%E5%BF%98/" title="openclaw使用方法备忘"><div style="background: none"></div></a><div class="content"><a class="title" href="/2026/03/12/openclaw%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%E5%A4%87%E5%BF%98/" title="openclaw使用方法备忘">openclaw使用方法备忘</a><time datetime="2026-03-12T00:32:51.000Z" title="Created 2026-03-12 00:32:51">2026-03-12</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(/img/footer_bg.jpg);"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2024 - 2026 By Chase King</span></div><div class="footer_custom_text">由 <a href="https://hexo.io" target="_blank">Hexo</a> 驱动 &nbsp;|&nbsp; 主题 <a href="https://butterfly.js.org" target="_blank">Butterfly</a> &nbsp;|&nbsp; 托管于 <a href="https://github.com/chasehl/chasehl.github.io" target="_blank">GitHub Pages</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="Scroll to Comments"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@19.1.3/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const getGiscusTheme = theme => theme === 'dark' ? 'dark' : 'light'
+
+  const createScriptElement = config => {
+    const ele = document.createElement('script')
+    Object.entries(config).forEach(([key, value]) => {
+      ele.setAttribute(key, value)
+    })
+    return ele
+  }
+
+  const loadGiscus = (el = document, key) => {
+    const mappingConfig = isShuoshuo
+      ? { 'data-mapping': 'specific', 'data-term': key }
+      : { 'data-mapping': (option && option['data-mapping']) || 'pathname' }
+
+    const giscusConfig = {
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'chasehl/chasehl.github.io',
+      'data-repo-id': 'R_kgDON3lWOw',
+      'data-category-id': 'DIC_kwDON3lWO84C4PJp',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      crossorigin: 'anonymous',
+      async: true,
+      ...option,
+      ...mappingConfig
+    }
+
+    const scriptElement = createScriptElement(giscusConfig)
+
+    el.querySelector('#giscus-wrap').appendChild(scriptElement)
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyGiscus = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const changeGiscusTheme = theme => {
+    const iframe = document.querySelector('#giscus-wrap iframe')
+    if (iframe) {
+      const message = {
+        giscus: {
+          setConfig: {
+            theme: getGiscusTheme(theme)
+          }
+        }
+      }
+      iframe.contentWindow.postMessage(message, 'https://giscus.app')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if (isShuoshuo) {
+    'Giscus' === 'Giscus'
+      ? window.shuoshuoComment = { loadComment: loadGiscus }
+      : window.loadOtherComment = loadGiscus
+    return
+  }
+
+  if ('Giscus' === 'Giscus' || !false) {
+    if (false) btf.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment = loadGiscus
+  }
+})()</script></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading Database</span></div><div class="local-search-input"><input placeholder="Search for Posts" type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.5.4"></script></div></div></body></html>
