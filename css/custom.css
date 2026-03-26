@@ -1,22 +1,23 @@
-/* 引入字体 */
+/* ==========================================
+   字体
+   ========================================== */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=JetBrains+Mono&display=swap');
 
-/* 正文字体 */
 body {
   font-family: 'Noto Serif SC', serif;
 }
 
-/* 代码字体 */
 code, pre {
   font-family: 'JetBrains Mono', monospace;
 }
 
-/* 标题字体加粗 */
 h1, h2, h3 {
   font-weight: 700;
 }
 
-/* 文章卡片美化 */
+/* ==========================================
+   文章卡片
+   ========================================== */
 .recent-post-item {
   border-radius: 12px !important;
   box-shadow: 0 4px 20px rgba(0,0,0,0.08) !important;
@@ -26,4 +27,85 @@ h1, h2, h3 {
 .recent-post-item:hover {
   transform: translateY(-4px) !important;
   box-shadow: 0 8px 30px rgba(0,0,0,0.15) !important;
+}
+
+/* ==========================================
+   侧边栏卡片
+   ========================================== */
+#aside-content .card-widget {
+  border-radius: 12px !important;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.07) !important;
+}
+
+/* ==========================================
+   代码块
+   ========================================== */
+figure.highlight {
+  border-radius: 8px !important;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12) !important;
+}
+
+/* ==========================================
+   引用块
+   ========================================== */
+blockquote {
+  border-radius: 0 8px 8px 0 !important;
+  background: rgba(66, 90, 239, 0.05) !important;
+}
+
+/* ==========================================
+   标签云
+   ========================================== */
+#aside-content .card-tags a {
+  transition: transform 0.2s ease !important;
+}
+
+#aside-content .card-tags a:hover {
+  transform: scale(1.08) !important;
+}
+
+/* ==========================================
+   文章目录高亮
+   ========================================== */
+#toc-div .toc-link.active {
+  font-weight: 700;
+}
+
+/* ==========================================
+   回到顶部按钮
+   ========================================== */
+#rightside #go-up {
+  border-radius: 50% !important;
+  box-shadow: 0 4px 12px rgba(66, 90, 239, 0.3) !important;
+}
+
+/* ==========================================
+   页脚
+   ========================================== */
+#footer-wrap {
+  font-size: 0.85rem;
+}
+
+/* ==========================================
+   深色模式适配
+   ========================================== */
+[data-theme="dark"] .recent-post-item {
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3) !important;
+}
+
+[data-theme="dark"] blockquote {
+  background: rgba(66, 90, 239, 0.08) !important;
+}
+
+[data-theme="dark"] #aside-content .card-widget {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.25) !important;
+}
+
+/* ==========================================
+   移动端优化
+   ========================================== */
+@media (max-width: 768px) {
+  .recent-post-item:hover {
+    transform: none !important;
+  }
 }
