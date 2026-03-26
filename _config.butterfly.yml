@@ -21,7 +21,6 @@ theme_color:
 
 # ==========================================
 # 网站背景图片
-# 将图片放到 source/img/website_bg.jpg
 # ==========================================
 background: /img/website_bg.jpg
 
@@ -50,7 +49,7 @@ menu:
   友链: /links/ || fas fa-link
 
 # ==========================================
-# 头像（effect: false = 鼠标悬停才旋转）
+# 头像
 # ==========================================
 avatar:
   img: /img/avatar.jpg
@@ -58,13 +57,11 @@ avatar:
 
 # ==========================================
 # 首页顶部 Banner
-# 将图片放到 source/img/banner.jpg
 # ==========================================
 index_img: /img/banner.jpg
 
 # ==========================================
-# 文章默认封面（未设封面的文章随机取一张）
-# 将图片放到 source/img/covers/ 目录下
+# 文章默认封面
 # ==========================================
 cover:
   index_enable: true
@@ -101,7 +98,7 @@ local_search:
   CDN:
 
 # ==========================================
-# CDN（必须保留，否则启动报错）
+# CDN
 # ==========================================
 CDN:
   internal_provider: local
@@ -149,10 +146,8 @@ footer:
     since: 2024
   custom_text: '由 <a href="https://hexo.io" target="_blank">Hexo</a> 驱动 &nbsp;|&nbsp; 主题 <a href="https://butterfly.js.org" target="_blank">Butterfly</a> &nbsp;|&nbsp; 托管于 <a href="https://github.com/chasehl/chasehl.github.io" target="_blank">GitHub Pages</a>'
   copyright: true
-  runtime: false
+  runtime: true
 
-# 页脚背景图片（独立于 footer 块之外）
-# 将图片放到 source/img/footer_bg.jpg
 footer_img: /img/footer_bg.jpg
 
 # ==========================================
@@ -160,16 +155,52 @@ footer_img: /img/footer_bg.jpg
 # ==========================================
 aside:
   enable: true
+  hide: false
+  button: true
+  mobile: false
   position: right
+  display:
+    archive: true
+    tag: true
+    category: true
   card_author:
     enable: true
     description: 记录折腾过程的地方
-  card_tags:
+    button:
+      enable: true
+      icon: fab fa-github
+      text: GitHub
+      link: https://github.com/chasehl
+  card_announcement:
     enable: true
-  card_archives:
-    enable: true
+    content: 欢迎来到 ChaseLog，这里记录我的折腾历程 🚀
   card_recent_post:
     enable: true
+    limit: 5
+    sort: date
+    sort_order:
+  card_categories:
+    enable: true
+    limit: 8
+    expand: none
+    order_by: name
+  card_tags:
+    enable: true
+    limit: 40
+    color: true
+    order_by: name
+    order_type: 1
+  card_archives:
+    enable: true
+    type: monthly
+    format: MMMM YYYY
+    order: -1
+    limit: 8
+  card_webinfo:
+    enable: true
+    post_count: true
+    last_push_date: true
+    sort_order:
 
 # ==========================================
 # 深色模式
@@ -184,11 +215,131 @@ dark_mode:
 highlight_theme: mac
 highlight_copy: true
 highlight_lang: true
+highlight_shrink: false
+highlight_height_limit: false
 
 # ==========================================
-# 访问统计
+# 文章页配置
+# ==========================================
+post_meta:
+  page:
+    date_type: both
+    date_format: date
+    categories: true
+    tags: true
+    label: true
+  post:
+    date_type: both
+    date_format: date
+    categories: true
+    tags: true
+    label: true
+
+# 文章字数统计 & 阅读时长（需要 hexo-wordcount）
+wordcount:
+  enable: true
+  post_wordcount: true
+  min2read: true
+  total_wordcount: true
+
+# ==========================================
+# 文章目录（TOC）
+# ==========================================
+toc:
+  post: true
+  page: false
+  number: true
+  expand: true
+  style_simple: false
+  scroll_percent: true
+
+# ==========================================
+# 文章版权声明
+# ==========================================
+post_copyright:
+  enable: true
+  decode: false
+  author_href:
+  license: CC BY-NC-SA 4.0
+  license_url: https://creativecommons.org/licenses/by-nc-sa/4.0/
+
+# ==========================================
+# 文章打赏
+# ==========================================
+reward:
+  enable: false
+  QR_code:
+
+# ==========================================
+# 相关文章推荐
+# ==========================================
+related_post:
+  enable: true
+  limit: 6
+  date_type: created
+
+# ==========================================
+# 文章过期提醒
+# ==========================================
+noticeOutdate:
+  enable: true
+  style: flat
+  limit_day: 365
+  position: top
+  message_prev: 本文已超过
+  message_next: 天未更新，内容可能已过时，请注意甄别。
+
+# ==========================================
+# 文章编辑按钮（链接到 GitHub 编辑）
+# ==========================================
+post_edit:
+  enable: false
+  url: https://github.com/chasehl/chasehl.github.io/edit/main/source/
+
+# ==========================================
+# 回到顶部按钮
+# ==========================================
+rightside_scroll_percent: true
+
+# ==========================================
+# 鼠标点击效果
+# ==========================================
+click_heart: false
+
+# ==========================================
+# 网站标题打字效果（浏览器 tab）
+# ==========================================
+change_title_bar:
+  enable: true
+  hidden: 你去哪了？快回来！
+  visible: 欢迎回来！
+
+# ==========================================
+# 访问统计（不蒜子）
 # ==========================================
 busuanzi:
-  site_uv: false
-  site_pv: false
-  page_pv: false
+  site_uv: true
+  site_pv: true
+  page_pv: true
+
+# ==========================================
+# 加载动画
+# ==========================================
+preloader:
+  enable: true
+  source: 1
+  pace_css_url:
+
+# ==========================================
+# 图片描述（alt 文字显示）
+# ==========================================
+photofigcaption: true
+
+# ==========================================
+# 锚点链接
+# ==========================================
+anchor:
+  button:
+    enable: true
+    always_show: false
+  auto_update: false

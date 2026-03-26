@@ -4,16 +4,16 @@
 
 # Site
 title: ChaseLog
-subtitle: 'My Personal Blog'
-description: 'A blog about my personal thoughts and experiences.'
-keywords:
+subtitle: '记录折腾的地方'
+description: '记录云服务器、AI工具、技术学习的个人博客'
+keywords: 博客,技术,AI,折腾,Hexo
 author: Chase King
-language: en
-timezone: ''
+language: zh-CN
+timezone: 'Asia/Shanghai'
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: https://chaseking.github.io
+url: https://chasehl.github.io
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -102,7 +102,9 @@ theme: butterfly
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
-  type: ''
+  type: git
+  repo: https://github.com/chasehl/chasehl.github.io.git
+  branch: main
 
 search:
   path: search.xml
